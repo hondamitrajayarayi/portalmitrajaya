@@ -140,7 +140,7 @@ Route::group(['middleware' => 'auth'], function (){
     
     Route::get('inventaris','InventarisController@index')->name('inventaris');
     Route::get('inventaris/tambah','InventarisController@tambah')->name('inventaris.tambah');
-    Route::get('inventaris/getinfo/{id}','InventarisController@getinfo')->name('inventaris.getinfo');
+    
     Route::post('inventaris/autofillrb','InventarisController@pilihrb')->name('inventaris.pilihrb');
     Route::post('inventaris/simpan','InventarisController@simpan')->name('inventaris.simpan');
     Route::post('inventaris/generateqr','InventarisController@generateqr')->name('inventaris.generateqr');
@@ -202,6 +202,8 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('logout','AuthController@logout')->name('logout');
 });
+
+Route::get('inventaris/getinfo/{id}','InventarisController@getinfo')->name('inventaris.getinfo');
 
 Route::get('/tes', function ()
 {
