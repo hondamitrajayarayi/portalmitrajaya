@@ -15,12 +15,12 @@ use App\Karyawan;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+// Auth::routes();
 
-Route::get('/page', function ()
-{
-    return view('layouts.test');
-});
+// Route::get('/page', function ()
+// {
+//     return view('layouts.test');
+// });
 
 // Route::get('/','AuthController@index')->name('login');
 Route::get('/','Auth\LoginController@showLoginForm')->name('login');
@@ -141,6 +141,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('inventaris','InventarisController@index')->name('inventaris');
     Route::get('inventaris/tambah','InventarisController@tambah')->name('inventaris.tambah');
     Route::get('inventaris/getinfo/{id}','InventarisController@getinfo')->name('inventaris.getinfo');
+    Route::post('inventaris/autofillrb','InventarisController@pilihrb')->name('inventaris.pilihrb');
     Route::post('inventaris/simpan','InventarisController@simpan')->name('inventaris.simpan');
     Route::post('inventaris/generateqr','InventarisController@generateqr')->name('inventaris.generateqr');
     // Route::group(['middleware' => 'can:menu_mst_test'], function (){
