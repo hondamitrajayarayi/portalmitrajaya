@@ -358,20 +358,20 @@
                                     <th scope="row" >Total</th>
                                     <th class="text-end">@uang($data->total_harga)</th>
                                 </tr>
-                                <tr class="fs-15">
+                                {{-- <tr class="fs-15">
                                     <th scope="row" >Beban Pembagian (75%)</th>
                                     <th class="text-end bg-warning">@uang($data->total_harga*75/100)</th>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                         <!--end table-->
                     </div>
-                    @if($data->status == 2)
+                    {{-- @if($data->status == 2)
                     <div class="mt-3">
                         <h6 class="text-muted fw-semibold mb-2">Tambahkan Beban pembagian (75% x Total Bayar) ?</h6>
-                    </div>
+                    </div> --}}
 
-                    @endif
+                    {{-- @endif --}}
                     <div class="mt-3">
                         <h6 class="text-muted text-uppercase fw-semibold mb-2">Dana Ditransfer ke:</h6>
                         <p class="text-muted mb-1">Bank: <span class="fw-medium" id="payment-method">{{ $data->bank }}</span></p>
