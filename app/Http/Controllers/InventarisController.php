@@ -33,8 +33,9 @@ class InventarisController extends Controller
                 ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')
                 ->orderBy('trx_rb_header.created_date','desc')
                 ->get();
-
-        return view('inventori.inventory_tambah', compact('data'));
+        $autofill = null;
+        
+        return view('inventori.inventory_tambah', compact('data','autofill'));
     }
     public function simpan(Request $request)
     {
@@ -67,6 +68,16 @@ class InventarisController extends Controller
         }
         return redirect()->route('inventaris')->with('message','Data Berhasil Disimpan!');
     }
+    public function pilihrb (Request $request){
+        $data = TrxRbHeader::where('trx_rb_header.status',0)
+                ->whereNotIn('trx_rb_detail_item.item_id', TrxInventory::get('item_id'))
+                ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')
+                ->orderBy('trx_rb_header.created_date','desc')
+                ->get();
+        $autofill = TrxRbDetailItem::where('item_id', $request->item)->first();
+
+        return view('inventori.inventory_tambah', compact('data','autofill'));
+    }
     public function generateqr(Request $request)
     {
         $validate = $request->validate([
@@ -80,12 +91,12 @@ class InventarisController extends Controller
                 //generate qr
                 \QrCode::size(250)
                     ->format('svg')
-                    ->generate('http://127.0.0.1:8000/inventaris/getinfo/'.$value, public_path('inventory/qr/qr-'.$value.'.svg'));
+                    ->generate('http://intranet.hondamitrajaya.com/inventaris/getinfo/'.$value, public_path('inventory/qr/qr-'.$value.'.svg'));
 
                 //simpan ke tabel mst qr
                 $inventory = [
                     'INVENTORY_ID'  => $value,
-                    'URL'           => 'http://127.0.0.1:8000/inventaris/getinfo/'.$value,
+                    'URL'           => 'http://intranet.hondamitrajaya.com/inventaris/getinfo/'.$value,
                     'NAME_FILE'     => 'qr-'.$value.'.svg',
                     'CREATED_BY'    => Auth::user()->username,
                     'CREATED_DATE'  => date('Y-m-d H:i:s')
@@ -129,7 +140,7 @@ class InventarisController extends Controller
         $diketahui = Karyawan::where('id_jabatan',2)->orWhere('id_bag_dept',8)->get();
         $disetujui = Karyawan::where('id_jabatan',2)->get();
 
-        return view('inventori.inventory_detail', compact('inventaris','rb','id','data','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
+        return view('inventori.inventory_detail', compact('inventaris','id','data','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
     }
     public function getKode($user)
     {
