@@ -1,0 +1,192 @@
+.pie {
+  width: var(--w);
+  aspect-ratio: 1;
+  display: inline-grid;
+  place-content: center;
+  margin: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.pie:before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset: 0;
+  background: conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+          mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.r-chat-text{
+    max-width: 200px;
+
+}
+.r-chat-text .text-primary{
+	font-weight: 600;
+}
+.chat-status{
+	display: block;
+	font-size: 10.5px;
+}
+.chat-right{
+	text-align: right;
+}
+.unread-badge {
+    position: absolute;
+    top: 15px;
+    left: 75px;
+    z-index: 1;
+}
+.img-channel {
+    margin-right: 5px;
+    width: 16px;
+    margin-left: -5px;
+    margin-top: 10px;
+}
+.chat-user-list li:hover{
+	background: aliceblue	;
+}
+.text-chat{
+	font-size: 12px;
+	line-height: 15px !important;
+    display: block;
+    max-height: 30px;
+    overflow-y:hidden;
+    color:#969EAA !important;
+}
+#users-chat{
+/*	background: #F0F3F6;
+*/}
+
+/*blue style*/
+.chat-conversation.blue .right .conversation-list .ctext-wrap .ctext-wrap-content
+{
+  background-color:#3478f1 !important;
+  color: white !important;
+}
+
+.chat-conversation.blue .right .ctext-wrap:first-child .pointer{
+  background-color:#3478f1 !important;  
+}
+.chat-conversation.blue .conversation-list .ctext-wrap-content
+{
+  background-color:#e9e9e9;
+}
+.chat-conversation.blue .left .ctext-wrap:first-child .pointer{
+  background-color:#e9e9e9;
+}
+/*end blue style */
+
+#users-chat .chat-conversation .chat-avatar{
+	width: 28px;
+}
+#users-chat .chat-avatar img{
+	position: absolute;
+    top: 0px;
+}
+#users-chat .right .chat-avatar img {
+    right: 0px;
+}
+.right .ctext-wrap:first-child .pointer {
+    height: 20px;
+    width: 20px;
+    background: #c6e5f9;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-radius: 0 0 12px 0;
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    z-index: 0;
+    left: auto;
+}
+
+.left .ctext-wrap:first-child .pointer {
+    height: 20px;
+    width: 20px;
+    background: #fff;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-radius: 0 0 12px 0;
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    z-index: 0;
+}
+.chat-right-bar{
+	width: 310px;	
+}
+.chat-right-bar .table-card input{
+  	border: 0px;
+    background: inherit;	
+}
+.chat-right-bar .team-cover{
+    
+    height: 100px;
+    background-size: cover !important;
+    display: block;  
+}
+.table.no-border td{
+	border-bottom-width: 0px;
+}
+.chat-leftsidebar .nav-link{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+
+}
+@media (max-width: 767.98px){
+  .navbar-menu .navbar-nav .nav-link{
+    font-size: 16px;
+  }
+  .navbar-menu .navbar-nav .nav-sm .nav-link{
+    font-size: 14px;
+  }
+  .menu-title span{
+    font-size: 12px;
+  }
+  .chat-message-list li{
+    border-top: 1px dashed var(--vz-border-color) !important;
+  }
+
+}
+
+@media (min-width: 576px){
+     #page-topbar {
+        background-color: var(--vz-header-bg) !important;
+        border-color: var(--vz-header-bg) !important;
+    }
+    .navbar-header .btn-topbar {
+        color: var(--vz-gray-700) !important;
+    }
+    .hamburger-icon span {
+        background-color:  var(--vz-gray-700) !important;
+    }
+    .topbar-user {
+        background-color: var(--vz-topbar-user-bg) !important;
+    }
+  .navbar-header .user-name-text {
+      color: var(--vz-gray-700) !important;
+  }
+  .topbar-user .user-name-sub-text {
+      color: #878a99 !important;
+  }
+  .app-search span.search-widget-icon {
+      color: #878a99 !important;
+  }
+  .app-search .form-control{
+    background-color: var(--vz-topbar-search-bg) !important;
+    color: var(--vz-body-color) !important;
+  }
+  .app-search .form-control::placeholder{
+    color: #878a99 !important;
+  }
+  .navbar-header .pt-3.mt-1{
+    display: none;
+  }
+	.lg-show{
+		display: block !important;
+	}
+	.lg-show-inline{
+		display: inline-block !important;
+	}
+}
