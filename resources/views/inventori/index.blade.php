@@ -211,7 +211,7 @@
                                             <td class="email text-end">@uang($item->harga_beli)</td>
                                             <td class="email text-center">
                                                 @if($item->status == 1)
-                                                    <span class="badge badge-soft-success badge-border text-wrap"> Free</span>
+                                                    <span class="badge badge-soft-success badge-border text-wrap"> Close</span>
                                                 @elseif($item->status == 2)
                                                     <span class="badge bg-warning"> Aproval Internal</span>
                                                 @elseif($item->status == 3)

@@ -42,6 +42,7 @@ class InventarisController extends Controller
         $validate = $request->validate([
             'item' => 'required'
         ]);
+        
         foreach ($request->item as $value) {
             
             $item = TrxRbHeader::where('trx_rb_detail_item.item_id', $value)
@@ -69,6 +70,11 @@ class InventarisController extends Controller
         return redirect()->route('inventaris')->with('message','Data Berhasil Disimpan!');
     }
     public function pilihrb (Request $request){
+        
+        $validate = $request->validate([
+            'item' => 'required'
+        ]);
+
         $data = TrxRbHeader::where('trx_rb_header.status',0)
                 ->whereNotIn('trx_rb_detail_item.item_id', TrxInventory::get('item_id'))
                 ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')

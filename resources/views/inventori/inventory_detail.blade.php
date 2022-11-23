@@ -355,12 +355,12 @@
                                                         </table>
                                                         <!--end table-->
                                                     </div>
-                                                    @if($data->status == 2)
+                                                    {{-- @if($data->status == 2)
                                                     <div class="mt-3">
                                                         <h6 class="text-muted fw-semibold mb-2">Tambahkan Beban pembagian (75% x Total Bayar) ?</h6>
                                                     </div>
                                 
-                                                    @endif
+                                                    @endif --}}
                                                     <div class="mt-3">
                                                         <h6 class="text-muted text-uppercase fw-semibold mb-2">Dana Ditransfer ke:</h6>
                                                         <p class="text-muted mb-1">Bank: <span class="fw-medium" id="payment-method">{{ $data->bank }}</span></p>

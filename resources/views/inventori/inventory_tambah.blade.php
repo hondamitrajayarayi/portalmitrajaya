@@ -27,7 +27,7 @@
                     <p class="mb-0">Pilih minimal 1<span class="fw-semibold"> Data RB</span> yang akan dijadikan inventaris !</p>
                 </div>
                 @endif
-                <form action="{{ route('inventaris.simpan') }}" method="POST">
+                <form action="{{ route('inventaris.pilihrb') }}" method="POST">
                     @csrf
                     <div class="p-3 rounded">
                         <div class="row g-2">
@@ -234,79 +234,88 @@
         <div class="col-xl-9">
             <div div class="card">
                 <div class="card-header" >
-                    <h6 class="card-title mb-0 font-poppins fs-15" >Tambah Inventory</h6>
+                    <h6 class="card-title mb-0 font-poppins fs-15" >Tambah Inventaris</h6>
                 </div>
                 <div class="card-body fs-12">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <div>
-                                <label for="basiInput" class="form-label mb-1">No Revisi Budget <i class="text-muted">(optional)</i></label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="norb" name="norb" readonly aria-label="Recipient's username" aria-describedby="button-addon2">
-                                    <button data-bs-toggle="modal" data-bs-target="#exampleModalgrid" class="btn btn-soft-primary" type="button" id="button-addon2"><i class="ri-search-line"></i></button>
+                    <form action="{{ route('inventaris.simpan') }}">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">No Revisi Budget <i class="text-muted">(optional)</i></label>
+                                    <div class="input-group">
+                                        
+                                        <input type="text" class="form-control" id="norb" name="norb" @if($autofill != null) value="{{ $autofill->rb_id }}" @endif readonly aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <button data-bs-toggle="modal" data-bs-target="#exampleModalgrid" class="btn btn-soft-primary" type="button" id="button-addon2"><i class="ri-search-line"></i></button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Nama Item<i class="text-danger">*</i></label>
+                                    <input type="text" class="form-control" name="item" required id="valueInput" @if($autofill != null) value="{{ $autofill->item }}" @endif>
+                                </div>
+                            </div>
+                            <div class="col-md-1 mt-2">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Stok<i class="text-danger">*</i></label>
+                                    <input type="text" class="form-control" name="qty" required id="valueInput" @if($autofill != null) value="{{ $autofill->qty }}" @endif>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-2">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Harga Item<i class="text-danger">*</i></label>
+                                    <input type="text" class="form-control" name="harga" required id="valueInput" @if($autofill != null) value="{{ $autofill->harga }}" @endif>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <div>
+                                    <label for="validationCustom04"
+                                        class="form-label mb-1">Grup Item<i class="text-danger">*</i></label>
+                                    
+                                    <select class="form-control" data-choices name="grup" id="choices-single-default" required>
+                                        <option value="">Pilih grup</option>
+                                        
+                                    </select>
                                     
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div>
-                                <label for="basiInput" class="form-label mb-1">Nama Item<i class="text-danger">*</i></label>
-                                <input type="text" class="form-control" id="valueInput" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-1 mt-2">
-                            <div>
-                                <label for="basiInput" class="form-label mb-1">Stok<i class="text-danger">*</i></label>
-                                <input type="text" class="form-control" id="valueInput" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-3 mt-2">
-                            <div>
-                                <label for="basiInput" class="form-label mb-1">Harga Item<i class="text-danger">*</i></label>
-                                <input type="text" class="form-control" id="valueInput" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-2">
-                            <div>
-                                <label for="validationCustom04"
-                                    class="form-label mb-1 @error('jabatan') text-danger @enderror">Grup Item<i class="text-danger">*</i></label>
-                                
-                                <select class="form-control" data-choices name="jabatan" id="choices-single-default">
-                                    <option value="">Pilih grup</option>
+                            <div class="col-md-4 mt-2">
+                                <div>
+                                    <label for="validationCustom04"
+                                        class="form-label mb-1">Jenis Item<i class="text-danger">*</i></label>
                                     
-                                </select>
-                                
+                                    <select class="form-control" data-choices name="jenis" id="choices-single-default" required>
+                                        <option value="">Pilih jenis</option>
+                                        {{-- @foreach($jabatan as $kry)
+                                            <option value="{{ $kry->id }}" @if(old('jabatan') == $kry->id) selected @endif>{{ $kry->nama_jabatan }}</option>
+                                        @endforeach --}}
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-2">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Gambar Item<i class="text-danger">*</i></label>
+                                    <input type="file" name="gambar" class="form-control" id="valueInput" required>
+                                </div>
+                            </div>
+                            <div class="col-md-8 mt-2">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Deskripsi<i class="text-danger">*</i></label>
+                                    <textarea type="text" name="deskripsi" class="form-control" id="valueInput" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="card-body">
+                                    <div class="hstack gap-2 justify-content-end d-print-none">
+                                        <button type="submit" class="btn btn-success"><i class="ri-save-3-fill align-bottom me-1"></i> Submit</button>
+                                        <a href="{{ route('inventaris') }}" type="buttom" class="btn btn-primary"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Back</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4 mt-2">
-                            <div>
-                                <label for="validationCustom04"
-                                    class="form-label mb-1 @error('jabatan') text-danger @enderror">Jenis Item<i class="text-danger">*</i></label>
-                                
-                                <select class="form-control" data-choices name="jabatan" id="choices-single-default">
-                                    <option value="">Pilih jenis</option>
-                                    {{-- @foreach($jabatan as $kry)
-                                        <option value="{{ $kry->id }}" @if(old('jabatan') == $kry->id) selected @endif>{{ $kry->nama_jabatan }}</option>
-                                    @endforeach --}}
-                                </select>
-                                
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4 mt-2">
-                            <div>
-                                <label for="basiInput" class="form-label mb-1">Foto Item<i class="text-danger">*</i></label>
-                                <input type="file" class="form-control" id="valueInput" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-8 mt-2">
-                            <div>
-                                <label for="basiInput" class="form-label mb-1">Deskripsi<i class="text-danger">*</i></label>
-                                <textarea type="text" class="form-control" id="valueInput" value=""></textarea>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 
             </div>
@@ -349,6 +358,7 @@
                                         Pemeliharaan</h6>
                                 </a></div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
