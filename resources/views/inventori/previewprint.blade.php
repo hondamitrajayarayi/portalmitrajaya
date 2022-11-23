@@ -27,7 +27,7 @@
                                     {{ $item->inventory_id }}
                                 </p>
                                 <p class="mt-0 mb-0 fw-semibold" style="font-size: 8px">
-                                    <a href="http://127.0.0.1:8000/inventaris/getinfo/{{ $item->inventory_id }}" style="text-decoration: none" target="_blank">
+                                    <a href="http://intranet.hondamitrajaya.com/inventaris/getinfo/{{ $item->inventory_id }}" style="text-decoration: none" target="_blank">
                                         {{ $item->inventory->item }}
                                     </a>
                                 </p>
