@@ -186,6 +186,7 @@ class InventarisController extends Controller
             $tracking = null;
             $user = null;
             $mengetahui = null;
+            $menyetujui = null;
             $diketahui = null;
             $disetujui = null; 
         }
