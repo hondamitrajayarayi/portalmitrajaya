@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Master Data Inventaris')
+@section('title', 'Tambah Data Inventaris')
 @section('nav_active_inventaris', 'active')
 @push('styles')
 <style>
@@ -120,7 +120,8 @@
                     <h6 class="card-title mb-0 font-poppins fs-15" >Tambah Inventaris</h6>
                 </div>
                 <div class="card-body fs-12">
-                    <form action="{{ route('inventaris.simpan') }}">
+                    <form action="{{ route('inventaris.simpan') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="col-md-4">
                                 <div>
@@ -184,7 +185,7 @@
                             <div class="col-md-4 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Gambar Item<i class="text-danger">*</i></label>
-                                    <input type="file" name="gambar" class="form-control" id="valueInput" required>
+                                    <input type="file" name="gambar" accept="image/*" class="form-control" id="valueInput" required>
                                 </div>
                             </div>
                             <div class="col-md-8 mt-2">

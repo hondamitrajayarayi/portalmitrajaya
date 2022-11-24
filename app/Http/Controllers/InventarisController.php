@@ -50,35 +50,59 @@ class InventarisController extends Controller
         return response()->json($data);
     }
     public function simpan(Request $request)
-    {
-        $validate = $request->validate([
-            'item' => 'required'
-        ]);
+    {   
         
-        foreach ($request->item as $value) {
-            
-            $item = TrxRbHeader::where('trx_rb_detail_item.item_id', $value)
-                ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')
-                ->orderBy('trx_rb_header.created_date','desc')
-                ->first();
-            $user = Karyawan::where('nik', '=', $item->created_by)->first();
-            
+        if (!empty($request->norb)) {
+            $rb          = TrxRbHeader::where('rb_id', $request->norb)->first();
+            $user        = Karyawan::where('nik', '=', $rb->create_user)->first();
+            $inventoryId = $this->getKode($user);
+            $file        = $request->file('gambar');
+            $gambar      = $inventoryId. '-' .$file->getClientOriginalName();
+            $file->move('inventory/gambar', $gambar);
+
             $data = [
-                'INVENTORY_ID'  => $this->getKode($user),
-                'RB_ID'         => $item->rb_id,
+                'INVENTORY_ID'  => $inventoryId,
+                'RB_ID'         => $request->norb,
                 'STATUS'        => 1,
-                'ITEM'          => $item->item,
-                'QTY'           => $item->qty,
-                'HARGA_BELI'    => $item->harga,
+                'ITEM'          => $request->item,
+                'QTY'           => $request->qty,
+                'HARGA_BELI'    => preg_replace("/[^0-9]/", '', $request->harga),
+                'CREATED_BY'    => Auth::user()->username,
+                'CREATED_DATE'  => date('Y-m-d H:i:s'),
+                'UPDATED_DATE'  => null,
+                'BRANCH_ID'     => $rb->branch_id,
+                'SCHEMA'        => $rb->schema_name,
+                'DESKRIPSI_ITEM'=> $request->deskripsi,
+                'IMAGE'         => $gambar,
+                'GRUP_ID'       => $request->grup,
+                'JENIS_ID'      => $request->jenis,
+            ];
+        }else{
+            $user        = Karyawan::where('nik', '=', Auth::user()->username)->first();
+            $inventoryId = $this->getKode($user);
+            $file        = $request->file('gambar');
+            $gambar      = $inventoryId. '-' .$file->getClientOriginalName();
+            $file->move('inventory/gambar', $gambar);
+            $data = [
+                'INVENTORY_ID'  => $inventoryId,
+                'STATUS'        => 1,
+                'ITEM'          => $request->item,
+                'QTY'           => $request->qty,
+                'HARGA_BELI'    => preg_replace("/[^0-9]/", '', $request->harga),
                 'CREATED_BY'    => Auth::user()->username,
                 'CREATED_DATE'  => date('Y-m-d H:i:s'),
                 'UPDATED_DATE'  => null,
                 'BRANCH_ID'     => $user->branch_id,
                 'SCHEMA'        => $user->schema,
-                'ITEM_ID'       => $item->item_id,
+                'DESKRIPSI_ITEM'=> $request->deskripsi,
+                'IMAGE'         => $gambar,
+                'GRUP_ID'       => $request->grup,
+                'JENIS_ID'      => $request->jenis,
             ];
-            TrxInventory::insert($data);
         }
+        
+        TrxInventory::insert($data);
+        
         return redirect()->route('inventaris')->with('message','Data Berhasil Disimpan!');
     }
     public function pilihrb (Request $request){
@@ -140,23 +164,31 @@ class InventarisController extends Controller
        
         // rb
         $rb_id = $inventaris->rb_id;
-        $data     = TrxRbHeader::where('RB_ID', $rb_id)->first();
-        // $cek      = TrxRbDetailApproval::where('approve_by', Auth::user()->username)
-        //             ->where('status',0)->first();
-        $tracking = TrxRbTracking::where('RB_id', $rb_id)->orderBy('created_date', 'asc')->get();
-        $user     = Karyawan::where('nik', '=', $inventaris->TrxRbHeader->created_by)->first();
-        $mengetahui = TrxRbDetailApproval::where('RB_ID', $rb_id)
-                        ->where('FLAG','MENGETAHUI')
-                        ->orderBy('approve_date', 'asc')
-                        ->get();
-        // dd($mengetahui);
-        $menyetujui = TrxRbDetailApproval::where('RB_ID', $rb_id)
-                        ->where('FLAG','MENYETUJUI')
-                        ->orderBy('approve_date', 'asc')
-                        ->get();
         
-        $diketahui = Karyawan::where('id_jabatan',2)->orWhere('id_bag_dept',8)->get();
-        $disetujui = Karyawan::where('id_jabatan',2)->get();
+        $data     = TrxRbHeader::where('RB_ID', $rb_id)->first();
+        if(!empty($rb_id)){
+
+            $tracking = TrxRbTracking::where('RB_id', $rb_id)->orderBy('created_date', 'asc')->get();
+            $user     = Karyawan::where('nik', '=', $inventaris->TrxRbHeader->created_by)->first();
+            $mengetahui = TrxRbDetailApproval::where('RB_ID', $rb_id)
+                            ->where('FLAG','MENGETAHUI')
+                            ->orderBy('approve_date', 'asc')
+                            ->get();
+            // dd($mengetahui);
+            $menyetujui = TrxRbDetailApproval::where('RB_ID', $rb_id)
+                            ->where('FLAG','MENYETUJUI')
+                            ->orderBy('approve_date', 'asc')
+                            ->get();
+            
+            $diketahui = Karyawan::where('id_jabatan',2)->orWhere('id_bag_dept',8)->get();
+            $disetujui = Karyawan::where('id_jabatan',2)->get();
+        }else{
+            $tracking = null;
+            $user = null;
+            $mengetahui = null;
+            $diketahui = null;
+            $disetujui = null; 
+        }
 
         return view('inventori.inventory_detail', compact('inventaris','id','data','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
     }

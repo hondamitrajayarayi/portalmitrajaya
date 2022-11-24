@@ -184,12 +184,12 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="sort" data-sort="customer_name">#</th>
-                                        <th class="sort" data-sort="email">Inventory ID</th>
-                                        <th class="sort" data-sort="phone">RB ID</th>
+                                        <th class="sort" data-sort="email">ID</th>
                                         <th class="sort" data-sort="date">Item</th>
                                         <th class="sort text-center" data-sort="date">QTY</th>
                                         <th class="sort text-center" data-sort="date">Harga Beli</th>
                                         <th class="sort text-center" data-sort="status">Status</th>
+                                        <th class="sort text-center" data-sort="status">Gambar</th>
                                         <th class="sort" data-sort="status">Created</th>
                                         {{-- <th class="sort" data-sort="action">Action</th> --}}
                                     </tr>
@@ -204,18 +204,26 @@
                                                     <label class="form-check-label" for="cardtableCheck"></label>
                                                 </div>
                                             </td>
-                                            <td class="customer_name">{{ $item->inventory_id }}</td>
-                                            <td class="email"> {{ $item->rb_id }}</td>
+                                            <td class="customer_name">
+                                                {{ $item->inventory_id }}
+                                                {{-- <p class="text-muted mb-0">Inventory ID</p> {{ $item->inventory_id }} --}}
+                                                {{-- <p class="text-muted mt-1 mb-0">RB ID</p> {{ $item->rb_id ? $item->rb_id : '-' }} --}}
+                                            </td>
                                             <td class="email">{{ $item->item }}</td>
                                             <td class="email text-center">{{ $item->qty }}</td>
                                             <td class="email text-end">@uang($item->harga_beli)</td>
                                             <td class="email text-center">
                                                 @if($item->status == 1)
-                                                    <span class="badge badge-soft-success badge-border text-wrap"> Close</span>
+                                                    <span class="badge badge-soft-dark badge-border text-wrap"> Close</span>
                                                 @elseif($item->status == 2)
-                                                    <span class="badge bg-warning"> Aproval Internal</span>
-                                                @elseif($item->status == 3)
-                                                    <span class="badge bg-info"> Menunggu Aproval Teknisi</span>
+                                                    <span class="badge bg-danger"> Dipinjam</span>
+                                                @endif
+                                            </td>
+                                            <td class="date">
+                                                @if($item->image)
+                                                <i class="ri-image-line fs-16 text-danger"></i> 
+                                                <a href="{{ asset('inventory/gambar/' . $item->image) }}" target="_blank" class="text-muted"><i
+                                                    class="mdi mdi-open-in-new"></i></a>
                                                 @endif
                                             </td>
                                             <td class="date">@tanggal($item->created_date)</td>
