@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\GrupInventaris;
+use App\JenisInventaris;
 use App\Karyawan;
 use App\MstQrInventory;
 use App\TrxInventory;
@@ -34,8 +36,18 @@ class InventarisController extends Controller
                 ->orderBy('trx_rb_header.created_date','desc')
                 ->get();
         $autofill = null;
+        $grup = GrupInventaris::get(["group_name", "group_id"]);
         
-        return view('inventori.inventory_tambah', compact('data','autofill'));
+        
+        return view('inventori.inventory_tambah', compact('data','autofill','grup'));
+    }
+    
+    public function jenis(Request $request)
+    {
+        $data['jenis'] = JenisInventaris::where("group_id", $request->grup_id)
+                            ->get(["nama_jenis", "jenis_id"]);
+  
+        return response()->json($data);
     }
     public function simpan(Request $request)
     {
@@ -81,8 +93,8 @@ class InventarisController extends Controller
                 ->orderBy('trx_rb_header.created_date','desc')
                 ->get();
         $autofill = TrxRbDetailItem::where('item_id', $request->item)->first();
-
-        return view('inventori.inventory_tambah', compact('data','autofill'));
+        $grup = GrupInventaris::get(["group_name", "group_id"]);
+        return view('inventori.inventory_tambah', compact('data','autofill','grup'));
     }
     public function generateqr(Request $request)
     {

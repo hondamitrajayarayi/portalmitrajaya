@@ -113,123 +113,6 @@
         </div>
     </div>
 
-    <div class="modal fade zoomIn" id="modaledit" tabindex="-1" aria-labelledby="exampleModalgridLabel" 
-        style="display: none;" aria-modal="true" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content border-0">
-                <div class="modal-header p-3 bg-primary" >
-                    <h5 class="modal-title text-light" id="exampleModalgridLabel">Edit Karyawan</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
-                        id="close-modal" ></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('karyawan.update') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" id="id" value="{{ old('id') }}">
-                        <div class="row g-3">
-                            
-                            <div class="col-xxl-12">
-                                <div>
-                                    <label for="validationCustom04"
-                                        class="form-label @error('edit_nama') text-danger @enderror">Nama Karyawan</label>
-                                    <input type="text" id="edit_nama" name="edit_nama" value="{{ old('edit_nama') }}"
-                                        class="form-control @error('nama') is-invalid @enderror"
-                                        autocomplete="off">
-                                    @error('edit_nama')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-12">
-                                <div>
-                                    <label for="validationCustom02"
-                                        class="form-label @error('edit_jk') text-danger @enderror">Jenis Kelamin</label>
-                                    <div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="edit_jk" value="L"
-                                                id="inlineRadio1" @if(old('edit_jk') == 'L') checked @endif>
-                                            <label class="form-check-label" for="inlineRadio1">Laki-laki</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="edit_jk" value="P"
-                                                id="inlineRadio2" @if(old('edit_jk') == 'P') checked @endif>
-                                            <label class="form-check-label" for="inlineRadio2">Perempuan</label>
-                                        </div>
-                                    </div>
-                                    @error('edit_jk')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-xxl-12">
-                                <div>
-                                    <label for="validationCustom04"
-                                        class="form-label @error('edit_bagdept') text-danger @enderror">Bagian
-                                        Departemen</label>
-                                    
-                                    <select class="form-control" id="edit_bagdept" data-choices name="edit_bagdept" id="choices-single-default">
-                                        <option value="">Pilih Departemen</option>
-                                        {{-- @foreach($dep as $kry)
-                                            <option value="{{ $kry->id }}" @if(old('bagdept') == $kry->id) selected @endif>{{ $kry->nama_dept }}</option>
-                                        @endforeach --}}
-                                    </select>
-                                    @error('edit_bagdept')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-xxl-12">
-                                <div>
-                                    <label for="validationCustom04"
-                                        class="form-label @error('edit_telp') text-danger @enderror">Telepon</label>
-                                    <input type="text" id="edit_telp" name="edit_telp" value="{{ old('edit_telp') }}"
-                                        class="form-control @error('edit_telp') is-invalid @enderror" id="validationCustom04"
-                                        autocomplete="off">
-                                    @error('edit_telp')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <!--end col-->
-                            <div class="col-lg-12">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="submit" id="btnSubmitedit" class="btn btn-primary">Submit</button>
-                                    <div id="loadingedit" style="display:none;">
-                                        <button type="button" class="btn btn-primary btn-load" disabled>
-                                            <span class="d-flex align-items-center">
-                                                <span class="spinner-border flex-shrink-0" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
-                                                </span>
-                                                <span class="flex-grow-1 ms-2">
-                                                    Loading...
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    
-                                </div>
-                            </div>
-                            <!--end col-->
-                        </div>
-                        <!--end row-->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xl-9">
             <div div class="card">
@@ -253,19 +136,23 @@
                             <div class="col-md-8">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Nama Item<i class="text-danger">*</i></label>
-                                    <input type="text" class="form-control" name="item" required id="valueInput" @if($autofill != null) value="{{ $autofill->item }}" @endif>
+                                    <input type="text" class="form-control" name="item" required id="valueInput" @if($autofill != null) value="{{ $autofill->item }}" readonly @endif>
                                 </div>
                             </div>
                             <div class="col-md-1 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Stok<i class="text-danger">*</i></label>
-                                    <input type="text" class="form-control" name="qty" required id="valueInput" @if($autofill != null) value="{{ $autofill->qty }}" @endif>
+                                    <input type="text" class="form-control" name="qty" required id="valueInput" @if($autofill != null) value="{{ $autofill->qty }}" readonly @endif>
                                 </div>
                             </div>
                             <div class="col-md-3 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Harga Item<i class="text-danger">*</i></label>
-                                    <input type="text" class="form-control" name="harga" required id="valueInput" @if($autofill != null) value="{{ $autofill->harga }}" @endif>
+                                    {{-- <input type="text" class="form-control" name="harga" required id="valueInput" @if($autofill != null) value="{{ $autofill->harga }}" @endif> --}}
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                        <input type="text" name="harga" id="harga" @if($autofill != null) value="@rupiah($autofill->harga)" readonly @endif class="form-control text-end" autocomplete="off" required>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4 mt-2">
@@ -273,9 +160,11 @@
                                     <label for="validationCustom04"
                                         class="form-label mb-1">Grup Item<i class="text-danger">*</i></label>
                                     
-                                    <select class="form-control" data-choices name="grup" id="choices-single-default" required>
+                                    <select class="form-control" data-choices name="grup" id="grup" required>
                                         <option value="">Pilih grup</option>
-                                        
+                                        @foreach($grup as $grp)
+                                            <option value="{{ $grp->group_id }}" >{{ $grp->group_name }}</option>
+                                        @endforeach
                                     </select>
                                     
                                 </div>
@@ -285,11 +174,9 @@
                                     <label for="validationCustom04"
                                         class="form-label mb-1">Jenis Item<i class="text-danger">*</i></label>
                                     
-                                    <select class="form-control" data-choices name="jenis" id="choices-single-default" required>
+                                    <select class="form-control" data-choices name="jenis" id="jenis" required>
                                         <option value="">Pilih jenis</option>
-                                        {{-- @foreach($jabatan as $kry)
-                                            <option value="{{ $kry->id }}" @if(old('jabatan') == $kry->id) selected @endif>{{ $kry->nama_jabatan }}</option>
-                                        @endforeach --}}
+                                        
                                     </select>
                                     
                                 </div>
@@ -310,6 +197,7 @@
                                 <div class="card-body">
                                     <div class="hstack gap-2 justify-content-end d-print-none">
                                         <button type="submit" class="btn btn-success"><i class="ri-save-3-fill align-bottom me-1"></i> Submit</button>
+                                        <a href="{{ route('inventaris.tambah') }}" type="buttom" class="btn btn-danger"><i class="ri-restart-line align-bottom me-1"></i> Reset</a>
                                         <a href="{{ route('inventaris') }}" type="buttom" class="btn btn-primary"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Back</a>
                                     </div>
                                 </div>
@@ -369,6 +257,7 @@
 
 @push('before-scripts')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
 @endpush
 
 @push('center-scripts')
@@ -414,6 +303,65 @@
 @endpush
 @push('scripts')
     <script>
+        
+        var rupiah = document.getElementById("harga");
+        
+        rupiah.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah.value = formatRupiah(this.value);
+        });
+            
+        
+
+        function formatRupiah(angka) {
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return rupiah;
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+  
+            $('#grup').on('change', function () {
+                var grup_id = this.value;
+                console.log(grup_id);
+                $("#jenis").html('');
+                $.ajax({
+                    url: "{{url('inventaris/getjenis')}}",
+                    type: "POST",
+                    data: {
+                        grup_id: grup_id,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                        $('#jenis').html('<option value="">Pilih Jenis</option>');
+                        $.each(result.jenis, function (key, value) {
+                            
+                            $("#jenis").append('<option value="' + value
+                                .jenis_id + '">' + value.nama_jenis + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
         $(document).ready(function() {
             $("#myInput").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
@@ -429,22 +377,6 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-        });
-    </script>
-    <script>
-        $(document).on('click', '.edit', function() {
-            var url = "karyawan/";
-            var id = $(this).data('id');
-            $.get(url + id + '/edit', function(data) {
-                //success data
-                console.log(data);
-                $('#id').val(data.nik);
-                $('#edit_nama').val(data.nama);
-                $('#edit_telp').val(data.no_telp);
-                $('#edit_bagdept').val(data.id_bag_dept);
-                $('input[type=radio][name="edit_jk"][value='+data.jk+']').prop('checked', true);
-                $('#modaledit').modal('show');
-            })
         });
     </script>
     <script>

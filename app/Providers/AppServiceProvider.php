@@ -37,6 +37,14 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+        Blade::directive('rupiah', function ($amount) {
+            if (!$amount) {
+                return '';
+            } else {
+                return "<?php echo number_format($amount); ?>";
+            }
+        });
+
         Blade::directive('tanggal', function ($expression) {
             if (!$expression) {
                 return '';
