@@ -120,7 +120,7 @@
                                         Jabatan</label>
                                     
                                     <select class="form-control" data-choices name="jabatan" id="choices-single-default">
-                                        <option value="">Pilih Departemen</option>
+                                        <option value="">Pilih Jabatan</option>
                                         @foreach($jabatan as $kry)
                                             <option value="{{ $kry->id }}" @if(old('jabatan') == $kry->id) selected @endif>{{ $kry->nama_jabatan }}</option>
                                         @endforeach
