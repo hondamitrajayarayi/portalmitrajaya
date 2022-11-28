@@ -45,7 +45,6 @@ class PengajuanController extends Controller
 
     public function simpan(Request $request)
     {
-        
         foreach($request->file('dokumen') as $file)
         {
 
@@ -61,14 +60,16 @@ class PengajuanController extends Controller
         
 
         foreach($request->addmore as $data){
-            $detail[] = [
+            $detail = [
                 'RB_ID'     => $request->no_rb,
                 'ITEM'      => $data['keterangan'],
                 'QTY'       => (int)$data['qty'],
                 'HARGA'     => str_replace('.', '', $data['harga']),
+                'ITEM_ID'   => $this->itemId(),
             ];
+            TrxRbDetailItem::insert($detail);
         }
-
+        dd($detail);
         $tracking = [
             'rb_id'         => $request->no_rb,
             'status'        => 'Create RB',
@@ -140,7 +141,6 @@ class PengajuanController extends Controller
         }
 
         TrxRbHeader::insert($header);
-        TrxRbDetailItem::insert($detail);
         TrxRbDetailDokumen::insert($dok);
         TrxRbTracking::insert($tracking);
         
@@ -169,24 +169,83 @@ class PengajuanController extends Controller
 
         return view('transaksi.pengajuanDetail', compact('data','cek','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
     }
+    public function itemId()
+    {
+        $q = TrxRbDetailItem::select(DB::raw('max(SUBSTR(TRX_RB_DETAIL_ITEM.ITEM_ID,13)) as ITEM_ID'))
+            ->get();
+        $year = substr(date('Y'), -2);
+        if (count($q) != 0) {
+            foreach ($q as $k) {
+                $tmp = ((int)$k->item_id) + 1;
+                
+                $kd = 'ITM' . "-" . $year . "-". sprintf("%07s", $tmp);  
+            }
+        }
+        else {
+            $kd = 'ITM' . "-" . $year . "-". "-0000001";
+        }
+
+        return $kd;
+    }
     public function getKodeRB($user)
     {
         $schema = $user->schema;
         $branch = $user->branch_id;
         $year = substr(date('Y'), -2);
         $kd = null;
-        $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,23)) as rb_id'))->where('branch_id',$branch)->get();
-        
-        if (count($q) != 0) {
-            foreach ($q as $k) {
-                $tmp = ((int)$k->rb_id) + 1;
-                $kd = 'RB' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+
+        if ($schema == 'MITRA') {
+            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,22)) as rb_id'))
+            ->where('branch_id',$branch)
+            ->where('schema_name',$schema)
+            ->get();
+            
+            if (count($q) != 0) {
+                foreach ($q as $k) {
+                    $tmp = ((int)$k->rb_id) + 1;
+                    $kd = 'RB' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+                }
             }
+            else {
+                $kd = 'RB' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
+            }
+            
+            return $kd;
+        } else if ($schema == 'SEHATI') {
+            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,23)) as rb_id'))
+            ->where('branch_id',$branch)
+            ->where('schema_name',$schema)
+            ->get();
+            
+            if (count($q) != 0) {
+                foreach ($q as $k) {
+                    $tmp = ((int)$k->rb_id) + 1;
+                    $kd = 'RB' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+                }
+            }
+            else {
+                $kd = 'RB' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
+            }
+            
+            return $kd;
+        } else if ($schema == 'JAYA' || $schema == 'MAJU') {
+            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,21)) as rb_id'))
+            ->where('branch_id',$branch)
+            ->where('schema_name',$schema)
+            ->get();
+            
+            if (count($q) != 0) {
+                foreach ($q as $k) {
+                    $tmp = ((int)$k->rb_id) + 1;
+                    $kd = 'RB' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+                }
+            }
+            else {
+                $kd = 'RB' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
+            }
+            
+            return $kd;
         }
-        else {
-            $kd = 'RB' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
-        }
-        
-        return $kd;
+
     }
 }
