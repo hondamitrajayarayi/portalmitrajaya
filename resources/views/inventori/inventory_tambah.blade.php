@@ -138,6 +138,7 @@
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Nama Item<i class="text-danger">*</i></label>
                                     <input type="text" class="form-control" name="item" required id="valueInput" @if($autofill != null) value="{{ $autofill->item }}" readonly @endif>
+                                    <input type="hidden" class="form-control" name="item_id" required id="valueInput" @if($autofill != null) value="{{ $autofill->item_id }}" readonly @endif>
                                 </div>
                             </div>
                             <div class="col-md-1 mt-2">
@@ -198,8 +199,33 @@
                                 <div class="card-body">
                                     <div class="hstack gap-2 justify-content-end d-print-none">
                                         <button type="submit" class="btn btn-success"><i class="ri-save-3-fill align-bottom me-1"></i> Submit</button>
-                                        <a href="{{ route('inventaris.tambah') }}" type="buttom" class="btn btn-danger"><i class="ri-restart-line align-bottom me-1"></i> Reset</a>
-                                        <a href="{{ route('inventaris') }}" type="buttom" class="btn btn-primary"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Back</a>
+                                        <a href="{{ route('inventaris.tambah') }}" id="btnSubmit2" type="buttom" class="btn btn-danger"><i class="ri-restart-line align-bottom me-1"></i> Reset</a>
+                                        <div id="loading2" style="display:none;">
+                                            <button type="button" class="btn btn-danger btn-load" disabled>
+                                                <span class="d-flex align-items-center">
+                                                    <span class="spinner-border flex-shrink-0" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </span>
+                                                    <span class="flex-grow-1 ms-2">
+                                                        Loading...
+                                                    </span>
+                                                </span>
+                                            </button>
+                                        </div>
+
+                                        <a href="{{ route('inventaris') }}" type="buttom" id="btnSubmit3" class="btn btn-primary"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Back</a>
+                                        <div id="loading3" style="display:none;">
+                                            <button type="button" class="btn btn-primary btn-load" disabled>
+                                                <span class="d-flex align-items-center">
+                                                    <span class="spinner-border flex-shrink-0" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </span>
+                                                    <span class="flex-grow-1 ms-2">
+                                                        Loading...
+                                                    </span>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -441,6 +467,13 @@
         $('#btnSubmit2').click(function() {
             $(this).css('display', 'none');
             $('#loading2').show();
+            return true;
+        });
+    </script>
+    <script type="text/javascript">
+        $('#btnSubmit3').click(function() {
+            $(this).css('display', 'none');
+            $('#loading3').show();
             return true;
         });
     </script>

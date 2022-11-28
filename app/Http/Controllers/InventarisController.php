@@ -65,6 +65,7 @@ class InventarisController extends Controller
                 'RB_ID'         => $request->norb,
                 'STATUS'        => 1,
                 'ITEM'          => $request->item,
+                'ITEM_ID'       => $request->item_id,
                 'QTY'           => $request->qty,
                 'HARGA_BELI'    => preg_replace("/[^0-9]/", '', $request->harga),
                 'CREATED_BY'    => Auth::user()->username,
@@ -78,6 +79,7 @@ class InventarisController extends Controller
                 'JENIS_ID'      => $request->jenis,
             ];
         }else{
+            // create item id
             $user        = Karyawan::where('nik', '=', Auth::user()->username)->first();
             $inventoryId = $this->getKode($user);
             $file        = $request->file('gambar');
