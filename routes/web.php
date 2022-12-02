@@ -140,6 +140,11 @@ Route::group(['middleware' => 'auth'], function (){
     
     Route::get('inventaris','InventarisController@index')->name('inventaris');
     Route::get('inventaris/tambah','InventarisController@tambah')->name('inventaris.tambah');
+    Route::get('inventaris/peminjaman','InventarisController@peminjaman')->name('inventaris.peminjaman');
+    Route::get('inventaris/peminjaman/tambah','InventarisController@tambahpeminjaman')->name('inventaris.peminjaman.tambah');
+    Route::get('inventaris/{id}/pengembalian','InventarisController@editpeminjaman');
+    Route::post('inventaris/peminjaman/simpan','InventarisController@simpanpeminjaman')->name('inventaris.peminjaman.simpan');
+    Route::post('inventaris/peminjaman/update','InventarisController@updatepeminjaman')->name('inventaris.peminjaman.update');
     
     Route::post('inventaris/getjenis','InventarisController@jenis');
     Route::post('inventaris/autofillrb','InventarisController@pilihrb')->name('inventaris.pilihrb');

@@ -29,4 +29,8 @@ class TrxInventory extends Model
     public function cabang(){
         return $this->hasOne('\App\Branch','branch_id', 'branch_id')->where('schema_name', $this->schema);
     }
+
+    public function peminjaman(){
+        return $this->hasMany('\App\TrxPeminjaman','id_inventaris','inventory_id');
+    }
 }

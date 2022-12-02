@@ -7,6 +7,8 @@ use App\JenisInventaris;
 use App\Karyawan;
 use App\MstQrInventory;
 use App\TrxInventory;
+use App\TrxPeminjaman;
+use App\TrxPeminjamanItem;
 use App\TrxRbDetailApproval;
 use App\TrxRbDetailItem;
 use App\TrxRbHeader;
@@ -19,17 +21,12 @@ class InventarisController extends Controller
 {
     public function index()
     {
-        
-        $data = TrxRbHeader::where('trx_rb_header.status',0)
-                ->whereNotIn('trx_rb_detail_item.item_id', TrxInventory::get('item_id'))
-                ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')
-                ->orderBy('trx_rb_header.created_date','desc')
-                ->get();
         $datai = TrxInventory::orderBy('created_date','desc')->paginate(10);
 
-        return view('inventori.index', compact('data','datai'));
+        return view('inventori.index', compact('datai'));
     }
-    public function tambah(){
+    public function tambah()
+    {
         $data = TrxRbHeader::where('trx_rb_header.status',0)
                 ->whereNotIn('trx_rb_detail_item.item_id', TrxInventory::get('item_id'))
                 ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')
@@ -41,7 +38,135 @@ class InventarisController extends Controller
         
         return view('inventori.inventory_tambah', compact('data','autofill','grup'));
     }
-    
+    public function peminjaman()
+    {
+        $datai = TrxPeminjaman::orderBy('status', 'desc')
+                ->orderBy('created_date','desc')
+                ->paginate(10);
+
+        return view('inventori.peminjaman', compact('datai'));
+    }
+    public function tambahpeminjaman()
+    {
+        $data = TrxInventory::orderBy('created_date','desc')
+                ->get();
+
+        return view('inventori.peminjaman_tambah', compact('data'));
+    }
+    public function simpanpeminjaman(Request $request)
+    {
+        $validate = $request->validate([
+            'item' => 'required'
+        ]);
+        $user = Karyawan::where('nik', Auth::user()->username)->first();
+        $id_peminjaman =$this->get_idpinjam($user);
+        // dd(date('Y-m-d H:i:s', strtotime($request['estimasi'])));
+        $data = [
+            'V_ID_PINJAM'         => $id_peminjaman,
+            'V_ID_INVENTARIS'     => null,
+            'V_NAMA_PEMINJAM'     => $request['nama_peminjam'],
+            'V_TGL_PINJAM'        => date('Y-m-d H:i:s'),
+            'V_TGL_BALIK'         => null,
+            'V_KET'               => $request['keterangan'],
+            'V_CREATED_BY'        => Auth::user()->username,
+            'V_CREATE_DATE'       => date('Y-m-d H:i:s'),
+            'V_UPDATED_DATE'      => null,
+            'V_DIVISI_PEMINJAM'   => $request['divisi_peminjam'],
+            'V_ESTIMASI_BALIK'    => date('Y-m-d H:i:s', strtotime($request['estimasi']))
+        ];
+        
+        // test prosedur
+        $result = DB::connection('INTRA')->executeProcedure("INTRAMITRA.SP_IN_TRX_PEMINJAMAN", $data);   
+        
+        foreach($request['item'] as $item){
+            $data1[] = [
+                'ID_PEMINJAMAN'  => $id_peminjaman,
+                'ID_INVENTORY'   => $item,
+                'CREATED_DATE'   => date('Y-m-d H:i:s'),
+                'UPDATED_DATE'   => null
+            ];
+        }
+        TrxPeminjamanItem::insert($data1);
+
+        return redirect()->route('inventaris.peminjaman')->with('message','Data Berhasil Disimpan!');
+    }
+    public function updatepeminjaman(Request $request)
+    {
+        // dd($request);
+        $data = [
+            'status'        => 0,
+            'tgl_balik'     => date('Y-m-d H:i:s'),
+            'updated_date'  => date('Y-m-d H:i:s'), 
+        ];
+
+        TrxPeminjaman::where('id_pinjam', $request->id_pinjam)
+            ->update($data);
+        
+        return redirect()->route('inventaris.peminjaman')->with('message','Data Berhasil Diupdate!');
+    }
+    public function editpeminjaman($id)
+    {
+        $data = TrxPeminjamanItem::where('id_peminjaman', $id)
+                ->get();
+        foreach ($data as  $value) {
+            $id_inventory[] = $value->id_inventory;
+        }
+        $data1 = TrxInventory::whereIn('inventory_id', $id_inventory)->get();
+        
+        return response()->json($data1);
+    }
+    public function get_idpinjam($user){
+        $schema = $user->schema;
+        $branch = $user->branch_id;
+        $year = substr(date('Y'), -2);
+        $kd = null;
+        
+        if ($schema == 'MITRA') {
+            $q = TrxPeminjaman::select(DB::raw('max(SUBSTR(TRX_PEMINJAMAN.ID_PINJAM,23)) as ID_PINJAM'))
+            ->get();
+            
+            if (count($q) != 0) {
+                foreach ($q as $k) {
+                    $tmp = ((int)$k->id_pinjam) + 1;
+                    
+                    $kd = 'PNJ' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+                }
+            }
+            else {
+                $kd = 'PNJ' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
+            }
+        } else if ($schema == 'SEHATI') {
+            $q = TrxPeminjaman::select(DB::raw('max(SUBSTR(TRX_PEMINJAMAN.ID_PINJAM,24)) as ID_PINJAM'))
+            ->get();
+            
+            if (count($q) != 0) {
+                foreach ($q as $k) {
+                    $tmp = ((int)$k->id_pinjam) + 1;
+                    
+                    $kd = 'PNJ' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+                }
+            }
+            else {
+                $kd = 'PNJ' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
+            }
+        } else if($schema == 'JAYA' || $schema == 'MAJU'){
+            $q = TrxPeminjaman::select(DB::raw('max(SUBSTR(TRX_PEMINJAMAN.ID_PINJAM,22)) as ID_PINJAM'))
+            ->get();
+            
+            if (count($q) != 0) {
+                foreach ($q as $k) {
+                    $tmp = ((int)$k->id_pinjam) + 1;
+                    
+                    $kd = 'PNJ' . "-" . $year . "-". $schema . "-" . $branch . "-" . sprintf("%06s", $tmp);
+                }
+            }
+            else {
+                $kd = 'PNJ' . "-" . $year . "-". $schema ."-" . $branch . "-000001";
+            }
+        }
+
+        return $kd;
+    }
     public function jenis(Request $request)
     {
         $data['jenis'] = JenisInventaris::where("group_id", $request->grup_id)
@@ -163,11 +288,8 @@ class InventarisController extends Controller
     {
         // inventaris
         $inventaris = TrxInventory::where('inventory_id', $id)->first();
-       
-        // rb
         $rb_id = $inventaris->rb_id;
         
-        $data     = TrxRbHeader::where('RB_ID', $rb_id)->first();
         if(!empty($rb_id)){
 
             $tracking = TrxRbTracking::where('RB_id', $rb_id)->orderBy('created_date', 'asc')->get();
@@ -191,9 +313,22 @@ class InventarisController extends Controller
             $menyetujui = null;
             $diketahui = null;
             $disetujui = null; 
+            
         }
 
-        return view('inventori.inventory_detail', compact('inventaris','id','data','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
+        $peminjaman1 = TrxPeminjamanItem::where('id_inventory', $id)->first();
+        if (!empty($peminjaman1)) {
+            # code...
+            $peminjaman = TrxPeminjamanItem::where('id_inventory', $id)
+                        ->orderBy('created_date', 'desc')
+                        ->paginate(10);
+        }else{
+            $peminjaman = null;
+        }
+
+        $data     = TrxRbHeader::where('RB_ID', $rb_id)->first();
+
+        return view('inventori.inventory_detail', compact('inventaris','id','data','tracking','user','mengetahui','menyetujui','diketahui','disetujui','peminjaman'));
     }
     public function getKode($user)
     {

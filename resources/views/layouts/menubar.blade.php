@@ -161,6 +161,16 @@
                                 </a>
                             </li>
                             @endcan
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @yield('nav_active_jenis_inventaris')" href="{{ route('inventaris') }}">
+                                    <i class="ri-briefcase-line"></i><span data-key="t-widgets">Jenis Inventaris</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @yield('nav_active_grup_inventaris')" href="{{ route('inventaris') }}">
+                                    <i class="ri-briefcase-line"></i><span data-key="t-widgets">Grup Inventaris</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -196,7 +206,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link @yield('nav_active_peminjaman')" href="{{ route('/home') }}">
+                    <a class="nav-link menu-link @yield('nav_active_peminjaman')" href="{{ route('inventaris.peminjaman') }}">
                         <i class="ri-share-forward-2-fill"></i><span data-key="t-widgets">Peminjaman</span>
                     </a>
                 </li>

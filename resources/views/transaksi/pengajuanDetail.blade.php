@@ -475,7 +475,7 @@
                                 <div>
                                     <label for="basiInput" class="form-label fs-16">Diketahui oleh</label>
                                     <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="diketahui[]" multiple>
-                                        <option value="">Pilih Karyawan</option>
+                                        <option value="">Pilih</option>
                                         @foreach($diketahui as $result)
                                         <option value="{{ $result->nik }}">{{ $result->jabatan->nama_jabatan }} {{ $result->departemen->nama_dept }} | {{ $result->nama }}</option>
                                         @endforeach
@@ -486,7 +486,7 @@
                                 <div>
                                     <label for="basiInput" class="form-label fs-16">Disetujui oleh</label>
                                     <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="disetujui[]" multiple>
-                                        <option value="">Pilih Karyawan</option>
+                                        <option value="">Pilih</option>
                                         @foreach($disetujui as $result)
                                         <option value="{{ $result->nik }}">{{ $result->jabatan->nama_jabatan }} {{ $result->departemen->nama_dept }} | {{ $result->nama }}</option>
                                         @endforeach

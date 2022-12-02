@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title', 'Master Data Inventaris')
-@section('nav_active_inventaris', 'active')
+@section('title', 'Peminjaman Inventaris')
+@section('nav_active_peminjaman', 'active')
 @push('styles')
 <style>
     .table-custom {
@@ -11,12 +11,70 @@
 </style>
 @endpush
 @section('content')
+    <!-- staticBackdrop Modal -->
+    <div class="modal fade zoomIn" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center p-4">
+                    <lord-icon src="https://cdn.lordicon.com/kjkiqtxg.json" trigger="loop" colors="primary:#f7b84b,secondary:#405189" style="width:130px;height:130px">
+                    </lord-icon>
+                    <form action="{{ route('inventaris.peminjaman.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id_pinjam" id="id_pinjam" value="{{ old('id_pinjam') }}">
+                        
+                        <div class="mt-3">
+                            <h5 class="mb-1">Apakah anda yakin melakukan pengembalian ?</h5>
+                            <p class="text-muted mb-2">Pastikan barang yang dikembalikan telah sesuai.</p>
+                            {{-- <div class="card p-2"> --}}
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="mt-xl-0">
+                                            <div class="mt-1 text-muted">
+                                                <div class="card ribbon-box border shadow-none mb-lg-0">
+                                                    <div class="card-body">
+                                                        <div class="ribbon ribbon-primary round-shape">Info item</div>
+                                                        <div class="ribbon-content mt-4 text-start text-muted">
+                                                            
+                                                            <div id="detailitem">
 
+                                                            </div>
+                                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            {{-- </div> --}}
+                            <div class="hstack gap-2 justify-content-center mt-4">
+                                <button type="submit" class="btn btn-danger" id="btnSubmit2">Ya, yakin</button>
+                                <div id="loading2" style="display:none;">
+                                    <button type="button" class="btn btn-danger btn-load" disabled>
+                                        <span class="d-flex align-items-center">
+                                            <span class="spinner-border flex-shrink-0" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </span>
+                                            <span class="flex-grow-1 ms-2">
+                                                Loading...
+                                            </span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <a type="button" href="javascript:void(0);" class="btn btn-primary" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Batal</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl-12">
             <div div class="card">
                 <div class="card-header" >
-                    <h6 class="card-title mb-0 font-poppins fs-15" >Master Inventory</h6>
+                    <h6 class="card-title mb-0 font-poppins fs-15" >Peminjaman Inventory</h6>
                 </div>
                 <form method="POST">
                     @csrf
@@ -24,19 +82,31 @@
                         <div class="row g-2">
                             <div class="col-lg">
                                 <div class="search-box">
-                                    <input type="text" id="myInput" class="form-control search" placeholder="Search inventory id, rb id, item">
+                                    <input type="text" id="myInput" class="form-control search" placeholder="Search peminjaman id, nama peminjam, item">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
                             <div class="col-lg-auto">
                                 <div class="d-flex justify-content-md-start justify-content-center" data-v-cd5f1dea=""
                                         data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
-                                        <a href="{{ route('inventaris.tambah') }}" type="button" class="btn btn-secondary" data-v-cd5f1dea="">
+                                        <a href="{{ route('inventaris.peminjaman.tambah') }}" type="button" id="btnSubmit" class="btn btn-secondary" data-v-cd5f1dea="">
                                             <i class="ri-add-line align-bottom me-1" data-v-cd5f1dea=""></i> Tambah Data
                                         </a>
+                                        <div id="loading" style="display:none;">
+                                            <button type="button" class="btn btn-secondary btn-load" disabled>
+                                                <span class="d-flex align-items-center">
+                                                    <span class="spinner-border flex-shrink-0" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </span>
+                                                    <span class="flex-grow-1 ms-2">
+                                                        Loading...
+                                                    </span>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
                             </div>
-                            <div class="col-lg-auto">
+                            {{-- <div class="col-lg-auto">
                                 <button class="btn btn-primary" formaction="{{ route('inventaris.generateqr') }}" id="btnSubmit2" type="submit" data-v-cd5f1dea="">
                                     <i class="ri-qr-code-line align-bottom me-1" data-v-cd5f1dea=""></i> Generate QR
                                 </button>
@@ -52,7 +122,7 @@
                                         </span>
                                     </button>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -64,54 +134,63 @@
                                     <tr>
                                         <th class="sort" data-sort="customer_name">#</th>
                                         <th class="sort" data-sort="email">ID</th>
+                                        <th class="sort" data-sort="date">Nama Peminjam</th>
+                                        <th class="sort" data-sort="date">Divisi</th>
                                         <th class="sort" data-sort="date">Item</th>
-                                        <th class="sort text-center" data-sort="date">QTY</th>
-                                        <th class="sort text-center" data-sort="date">Harga Beli</th>
+                                        <th class="sort" data-sort="date">Tanggal Pinjam</th>
+                                        <th class="sort" data-sort="date">Tanggal Balik</th>
+                                        <th class="sort" data-sort="date">Estimasi Balik</th>
                                         <th class="sort text-center" data-sort="status">Status</th>
-                                        <th class="sort text-center" data-sort="status">Gambar</th>
-                                        <th class="sort" data-sort="status">Cabang</th>
-                                        <th class="sort" data-sort="status">Created</th>
                                         <th class="sort text-center" data-sort="action">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all" id="carirow">
                                     @foreach ($datai as $no => $item)
                                         <tr>
-                                            {{-- <td class="status">{{ $datai->firstItem() + $no }}</td> --}}
-                                            <td>
+                                            <td class="status">{{ $datai->firstItem() + $no }}</td>
+                                            {{-- <td>
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="inventory[]" type="checkbox" value="{{ $item->inventory_id }}" id="cardtableCheck">
                                                     <label class="form-check-label" for="cardtableCheck"></label>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                             <td class="customer_name">
-                                                {{ $item->inventory_id }}
+                                                {{ $item->id_pinjam }}
                                                 {{-- <p class="text-muted mb-0">Inventory ID</p> {{ $item->inventory_id }} --}}
                                                 {{-- <p class="text-muted mt-1 mb-0">RB ID</p> {{ $item->rb_id ? $item->rb_id : '-' }} --}}
                                             </td>
-                                            <td class="email">{{ $item->item }}</td>
-                                            <td class="email text-center">{{ $item->qty }}</td>
-                                            <td class="email text-end">@uang($item->harga_beli)</td>
+                                            <td class="email">{{ $item->nama_peminjam }}</td>
+                                            <td class="email">{{ $item->divisi_peminjam }}</td>
+                                            <td class="email">
+                                                @foreach($item->ditem as $rslt)
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <i class="ri-checkbox-circle-fill text-primary"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2">
+                                                        <p class="mb-0">{{ $rslt->inventaris['item'] }}</p>
+                                                    </div>
+                                                </div>
+                                                @endforeach 
+                                            </td>
+                                            <td class="email">@tanggal($item->tgl_pinjam)</td>
+                                            <td class="email">
+                                                @if($item->tgl_balik != null)
+                                                @tanggal($item->tgl_balik)
+                                                @else -
+                                                @endif
+                                            </td>
+                                            <td class="email">@tanggal($item->estimasi_balik)</td>
+                                            
                                             <td class="email text-center">
                                                 @if($item->status == 1)
-                                                    <span class="badge badge-soft-dark badge-border text-wrap"> Close</span>
-                                                @elseif($item->status == 2)
-                                                    <span class="badge bg-danger"> Dipinjamkan</span>
+                                                    <span class="badge badge-soft-danger badge-border text-wrap"> Dipinjam</span>
+                                                @elseif($item->status == 0)
+                                                    <span class="badge badge-soft-primary badge-border text-wrap"> Dikembalikan</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                @if($item->image)
-                                                <i class="ri-image-line fs-16 text-danger"></i> 
-                                                <a href="{{ asset('inventory/gambar/' . $item->image) }}" target="_blank" class="text-muted"><i
-                                                    class="mdi mdi-open-in-new"></i></a>
-                                                @endif
-                                            </td>
-                                            <td class="date">{{ $item->cabang->schema_name }} | {{ $item->cabang->branch_name }}</td>
-                                            <td class="date">@tanggal($item->created_date)</td>
-                                            {{-- <td class="text-center">
-                                                <a href="" type="buttom" class="btn btn-light btn-sm"> Detail</a>
-                                            </td> --}}
-                                            <td class="text-center">
+                                                @if($item->status == 1)
                                                 <span data-v-cd5f1dea="">
                                                     <div class="dropdown" data-v-cd5f1dea=""><button
                                                             class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -120,30 +199,37 @@
                                                                 data-v-cd5f1dea=""></i></button>
                                                         <ul class="dropdown-menu dropdown-menu-end" data-v-cd5f1dea=""
                                                             style="">
-
+                                                            
                                                             <li data-v-cd5f1dea="">
-                                                                <a href="{{ asset('inventaris/getinfo/'. $item->inventory_id ) }}" class="dropdown-item edit"
-                                                                    id="edit" target="_blank"><i
+                                                                <a href="javascript:void(0)" class="dropdown-item pengembalian"
+                                                                    id="pengembalian" data-id="{{ $item->id_pinjam }}"><i
+                                                                        class="ri-reply-fill align-bottom me-2 text-muted"
+                                                                        data-v-cd5f1dea=""></i> Pengembalian</a>
+                                                            </li>
+                                                            
+                                                            {{-- <li data-v-cd5f1dea="">
+                                                                <a href="{{ asset('inventaris/getinfo/'. $item->id_pinjam ) }}" class="dropdown-item"
+                                                                    target="_blank"><i
                                                                         class="ri-pages-line align-bottom me-2 text-muted"
                                                                         data-v-cd5f1dea=""></i> Detail</a>
-                                                            </li>
-                                                            <li data-v-cd5f1dea="">
+                                                            </li> --}}
+                                                            {{-- <li data-v-cd5f1dea="">
                                                                 <a href="javascript:void(0)" class="dropdown-item edit"
                                                                     id="edit" data-v-cd5f1dea=""
-                                                                    data-id="{{ $item->inventory_id }}"><i
+                                                                    data-id="{{ $item->id_pinjam }}"><i
                                                                         class="ri-service-line align-bottom me-2 text-muted"
                                                                         data-v-cd5f1dea=""></i> Pemeliharaan</a>
-                                                            </li>
+                                                            </li> --}}
                                                             {{-- <li data-v-cd5f1dea="">
                                                                 <a class="dropdown-item remove-item-btn confirm-delete"
-                                                                    data-v-cd5f1dea="" data-id="{{ $item->inventory_id }}">
+                                                                    data-v-cd5f1dea="" data-id="{{ $item->id_pinjam }}">
                                                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"
                                                                         data-v-cd5f1dea="">
                                                                     </i>
                                                                     Delete
                                                                     <form method="POST"
-                                                                        action="{{ route('karyawan.hapus', $item->inventory_id) }}"
-                                                                        id="delete-{{ $item->inventory_id }}">
+                                                                        action="{{ route('karyawan.hapus', $item->id_pinjam) }}"
+                                                                        id="delete-{{ $item->id_pinjam }}">
                                                                         @csrf
                                                                         @method('delete')
                                                                     </form>
@@ -152,6 +238,14 @@
                                                         </ul>
                                                     </div>
                                                 </span>
+                                                @else 
+                                                <button disabled
+                                                    class="btn btn-soft-dark btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false"
+                                                    data-v-cd5f1dea=""><i class="ri-more-fill"
+                                                        data-v-cd5f1dea=""></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -186,20 +280,20 @@
                         <div class="d-flex mb-2 list-setting_item pointer" >
                             <div class="flex-shrink-0" ><span
                                     class="badge badge-soft-primary p-1 fs-15" ><i
-                                        class="text-info ri-briefcase-line" ></i></span></div>
+                                        class="ri-briefcase-line" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
                                     href="{{ route('inventaris')}}" class="" >
-                                    <h6 class="text-info text-truncate fs-13 mb-0 font-poppins" >
+                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
                                         Inventaris</h6>
                                 </a></div>
                         </div>
                         <div class="d-flex mb-2 list-setting_item pointer" >
                             <div class="flex-shrink-0" ><span
                                     class="badge badge-soft-primary p-1 fs-15" ><i
-                                        class="ri-share-forward-2-fill" ></i></span></div>
+                                        class="text-info  ri-share-forward-2-fill" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
                                     href="{{ route('inventaris.peminjaman')}}" class="" >
-                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
+                                    <h6 class="text-info  text-truncate fs-13 mb-0 font-poppins" >
                                         Peminjaman</h6>
                                 </a></div>
                         </div>
@@ -286,18 +380,20 @@
         });
     </script>
     <script>
-        $(document).on('click', '.edit', function() {
-            var url = "karyawan/";
+        $(document).on('click', '.pengembalian', function() {
             var id = $(this).data('id');
-            $.get(url + id + '/edit', function(data) {
-                //success data
-                console.log(data);
-                $('#id').val(data.nik);
-                $('#edit_nama').val(data.nama);
-                $('#edit_telp').val(data.no_telp);
-                $('#edit_bagdept').val(data.id_bag_dept);
-                $('input[type=radio][name="edit_jk"][value='+data.jk+']').prop('checked', true);
-                $('#modaledit').modal('show');
+            $.get('/inventaris/' + id + '/pengembalian', function(data) {
+                $('#detailitem').html("");
+                $.each(data, function (i, result) {
+                    console.log(data[i]);
+                    var image = data[i].image;
+                    
+                    $('#detailitem').append('<div class="row"><div class="col-xl-4 mt-2"><div class="product-img-slider sticky-side-div"><div class="swiper product-thumbnail-slider p-2 rounded bg-light"><div class="swiper-wrapper"><div><img id="displayPhoto" src="{{ url('inventory/gambar')}}/'+image +'" class="img-fluid d-block"></div></div></div></div></div><div class="col-xl-8"> <h5 class="mt-2">' + data[i].item + 
+                        '</h5><p class="mb-0">'+ data[i].inventory_id +
+                            '</p><p class="mb-0">' + data[i].deskripsi_item +'</p> </div></div>');
+                });
+                $('#id_pinjam').val(id);
+                $('#staticBackdrop').modal('show');
             })
         });
     </script>

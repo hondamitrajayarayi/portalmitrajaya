@@ -81,6 +81,7 @@
                         </div>
                         <div class="card-body p-4 ">
                             <div class="tab-content text-muted ">
+                                {{-- info inventaris --}}
                                 <div class="tab-pane active show" id="all" role="tabpanel">
                                     <div class="row">
                                         
@@ -198,7 +199,7 @@
                                         </div>
                                     </div>
                                 </div>
-            
+                                {{-- info rb --}}
                                 <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="#images-tab">
                                     <div class="row">
                                         @if(empty($inventaris->rb_id))
@@ -699,9 +700,10 @@
                                         @endif
                                     </div>
                                 </div>
-                                <!--end tab-pane-->
+                                {{-- info peminjaman --}}
                                 <div class="tab-pane" id="news" role="tabpanel">
                                     <div class="row">
+                                        @if(empty($peminjaman))
                                         <div class="col-lg-12">
                                             <div class="text-center mt-sm-5 pt-2 mb-2">
                                                 <div class="mb-sm-4 pb-sm-3 pb-3">
@@ -721,9 +723,118 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @else
+                                        {{-- <div class="p-3">
+                                            <div class="row g-2">
+                                                <div class="col-lg">
+                                                    <div class="search-box">
+                                                        <input type="text" id="myInput" class="form-control search" placeholder="Search inventory id, rb id, item">
+                                                        <i class="ri-search-line search-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-auto">
+                                                    <div class="d-flex justify-content-md-start justify-content-center" data-v-cd5f1dea=""
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                                            <a href="{{ route('inventaris.tambah') }}" type="button" class="btn btn-secondary" data-v-cd5f1dea="">
+                                                                <i class="ri-add-line align-bottom me-1" data-v-cd5f1dea=""></i> Tambah Data
+                                                            </a>
+                                                        </div>
+                                                </div>
+                                                <div class="col-lg-auto">
+                                                    <button class="btn btn-primary" formaction="{{ route('inventaris.generateqr') }}" id="btnSubmit2" type="submit" data-v-cd5f1dea="">
+                                                        <i class="ri-qr-code-line align-bottom me-1" data-v-cd5f1dea=""></i> Generate QR
+                                                    </button>
+                                                    <div id="loading2" style="display:none;">
+                                                        <button type="button" class="btn btn-primary btn-load" disabled>
+                                                            <span class="d-flex align-items-center">
+                                                                <span class="spinner-border flex-shrink-0" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </span>
+                                                                <span class="flex-grow-1 ms-2">
+                                                                    Loading...
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+                    
+                                        <div class="card-body fs-13">
+
+                                            <div class="table-responsive table-card mb-1">
+                                                <table class="table align-middle table-nowrap" id="customerTable">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th class="sort" data-sort="customer_name">#</th>
+                                                            <th class="sort" data-sort="date">Nama Peminjam</th>
+                                                            <th class="sort" data-sort="date">Divisi</th>
+                                                            <th class="sort" data-sort="date">Item</th>
+                                                            <th class="sort" data-sort="date">Tanggal Pinjam</th>
+                                                            <th class="sort" data-sort="date">Tanggal Balik</th>
+                                                            <th class="sort" data-sort="date">Estimasi Balik</th>
+                                                            <th class="sort text-center" data-sort="status">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="list form-check-all" id="carirow">
+                                                        @foreach ($peminjaman as $no => $item)
+                                                            <tr>
+                                                                <td class="status">{{ $peminjaman->firstItem() + $no }}</td>
+                                                                <td class="email">{{ $item->peminjaman['nama_peminjam'] }}</td>
+                                                                <td class="email">{{ $item->peminjaman['divisi_peminjam'] }}</td>
+                                                                <td class="email">
+                                                                    @foreach($item->peminjaman->ditem as $rslt)
+                                                                    <div class="d-flex">
+                                                                        <div class="flex-shrink-0">
+                                                                            <i class="ri-checkbox-circle-fill text-primary"></i>
+                                                                        </div>
+                                                                        <div class="flex-grow-1 ms-2">
+                                                                            <p class="mb-0">{{ $rslt->inventaris['item'] }}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endforeach 
+                                                                </td>
+                                                                <td class="email">@tanggal($item->peminjaman['tgl_pinjam'])</td>
+                                                                <td class="email">
+                                                                    @if($item->peminjaman['tgl_balik'] != null)
+                                                                    @tanggal($item->peminjaman['tgl_balik'])
+                                                                    @else -
+                                                                    @endif
+                                                                </td>
+                                                                <td class="email">@tanggal($item->peminjaman['estimasi_balik'])</td>
+                                                                
+                                                                <td class="email text-center">
+                                                                    @if($item->peminjaman['status'] == 1)
+                                                                        <span class="badge badge-soft-danger badge-border text-wrap"> Dipinjam</span>
+                                                                    @elseif($item->peminjaman['status'] == 0)
+                                                                        <span class="badge badge-soft-primary badge-border text-wrap"> Dikembalikan</span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <div class="noresult" style="display: none">
+                                                    <div class="text-center">
+                                                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                                            colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
+                                                        </lord-icon>
+                                                        <h5 class="mt-2">Sorry! No Result Found</h5>
+                                                        <p class="text-muted mb-0">We've searched more than 150+ Orders We did not find any
+                                                            orders for you search.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="d-flex justify-content-end">
+                                                {{ $peminjaman->links() }}
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
+
                                 </div>
-                                <!--end tab-pane-->
+                                {{-- info perawatan --}}
                                 <div class="tab-pane" id="video" role="tabpanel">
                                     <div class="row">
                                         <div class="col-lg-12">
