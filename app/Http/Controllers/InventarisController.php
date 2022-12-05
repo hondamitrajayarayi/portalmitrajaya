@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Branch;
 use App\GrupInventaris;
 use App\JenisInventaris;
 use App\Karyawan;
@@ -48,8 +49,9 @@ class InventarisController extends Controller
     }
     public function tambahpeminjaman()
     {
-        $data = TrxInventory::orderBy('created_date','desc')
-                ->get();
+        $data = Branch::all();
+        // $data = TrxInventory::where('status',1)->orderBy('created_date','desc')
+        //         ->get();
 
         return view('inventori.peminjaman_tambah', compact('data'));
     }
@@ -85,23 +87,34 @@ class InventarisController extends Controller
                 'CREATED_DATE'   => date('Y-m-d H:i:s'),
                 'UPDATED_DATE'   => null
             ];
+            $inventory = [
+                'status'    => 0
+            ];
+            TrxInventory::where('inventory_id',$item)->update($inventory);
         }
         TrxPeminjamanItem::insert($data1);
 
+        
         return redirect()->route('inventaris.peminjaman')->with('message','Data Berhasil Disimpan!');
     }
     public function updatepeminjaman(Request $request)
     {
         // dd($request);
         $data = [
+            'note'          => $request->note,
             'status'        => 0,
             'tgl_balik'     => date('Y-m-d H:i:s'),
             'updated_date'  => date('Y-m-d H:i:s'), 
         ];
-
         TrxPeminjaman::where('id_pinjam', $request->id_pinjam)
             ->update($data);
         
+        $inventory = [
+            'status'    => 1
+        ];
+        $data = TrxPeminjamanItem::where('id_peminjaman',$request->id_pinjam)->get('id_inventory');
+        
+        TrxInventory::whereIn('inventory_id',$data)->update($inventory);
         return redirect()->route('inventaris.peminjaman')->with('message','Data Berhasil Diupdate!');
     }
     public function editpeminjaman($id)

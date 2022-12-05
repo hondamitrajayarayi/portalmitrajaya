@@ -40,12 +40,18 @@
                                                             </div>
                                                                     
                                                         </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-xl-12 mt-3 text-start">
+                                        <div>
+                                            <label for="basiInput" class="form-label mb-1 text-start">Note<i class="text-danger">*</i></label>        
+                                            <textarea class="form-control" name="note" placeholder="Tambah keterangan disini"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             {{-- </div> --}}
                             <div class="hstack gap-2 justify-content-center mt-4">

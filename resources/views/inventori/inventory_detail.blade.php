@@ -760,20 +760,21 @@
                                             </div>
                                         </div> --}}
                     
-                                        <div class="card-body fs-13">
+                                        <div class="card-body fs-12">
 
                                             <div class="table-responsive table-card mb-1">
                                                 <table class="table align-middle table-nowrap" id="customerTable">
                                                     <thead class="table-light">
                                                         <tr>
                                                             <th class="sort" data-sort="customer_name">#</th>
-                                                            <th class="sort" data-sort="date">Nama Peminjam</th>
+                                                            <th class="sort" data-sort="date">Peminjam</th>
                                                             <th class="sort" data-sort="date">Divisi</th>
                                                             <th class="sort" data-sort="date">Item</th>
                                                             <th class="sort" data-sort="date">Tanggal Pinjam</th>
                                                             <th class="sort" data-sort="date">Tanggal Balik</th>
                                                             <th class="sort" data-sort="date">Estimasi Balik</th>
                                                             <th class="sort text-center" data-sort="status">Status</th>
+                                                            <th class="sort" data-sort="status">Note</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="list form-check-all" id="carirow">
@@ -810,6 +811,7 @@
                                                                         <span class="badge badge-soft-primary badge-border text-wrap"> Dikembalikan</span>
                                                                     @endif
                                                                 </td>
+                                                                <td class="email">{{ $item->peminjaman['note'] }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

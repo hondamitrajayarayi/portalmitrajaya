@@ -22,14 +22,25 @@
                     <form action="{{ route('inventaris.peminjaman.simpan') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Cabang<i class="text-danger">*</i></label>
+                                    <select class="form-control" id="choices-multiple-remove-button" data-choices name="cabang" >
+                                        <option value="">Pilih Cabang</option>
+                                        @foreach($data as $result)
+                                        <option value="{{ $result->branch_id }}">{{ $result->schema_name }} | {{ $result->branch_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Pilih Item <i class="text-danger">*</i></label>
                                     <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="item[]" multiple>
                                         <option value="">Pilih Item</option>
-                                        @foreach($data as $result)
+                                        {{-- @foreach($data as $result)
                                         <option value="{{ $result->inventory_id }}">{{ $result->inventory_id }} | {{ $result->item }} | {{ $result->deskripsi_item }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </div>
                             </div>

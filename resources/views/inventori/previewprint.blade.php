@@ -21,9 +21,9 @@
                     <div class="card-body p-4">
                         <div class="row g-3">
                             @foreach($data as $item)
-                            <div class="col-lg-2 col-2 text-center p-2">
+                            <div class="col-lg-2 col-sm-3 text-center p-2">
                                 <img height="100" src="{{ asset('inventory/qr/'.$item->name_file) }}">
-                                <p class="mb-0" style="font-size: 5px">
+                                <p class="mb-0" style="font-size: 8px">
                                     {{ $item->inventory_id }}
                                 </p>
                                 <p class="mt-0 mb-0 fw-semibold" style="font-size: 8px">
