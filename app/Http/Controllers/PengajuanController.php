@@ -69,7 +69,7 @@ class PengajuanController extends Controller
             ];
             TrxRbDetailItem::insert($detail);
         }
-        dd($detail);
+        // dd($detail);
         $tracking = [
             'rb_id'         => $request->no_rb,
             'status'        => 'Create RB',
@@ -108,6 +108,7 @@ class PengajuanController extends Controller
                 'rb_id'         => $request->no_rb,
                 'approve_by'    => $kacab->nik,
                 'status'        => 0,
+                'leveling'      => 1,
                 'flag'          => 'MENGETAHUI',
                 'approve_date'  => date('Y-m-d H:i:s'),
             ];
@@ -140,6 +141,16 @@ class PengajuanController extends Controller
             ];
         }
 
+        $approval2 = [
+            'rb_id'         => $request->no_rb,
+            'approve_by'    => Auth::user()->username,
+            'status'        => 1,
+            'leveling'      => 0,
+            'flag'          => 'MEMBUAT',
+            'approve_date'  => date('Y-m-d H:i:s'),
+        ];
+        TrxRbDetailApproval::insert($approval2);
+
         TrxRbHeader::insert($header);
         TrxRbDetailDokumen::insert($dok);
         TrxRbTracking::insert($tracking);
@@ -150,18 +161,20 @@ class PengajuanController extends Controller
     public function detail($id)
     {
         $data     = TrxRbHeader::where('RB_ID', $id)->first();
-        $cek      = TrxRbDetailApproval::where('approve_by', Auth::user()->username)
+        $cek      = TrxRbDetailApproval::where('RB_ID', $id)
+                    ->where('approve_by', Auth::user()->username)
                     ->where('status',0)->first();
+        
         $tracking = TrxRbTracking::where('RB_id', $id)->orderBy('created_date', 'asc')->get();
         $user     = Karyawan::where('nik', '=', Auth::user()->username)->first();
         $mengetahui = TrxRbDetailApproval::where('RB_ID', $id)
                         ->where('FLAG','MENGETAHUI')
-                        ->orderBy('approve_date', 'asc')
+                        ->orderBy('leveling', 'asc')
                         ->get();
         // dd($mengetahui);
         $menyetujui = TrxRbDetailApproval::where('RB_ID', $id)
                         ->where('FLAG','MENYETUJUI')
-                        ->orderBy('approve_date', 'asc')
+                        ->orderBy('leveling', 'asc')
                         ->get();
         
         $diketahui = Karyawan::where('id_jabatan',2)->orWhere('id_bag_dept',8)->get();
@@ -195,7 +208,7 @@ class PengajuanController extends Controller
         $kd = null;
 
         if ($schema == 'MITRA') {
-            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,22)) as rb_id'))
+            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,21)) as rb_id'))
             ->where('branch_id',$branch)
             ->where('schema_name',$schema)
             ->get();
@@ -212,7 +225,7 @@ class PengajuanController extends Controller
             
             return $kd;
         } else if ($schema == 'SEHATI') {
-            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,23)) as rb_id'))
+            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,22)) as rb_id'))
             ->where('branch_id',$branch)
             ->where('schema_name',$schema)
             ->get();
@@ -229,7 +242,7 @@ class PengajuanController extends Controller
             
             return $kd;
         } else if ($schema == 'JAYA' || $schema == 'MAJU') {
-            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,21)) as rb_id'))
+            $q = TrxRbHeader::select(DB::raw('max(SUBSTR(TRX_RB_HEADER.RB_ID,20)) as rb_id'))
             ->where('branch_id',$branch)
             ->where('schema_name',$schema)
             ->get();

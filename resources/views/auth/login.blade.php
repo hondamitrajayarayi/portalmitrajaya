@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Sign In | Portal Mitra</title>
+    <title>Sign In | Intranet Mitra</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -135,7 +135,7 @@
                         <p class="mb-0 text-muted">&copy;
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> Honda Mitrajaya | Portalmitra
+                            </script> Honda Mitrajaya | Intranet
                         </p>
                     </div>
                 </div>

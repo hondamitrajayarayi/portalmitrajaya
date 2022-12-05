@@ -240,7 +240,7 @@
                 <div class="card-header border-bottom-dashed p-4 mb-0">
                     <div class="alert alert-info mb-0">
                         <p class="mb-0"><span class="fw-semibold">Note:</span>
-                            <span id="note">{{ $data->keterangan }}
+                            <span id="note">@nl2br($data->keterangan)
                             </span>
                         </p>
                     </div>
@@ -388,7 +388,7 @@
                         <div class="col mt-2 text-center">
                             Dibuat Oleh,<br>
                             <i class="ri-check-double-line text-success fs-1"></i>
-                            <div class="fs-13">
+                            <div class="fs-12">
                                 <strong><u>{{ $data->karyawan->nama }}</u><br>
                                 {{ $data->karyawan->jabatan->nama_jabatan }}</strong>
                             </div>
@@ -405,7 +405,7 @@
                             @else
                             <i class="ri-time-line text-warning fs-1"></i>
                             @endif
-                            <div class="fs-13">
+                            <div class="fs-12">
                                 <strong><u>{{ $result->karyawan->nama }}</u><br>
                                 {{ $result->karyawan->jabatan->nama_jabatan }} {{ $result->karyawan->departemen->nama_dept }}</strong>
                             </div>
@@ -423,7 +423,7 @@
                             @else
                             <i class="ri-time-line text-warning fs-1"></i>
                             @endif
-                            <div class="fs-13">
+                            <div class="fs-12">
                                 <strong><u>{{ $result->karyawan->nama }}</u><br>
                                 {{ $result->karyawan->jabatan->nama_jabatan }} {{ $result->karyawan->departemen->nama_dept }}</strong>
                             </div>

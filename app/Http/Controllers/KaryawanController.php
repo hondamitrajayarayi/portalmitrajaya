@@ -30,7 +30,7 @@ class KaryawanController extends Controller
             'jk'        => 'required|in:L,P',
             'bagdept'   => 'required',
             'jabatan'   => 'required',
-            'branch'   =>   'required',
+            'branch'   =>  'required',
             'telp'      => 'required|max:15|min:9',
         ],
         [
@@ -70,12 +70,12 @@ class KaryawanController extends Controller
 
     public function simpan(Request $request)
     {
+        
+        $this->_validation($request);
         $branch = explode(',',$request->branch);
         $cabang = $branch[0];
         $schema = $branch[1];
         $nik    = $this->_nik();
-
-        $this->_validation($request);
         // foreach($request->branch as )
         $data = [
             'nik'       => $nik,

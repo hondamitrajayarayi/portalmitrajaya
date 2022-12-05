@@ -113,7 +113,7 @@
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5" 
                                         class="form-label mb-1">Note</label>
-                                    <textarea class="form-control" name="note" id="deskripsi" rows="1" required>{{ old('deskripsi') }}</textarea>
+                                    <textarea class="form-control" name="note" id="deskripsi" rows="2" required>{{ old('deskripsi') }}</textarea>
                                     
                                 </div>
                                 

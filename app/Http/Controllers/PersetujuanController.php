@@ -9,6 +9,7 @@ use App\TrxRbHeader;
 use App\TrxRbTracking;
 use App\TrxRbDetailApproval;
 use App\Karyawan;
+use Illuminate\Support\Facades\DB;
 
 class PersetujuanController extends Controller
 {
@@ -16,19 +17,38 @@ class PersetujuanController extends Controller
     {
         $user = Karyawan::where('nik', Auth::user()->username)->first();
         $rb_id = [];
-        $cek = TrxRbDetailApproval::where('approve_by', Auth::user()->username)->where('status',0)->get();
-        
-        if($cek != null){
-            foreach ($cek as $key ) {
+        $cek3 = null;
+        $status = null;
+        $cek = TrxRbDetailApproval::where('approve_by', Auth::user()->username)
+                ->where('status',0)
+                ->get();
+        // cek leveling
+        foreach ($cek as  $value) {
+            $rb_id2 = $value->rb_id;
+            $level = $value->leveling - 1;
+            $cek2 = TrxRbDetailApproval::where('rb_id', $rb_id2)
+                    ->where('leveling', $level)
+                    ->first();
+            
+            if($cek2 != null){
+                $status = $cek2->status;       
+                if($status != '0'){
+                    $cek3[] = $cek2->rb_id; 
+                }
+            }
+        }
+
+        if($cek3 != null){
+            foreach ($cek3 as $key ) {
                 # code...
-                $rb_id[] = $key->rb_id;
+                $rb_id[] = $key;
             }
         }
 
         $data = TrxRbHeader::whereIn('rb_id', $rb_id)
             ->orderBy('created_date', 'DESC')
             ->paginate(10);
-        
+
         return view('transaksi.persetujuan', compact('data','user'));
     }
 
@@ -51,7 +71,41 @@ class PersetujuanController extends Controller
 
         return view('transaksi.persetujuan_riwayat', compact('data','user'));
     }
+    public function _leveling($rb_id)
+    {
+        // $q = TrxRbDetailApproval::select(DB::raw('max(TRX_RB_DETAIL_APPROVAL.LEVELING) as leveling'))
+        //     ->where('rb_id',$rb_id)
+        //     ->first();
+        $q2 = TrxRbDetailApproval::where('rb_id', $rb_id)->max('leveling');
+        $kd = (int)$q2 + 1;
+        
+        return $kd;
+    }
+    public function _send_mail($rb_id)
+    {
+        $q  = TrxRbDetailApproval::select(DB::raw('min(TRX_RB_DETAIL_APPROVAL.LEVELING) as leveling'))
+            ->where('rb_id',$rb_id)
+            ->where('status',0)
+            ->first();
 
+         // get user by level and rb_id
+        $q2 = TrxRbDetailApproval::where('leveling', $q->leveling)->where('rb_id',$rb_id)->first();
+      
+        $data = TrxRbHeader::where('rb_id', $rb_id)->first();
+        $user = Karyawan::where('nik', '=', $q2->approve_by)->first();
+        $email = [
+            'rb_id'         => $rb_id,
+            'to'            => $user->nama,
+            'cabang'        => $data->cabang->branch_name,
+            'pemohon'       => $data->karyawan->nama,
+            'mengetahui'    => null,
+            'j_mengetahui'  => null
+        ];
+
+        \Mail::to($user->user->email)->send(new \App\Mail\NewTicketToApproval($email));
+
+        return true;
+    }
     public function updateStatus(Request $request)
     {
         $cekuser= Karyawan::where('nik', '=', $request->id_user)->first();
@@ -92,63 +146,46 @@ class PersetujuanController extends Controller
 
             TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
             TrxRbTracking::insert($tracking);
-            TrxRbDetailApproval::where('rb_id', $request->rb_id)->update($approval);
+            TrxRbDetailApproval::where('rb_id', $request->rb_id)
+                                ->where('approve_by', Auth::user()->username)
+                                ->update($approval);
             
             return redirect()->route('persetujuan')->with('message','RB Berhasil Diupdate!');
         }
 
         //update pembagian approval oleh evi
         if ($request->status == 3){
-            $data = TrxRbHeader::where('rb_id', $request->rb_id)->first();
-            $mengetahui = TrxRbDetailApproval::where('rb_id', $request->rb_id)->where('flag','MENGETAHUI')->where('status',0)->first();
-            
-
-            foreach($request->disetujui as $setuju){
-                $disetujui = [
-                    'rb_id'         => $request->rb_id,
-                    'approve_by'    => $setuju,
-                    'status'        => 0,
-                    'flag'          => 'MENYETUJUI',
-                    'approve_date'  => date('Y-m-d H:i:s'),
-                ];
-
-                $user = Karyawan::where('nik', '=', $setuju)->first();
-                $email = [
-                    'rb_id'         => $request->rb_id,
-                    'to'            => $user->nama,
-                    'cabang'        => $data->cabang->branch_name,
-                    'pemohon'       => $data->karyawan->nama,
-                    'mengetahui'    => (!empty($mengetahui) ? $mengetahui->karyawan->nama : null),
-                    'j_mengetahui'  => (!empty($mengetahui) ? $mengetahui->karyawan->jabatan->nama_jabatan : null)
-                ];
-
-                \Mail::to($user->user->email)->send(new \App\Mail\NewTicketToApproval($email));
-                TrxRbDetailApproval::insert($disetujui);
-            }
+            $data = TrxRbHeader::where('rb_id', $request->rb_id)->first();   
 
             foreach($request->diketahui as $result){
+                $level2 = $this->_leveling($request->rb_id);
+                $rb_id = $request->rb_id;
                 $diketahui = [
                     'rb_id'         => $request->rb_id,
                     'approve_by'    => $result,
                     'status'        => 0,
                     'flag'          => 'MENGETAHUI',
+                    'leveling'      => $level2,
                     'approve_date'  => date('Y-m-d H:i:s'),
                 ];
 
-                $user = Karyawan::where('nik', '=', $result)->first();
-                $email = [
-                    'rb_id'         => $request->rb_id,
-                    'to'            => $user->nama,
-                    'cabang'        => $data->cabang->branch_name,
-                    'pemohon'       => $data->karyawan->nama,
-                    'mengetahui'    => (!empty($mengetahui) ? $mengetahui->karyawan->nama : null),
-                    'j_mengetahui'  => (!empty($mengetahui) ? $mengetahui->karyawan->jabatan->nama_jabatan : null)
-                ];
-        
-                \Mail::to($user->user->email)->send(new \App\Mail\NewTicketToApproval($email));
                 TrxRbDetailApproval::insert($diketahui);
             }
             
+            foreach($request->disetujui as $setuju){
+                $level = $this->_leveling($request->rb_id) ;
+                $disetujui = [
+                    'rb_id'         => $request->rb_id,
+                    'approve_by'    => $setuju,
+                    'status'        => 0,
+                    'leveling'      => $level,
+                    'flag'          => 'MENYETUJUI',
+                    'approve_date'  => date('Y-m-d H:i:s'),
+                ];
+
+                TrxRbDetailApproval::insert($disetujui);
+            }
+
             $data = [
                 'status'        => $request->status,
                 'update_user'   => $cekuser->nik,
@@ -162,6 +199,9 @@ class PersetujuanController extends Controller
                 'id_user'       => $cekuser->nik,
                 'created_date'  => date('Y-m-d H:i:s')
             ];
+
+            //kirim email 
+            $this->_send_mail($rb_id);
 
             TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
             TrxRbTracking::insert($tracking);
@@ -223,6 +263,8 @@ class PersetujuanController extends Controller
                 
                 TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
                 TrxRbTracking::insert($tracking);
+            }else{
+                $this->_send_mail($request->rb_id);
             }
 
             return redirect()->route('persetujuan')->with('message','RB Berhasil Diupdate!');

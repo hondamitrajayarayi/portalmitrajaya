@@ -394,7 +394,7 @@
                                 <tr>
                                   
                                     <td align="center" style="font-size:0px;padding:25px 25px;padding-bottom:40px;word-break:break-word;">
-                                        <a href="http://127.0.0.1:8000/persetujuan/detail/{{ $details['rb_id'] }}" target="_blank">
+                                        <a href="http://intranet.hondamitrajaya.com/pengajuan/detail/{{ $details['rb_id'] }}" target="_blank">
 
                                             <button class="button button1">Klik Disini</button>
                                         </a>

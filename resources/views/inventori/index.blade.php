@@ -95,8 +95,8 @@
                                             <td class="email text-center">
                                                 @if($item->status == 1)
                                                     <span class="badge badge-soft-dark badge-border text-wrap"> Close</span>
-                                                @elseif($item->status == 2)
-                                                    <span class="badge bg-danger"> Dipinjamkan</span>
+                                                @elseif($item->status == 0)
+                                                    <span class="badge badge-soft-danger badge-border text-wrap"> Dipinjamkan</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">

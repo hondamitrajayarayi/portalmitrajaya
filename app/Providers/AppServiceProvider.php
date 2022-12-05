@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale('id');
         date_default_timezone_set('Asia/Jakarta');
 
+        Blade::directive('nl2br', function ($string) {
+            return "<?php echo nl2br($string); ?>";
+        });
+
         Blade::directive('uang', function ($amount) {
             if (!$amount) {
                 return '';

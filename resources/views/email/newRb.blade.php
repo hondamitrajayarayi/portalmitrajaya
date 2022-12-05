@@ -387,7 +387,7 @@
                                 <tr>
                                   
                                     <td align="center" style="font-size:0px;padding:25px 25px;padding-bottom:40px;word-break:break-word;">
-                                        <a href="http://127.0.0.1:8000/pengajuan/detail/{{ $details['norb'] }}" target="_blank">
+                                        <a href="http://intranet.hondamitrajaya.com/pengajuan/detail/{{ $details['norb'] }}" target="_blank">
 
                                             <button class="button button1">Klik Disini</button>
                                         </a>
