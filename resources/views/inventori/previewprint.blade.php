@@ -14,39 +14,42 @@
 
    
 <div class="row justify-content-center">
-    <div class="col-xl-9">
-        <div class="card shadow-none" id="demo">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-body p-4">
-                        <div class="row g-3">
-                            @foreach($data as $item)
-                            <div class="col-lg-2 col-sm-3 text-center p-2">
-                                <img height="100" src="{{ asset('inventory/qr/'.$item->name_file) }}">
-                                <p class="mb-0" style="font-size: 8px">
+    <div class="col-xl-1 col-sm-1 col-1">
+        {{-- <div class="card shadow-none" id="demo"> --}}
+            <div class="row text-center">
+                <div class="col-lg-12 col-sm-12 col-12">
+                    {{-- <div class="card-body"> --}}
+                        @foreach($data as $item)
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-4 text-center mt-1">
+                                <img height="37.44px" src="{{ asset('inventory/qr/'.$item->name_file) }}">
+                                {{-- <img height="100px" src="{{ asset('inventory/qr/'.$item->name_file) }}"> --}}
+                            </div>
+                            {{-- <div class="col-lg-8 col-sm-8 col-8 text-center mt-1">   
+                                <p class="mb-0 mt-3" style="font-size: 5px">
                                     {{ $item->inventory_id }}
                                 </p>
-                                <p class="mt-0 mb-0 fw-semibold" style="font-size: 8px">
+                                <p class="mt-0 mb-0 fw-semibold" style="font-size: 7px">
                                     <a href="{{ asset('inventaris/getinfo/'. $item->inventory_id ) }}" style="text-decoration: none" target="_blank">
                                         {{ $item->inventory->item }}
                                     </a>
                                 </p>
-                            </div>
-                            @endforeach
+                            </div> --}}
                         </div>
-                    </div>
+                        @endforeach
+                    {{-- </div> --}}
                     
                 </div>
-                <div class="col-lg-12">
+                {{-- <div class="col-lg-12">
                     <div class="card-body p-4">
                         <div class="hstack gap-2 justify-content-end d-print-none">
                             <a href="javascript:window.print()" class="btn btn-success"><i class="ri-printer-line align-bottom me-1"></i> Print</a>
                             <a href="{{ route('inventaris') }}" class="btn btn-primary"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Back</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
-        </div>
+        {{-- </div> --}}
     </div>
 </div>
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Detail Inventory | Portal Mitra</title>
+    <title>Detail Inventory | Intranet Mitra</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -44,15 +44,39 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header border-0">
+                        <div class="card-header border-0 mt-4">
                             <div class="row justify-content-center mb-4">
-                                
+                                {{-- <div class="col-lg-3">
+                                    <span class="logo-sm">
+                                        <img src="https://www.hondamitrajaya.com/static/frontend/images/logo.png" alt=""
+                                            height="22">
+                                    </span>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <form action="{{ route('inventaris.getinfo') }}" method="POST">
+                                        @csrf
+                                        <div class="row g-2">
+                                            <div class="col">
+                                                <div class="position-relative mb-2">
+                                                    <input type="text" name="inv_id" class="form-control rounded-pill form-control-lg bg-light border-light" placeholder="Masukan kode inventaris disini..." autocomplete="off">
+                                                    <button type="submit" id="btnSubmit" class="btn btn-lg link-primary position-absolute end-0 top-0 " aria-controls="offcanvasExample"><i class="ri-search-line"></i> &nbsp;&nbsp;</button>
+                                                    <div id="loading" style="display:none;">
+                                                        <button type="button" class="btn btn-lg link-primary btn-load position-absolute end-0 top-0 " aria-controls="offcanvasExample">
+                                                            <i class="mdi mdi-loading mdi-spin fs-20 align-middle me-2"></i>&nbsp;&nbsp;
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                {{-- <div class="col-lg-3">
+                                </div> --}}
                                 <!--end col-->
                                 <div class="col-lg-12">
-                                    <h5 class="fs-5 fw-semibold text-center mt-4 mb-0">Menampilkan detail inventaris "<span class="text-primary fw-medium">{{ $id }}</span>"</h5>
+                                    <h5 class="fs-5 fw-semibold text-center mb-0 mt-2">Menampilkan detail inventaris "<span class="text-primary fw-medium">{{ $id }}</span>"</h5>
                                 </div>
                             </div>
-                            <!--end row-->
                         </div>
                         <div>
                             <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
@@ -84,7 +108,7 @@
                                 {{-- info inventaris --}}
                                 <div class="tab-pane active show" id="all" role="tabpanel">
                                     <div class="row">
-                                        
+                                        @if(!empty($inventaris))
                                         <div class="col-xl-4 col-md-8 mx-auto">
                                             <div class="product-img-slider sticky-side-div">
                                                 <div class="swiper product-thumbnail-slider p-2 rounded bg-light">
@@ -197,15 +221,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                {{-- info rb --}}
-                                <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="#images-tab">
-                                    <div class="row">
-                                        @if(empty($inventaris->rb_id))
+                                        @else
                                         <div class="col-lg-12">
-                                            <div class="text-center mt-sm-5 pt-2 mb-2">
-                                                <div class="mb-sm-4 pb-sm-3 pb-3">
+                                            <div class="text-center mt-sm-2 pt-2 mb-2">
+                                                <div class="mb-sm-4 pb-sm-3 pb-2">
                                                 <lord-icon
                                                     src="https://cdn.lordicon.com/tdrtiskw.json"
                                                     trigger="loop"
@@ -217,7 +236,33 @@
                                                 <div>                    
                                                     <div class="mt-4">
                                                         <h4>Data tidak ditemukan !</h4>
-                                                        <p class="text-muted mb-0">Tidak ditemukan riwayat rb 😊</p>
+                                                        <p class="text-muted mb-0">Tidak ditemukan data inventaris 😊</p>
+                                                    </div>                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                {{-- info rb --}}
+                                <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="#images-tab">
+                                    <div class="row">
+                                        @if(empty($inventaris->rb_id))
+                                        <div class="col-lg-12">
+                                            <div class="text-center mt-sm-2 pt-2 mb-2">
+                                                <div class="mb-sm-4 pb-sm-3 pb-2">
+                                                <lord-icon
+                                                    src="https://cdn.lordicon.com/tdrtiskw.json"
+                                                    trigger="loop"
+                                                    colors="primary:#f7b84b,secondary:#405189"
+                                                    style="width:130px;height:130px">
+                                                </lord-icon>
+                                                </div>
+                                                
+                                                <div>                    
+                                                    <div class="mt-4">
+                                                        <h4>Data tidak ditemukan !</h4>
+                                                        <p class="text-muted mb-0">Tidak ditemukan data RB 😊</p>
                                                     </div>                    
                                                 </div>
                                             </div>
@@ -705,8 +750,8 @@
                                     <div class="row">
                                         @if(empty($peminjaman))
                                         <div class="col-lg-12">
-                                            <div class="text-center mt-sm-5 pt-2 mb-2">
-                                                <div class="mb-sm-4 pb-sm-3 pb-3">
+                                            <div class="text-center mt-sm-2 pt-2 mb-2">
+                                                <div class="mb-sm-4 pb-sm-3 pb-2">
                                                 <lord-icon
                                                     src="https://cdn.lordicon.com/tdrtiskw.json"
                                                     trigger="loop"
@@ -838,27 +883,22 @@
                                 </div>
                                 {{-- info perawatan --}}
                                 <div class="tab-pane" id="video" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="text-center mt-sm-5 pt-2 mb-2">
-                                                <div class="mb-sm-4 pb-sm-3 pb-3">
-                                                    <lord-icon
-                                                        src="https://cdn.lordicon.com/tdrtiskw.json"
-                                                        trigger="loop"
-                                                        colors="primary:#f7b84b,secondary:#405189"
-                                                        style="width:130px;height:130px">
-                                                    </lord-icon>
-                                                </div>
-                                                
-                                                <div>
-                                                    
-                    
-                                                    <div class="mt-4">
-                                                        <h4>Data tidak ditemukan !</h4>
-                                                        <p class="text-muted mb-0">Tidak ditemukan riwayat pemeliharaan 😊</p>
-                                                    </div>
-                    
-                                                </div>
+                                    <div class="col-lg-12">
+                                        <div class="text-center mt-sm-2 pt-2 mb-2">
+                                            <div class="mb-sm-4 pb-sm-3 pb-2">
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/tdrtiskw.json"
+                                                trigger="loop"
+                                                colors="primary:#f7b84b,secondary:#405189"
+                                                style="width:130px;height:130px">
+                                            </lord-icon>
+                                            </div>
+                                            
+                                            <div>                    
+                                                <div class="mt-4">
+                                                    <h4>Data tidak ditemukan !</h4>
+                                                    <p class="text-muted mb-0">Tidak ditemukan riwayat pemeliharaan 😊</p>
+                                                </div>                    
                                             </div>
                                         </div>
                                     </div>
@@ -904,5 +944,11 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="http://velzon.laravel-default.themesbrand.com/assets/libs/particles.js/particles.js.min.js"></script>
 <script src="http://velzon.laravel-default.themesbrand.com/assets/js/pages/particles.app.js"></script>
-        
+<script type="text/javascript">
+    $('#btnSubmit').click(function() {
+        $(this).css('display', 'none');
+        $('#loading').show();
+        return true;
+    });
+</script>         
 </html>

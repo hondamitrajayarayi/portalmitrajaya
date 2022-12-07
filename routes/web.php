@@ -209,7 +209,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('logout','AuthController@logout')->name('logout');
 });
 
-Route::get('inventaris/getinfo/{id}','InventarisController@getinfo')->name('inventaris.getinfo');
+Route::get('inventaris/getinfo',function ()
+{
+    return view('inventori.inventory_cari');
+})->name('inventaris.getinfo1');
+Route::post('inventaris/getinfo','InventarisController@getinfo')->name('inventaris.getinfo');
 
 Route::get('/tes', function ()
 {

@@ -122,7 +122,7 @@
                                                             style="">
 
                                                             <li data-v-cd5f1dea="">
-                                                                <a href="{{ asset('inventaris/getinfo/'. $item->inventory_id ) }}" class="dropdown-item edit"
+                                                                <a href="{{ route('inventaris.getinfo1') }}" class="dropdown-item edit"
                                                                     id="edit" target="_blank"><i
                                                                         class="ri-pages-line align-bottom me-2 text-muted"
                                                                         data-v-cd5f1dea=""></i> Detail</a>

@@ -269,16 +269,18 @@ class InventarisController extends Controller
         foreach ($request->inventory as $value) {
             $cek = MstQrInventory::where('inventory_id', $value)->count();
 
+            //generate qr
+            \QrCode::size(250)
+                ->format('svg')
+                ->generate($value, public_path('inventory/qr/qr-'.$value.'.svg'));
+
             if($cek == 0){
-                //generate qr
-                \QrCode::size(250)
-                    ->format('svg')
-                    ->generate('http://intranet.hondamitrajaya.com/inventaris/getinfo/'.$value, public_path('inventory/qr/qr-'.$value.'.svg'));
 
                 //simpan ke tabel mst qr
                 $inventory = [
                     'INVENTORY_ID'  => $value,
-                    'URL'           => 'http://intranet.hondamitrajaya.com/inventaris/getinfo/'.$value,
+                    // 'URL'           => 'http://intranet.hondamitrajaya.com/inventaris/getinfo/'.$value,
+                    'URL'           => $value,
                     'NAME_FILE'     => 'qr-'.$value.'.svg',
                     'CREATED_BY'    => Auth::user()->username,
                     'CREATED_DATE'  => date('Y-m-d H:i:s')
@@ -294,13 +296,25 @@ class InventarisController extends Controller
             ->get();
         
         // return ke view print qr
-        return view('inventori.previewprint', compact('data'));
+        // return view('inventori.previewprint', compact('data'));
+        return view('inventori.test_print', compact('data'));
     }
     
-    public function getinfo($id)
+    public function getinfo(Request $request)
     {
+        $id = $request->inv_id;
+
+        if ($id == null) {
+            return view('inventori.inventory_cari');
+        }
+        
         // inventaris
         $inventaris = TrxInventory::where('inventory_id', $id)->first();
+        // dd($inventaris);
+        if ($inventaris == null) {
+            return view('inventori.inventory_cari');
+        }
+
         $rb_id = $inventaris->rb_id;
         
         if(!empty($rb_id)){
@@ -326,7 +340,7 @@ class InventarisController extends Controller
             $menyetujui = null;
             $diketahui = null;
             $disetujui = null; 
-            
+            $rb_id = null;
         }
 
         $peminjaman1 = TrxPeminjamanItem::where('id_inventory', $id)->first();
