@@ -254,7 +254,7 @@
                                         <td class="email"> {{ $item->username }}</td>
                                         <td class="email">{{ $item->email }}</td>
                                         <td class="phone">{{ $item->karyawan->cabang->branch_name }}</td>
-                                        <td class="email">{{ $item->ugrup->grup }}</td>
+                                        <td class="email">{{ $item->ugrup->grup->name }}</td>
                                         <td class="email">
                                             <div>
                                                 <div class="form-check form-switch" id='editstatus'>
