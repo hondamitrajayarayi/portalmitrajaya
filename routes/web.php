@@ -69,13 +69,6 @@ Route::group(['middleware' => 'auth'], function (){
         Route::post('karyawan/update','KaryawanController@update')->name('karyawan.update');
         Route::delete('karyawan/delete/{id}','KaryawanController@hapus')->name('karyawan.hapus');
     });
-    // Route::group(['middleware' => 'can:menu_mst_teknisi'], function (){
-    //     Route::get('teknisi','TeknisiController@index')->name('teknisi');
-    //     Route::post('teknisi/simpan','TeknisiController@simpan')->name('teknisi.simpan');
-    //     Route::get('teknisi/{id}/edit','TeknisiController@edit')->name('teknisi.edit');
-    //     Route::post('teknisi/update','TeknisiController@update')->name('teknisi.update');
-    //     Route::delete('teknisi/delete/{id}','TeknisiController@hapus')->name('teknisi.hapus');
-    // });
     Route::group(['middleware' => 'can:menu_mst_user'], function (){
         Route::get('user','AuthController@index')->name('user');
         Route::post('user/simpan','AuthController@simpan')->name('user.simpan');
@@ -112,12 +105,18 @@ Route::group(['middleware' => 'auth'], function (){
         Route::post('jabatan/update','JabatanController@update')->name('jabatan.update');
         Route::delete('jabatan/delete/{id}','JabatanController@hapus')->name('jabatan.hapus');
     });
+    Route::group(['middleware' => 'can:menu_mst_jenis_inventaris'], function (){
+
+    });
+    Route::group(['middleware' => 'can:menu_mst_grup_inventaris'], function (){
+
+    });
+
+    // rb
     Route::group(['middleware' => 'can:menu_pengajuan'], function (){
         Route::get('pengajuan/riwayat','PengajuanController@list')->name('pengajuan.list');
         Route::get('pengajuan','PengajuanController@index')->name('pengajuan.baru');
         Route::post('pengajuan/simpan','PengajuanController@simpan')->name('pengajuan.simpan');
-        // Route::get('detail-ticket-teknisi/{id}','TransactionController@detailticketteknisi')->name('detail.ticket.teknisi');
-        // Route::post('ticket/update/status/teknisi','TransactionController@updateStatus')->name('ticket.updateStatus.teknisi');
     });
     Route::get('pengajuan/detail/{id}','PengajuanController@detail')->name('pengajuan.detail');
     Route::post('persetujuan/update','PersetujuanController@updateStatus')->name('persetujuan.update');
@@ -135,85 +134,38 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('otorisasi','OtorisasiController@index')->name('otorisasi');
         Route::post('otorisasi/update','OtorisasiController@update')->name('otorisasi.update');
         Route::get('riwayat/otorisasi','OtorisasiController@riwayat')->name('otorisasi.riwayat');
-        
+    });
+
+    // inventaris
+    Route::group(['middleware' => 'can:menu_data_inventaris'], function (){
+        Route::get('inventaris','InventarisController@index')->name('inventaris');
+        Route::get('inventaris/tambah','InventarisController@tambah')->name('inventaris.tambah');
+        Route::post('inventaris/getjenis','InventarisController@jenis');
+        Route::post('inventaris/autofillrb','InventarisController@pilihrb')->name('inventaris.pilihrb');
+        Route::post('inventaris/simpan','InventarisController@simpan')->name('inventaris.simpan');
+        Route::post('inventaris/generateqr','InventarisController@generateqr')->name('inventaris.generateqr');
+    });
+    Route::group(['middleware' => 'can:menu_query_inventaris'], function (){
+        Route::get('inventaris/getinfo',function (){
+                return view('inventori.inventory_cari');
+            })->name('inventaris.getinfo1');
+        Route::post('inventaris/getinfo','InventarisController@getinfo')->name('inventaris.getinfo');
+    });
+    Route::group(['middleware' => 'can:menu_peminjaman'], function (){
+        Route::get('inventaris/peminjaman','InventarisController@peminjaman')->name('inventaris.peminjaman');
+        Route::get('inventaris/peminjaman/tambah','InventarisController@tambahpeminjaman')->name('inventaris.peminjaman.tambah');
+        Route::get('inventaris/{id}/pengembalian','InventarisController@editpeminjaman');
+        Route::post('inventaris/peminjaman/simpan','InventarisController@simpanpeminjaman')->name('inventaris.peminjaman.simpan');
+        Route::post('inventaris/peminjaman/update','InventarisController@updatepeminjaman')->name('inventaris.peminjaman.update');
+    });
+    Route::group(['middleware' => 'can:menu_pemeliharaan'], function (){
+
     });
     
-    Route::get('inventaris','InventarisController@index')->name('inventaris');
-    Route::get('inventaris/tambah','InventarisController@tambah')->name('inventaris.tambah');
-    Route::get('inventaris/peminjaman','InventarisController@peminjaman')->name('inventaris.peminjaman');
-    Route::get('inventaris/peminjaman/tambah','InventarisController@tambahpeminjaman')->name('inventaris.peminjaman.tambah');
-    Route::get('inventaris/{id}/pengembalian','InventarisController@editpeminjaman');
-    Route::post('inventaris/peminjaman/simpan','InventarisController@simpanpeminjaman')->name('inventaris.peminjaman.simpan');
-    Route::post('inventaris/peminjaman/update','InventarisController@updatepeminjaman')->name('inventaris.peminjaman.update');
-    
-    Route::post('inventaris/getjenis','InventarisController@jenis');
-    Route::post('inventaris/autofillrb','InventarisController@pilihrb')->name('inventaris.pilihrb');
-    Route::post('inventaris/simpan','InventarisController@simpan')->name('inventaris.simpan');
-    Route::post('inventaris/generateqr','InventarisController@generateqr')->name('inventaris.generateqr');
-    // Route::group(['middleware' => 'can:menu_mst_test'], function (){
-    //     Route::get('crud','TestController@index')->name('crudindex');
-    //     Route::get('crud/tambah','TestController@tambah')->name('tambah');
-    //     Route::get('crud/caribarang','TestController@cari')->name('caribarang');
-    //     Route::post('crud/simpan','TestController@simpan')->name('simpan');
-    //     Route::delete('crud/delete/{id}','TestController@hapus')->name('hapus');
-    //     Route::get('crud/{id}/edit','TestController@edit')->name('edit');
-    //     Route::post('crud','TestController@update')->name('update');  
-    // });
-    // Route::group(['middleware' => 'can:menu_mst_kondisi'], function (){ 
-    //     Route::get('kondisi','KondisiController@index')->name('kondisi');  
-    //     Route::post('kondisi/simpan','KondisiController@simpan')->name('simpan.kondisi');
-    //     Route::get('kondisi/{id}/edit','KondisiController@edit')->name('edit.kondisi');
-    //     Route::post('kondisi/update','KondisiController@update')->name('update.kondisi');  
-    //     Route::delete('kondisi/delete/{id}','KondisiController@hapus')->name('hapus.kondisi');
-    // });
-    // Route::group(['middleware' => 'can:menu_mst_kategori'], function (){
-    //     Route::get('kategori','KategoriController@index')->name('kategori');  
-    //     Route::post('kategori/simpan','KategoriController@simpan')->name('simpan.kategori');
-    //     Route::get('kategori/{id}/edit','KategoriController@edit')->name('edit.kategori');
-    //     Route::post('kategori/update','KategoriController@update')->name('update.kategori');  
-    //     Route::delete('kategori/delete/{id}','KategoriController@hapus')->name('hapus.kategori');
-    // });
-    // Route::group(['middleware' => 'can:menu_mst_subkategori'], function (){
-    //     Route::get('subkategori','SubKategoriController@index')->name('subkategori');
-    //     Route::post('subkategori/simpan','SubKategoriController@simpan')->name('simpan.subkategori');
-    //     Route::get('subkategori/{id}/edit','SubKategoriController@edit')->name('edit.subkategori');
-    //     Route::post('subkategori/update','SubKategoriController@update')->name('update.subkategori');  
-    //     Route::delete('subkategori/delete/{id}','SubKategoriController@hapus')->name('hapus.subkategori'); 
-  
-    // });
-
-    Route::group(['middleware' => 'can:isTeknisiNadmin'], function (){
-        Route::get('ticket/assigmentTicket','TransactionController@assigmentTicket')->name('ticket.assigmentTicket');
-        Route::get('detail-ticket-teknisi/{id}','TransactionController@detailticketteknisi')->name('detail.ticket.teknisi');
-        Route::post('ticket/update/status/teknisi','TransactionController@updateStatus')->name('ticket.updateStatus.teknisi');
-    });
-
-    Route::group(['middleware' => 'can:isUserNadmin'], function (){
-        Route::get('new-ticket','TransactionController@newticket')->name('newticket');
-        Route::post('new-ticket/simpan','TransactionController@simpanTiketBaru')->name('newticket.simpan');
-        Route::get('my-ticket','TransactionController@myticket')->name('my.ticket');
-        Route::get('detail-ticket/{id}','TransactionController@detailticket')->name('detail.ticket');
-        
-        
-        Route::get('list-ticket','TransactionController@listticket')->name('list.ticket');
-        Route::get('approval-ticket','TransactionController@approvalticket')->name('approval.ticket');
-        Route::get('ticket/{id}/kategori/teknisi','TransactionController@getSpesialis');
-        Route::get('ticket/{id}/detail/modal','TransactionController@detailticketmodal');
-        Route::post('ticket/update/status','TransactionController@updateStatus')->name('ticket.updateStatus');
-        
-        Route::post('rating/add','RatingController@insert')->name('add.rating');
-        
-    });
-
-
     Route::get('logout','AuthController@logout')->name('logout');
 });
 
-Route::get('inventaris/getinfo',function ()
-{
-    return view('inventori.inventory_cari');
-})->name('inventaris.getinfo1');
-Route::post('inventaris/getinfo','InventarisController@getinfo')->name('inventaris.getinfo');
+
 
 Route::get('/tes', function ()
 {

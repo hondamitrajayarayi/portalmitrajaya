@@ -52,11 +52,19 @@
                                                 <option value="9">Pengesahan</option>
                                                 <option value="10">Otorisasi</option>
                                             </optgroup>
+                                            <optgroup label="App Inventaris">
+                                                <option value="">Data Inventaris</option>
+                                                <option value="">Query Inventaris</option>
+                                                <option value="">Peminjaman</option>
+                                                <option value="">Pemeliharaan</option>
+                                            </optgroup>
                                             <optgroup label="Master Data">
                                                 <option value="2">Karyawan</option>
                                                 <option value="4">Departemen</option>
                                                 <option value="5">Jabatan</option>
                                                 <option value="1">Cabang</option>
+                                                <option value="">Jenis Inventaris</option>
+                                                <option value="">Grup Inventaris</option>
                                             </optgroup>
                                         </select>
                                   

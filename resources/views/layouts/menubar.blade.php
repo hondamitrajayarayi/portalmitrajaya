@@ -161,16 +161,20 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('menu_mst_jenis_inventaris')
                             <li class="nav-item">
                                 <a class="nav-link menu-link @yield('nav_active_jenis_inventaris')" href="{{ route('inventaris') }}">
                                     <i class="ri-briefcase-line"></i><span data-key="t-widgets">Jenis Inventaris</span>
                                 </a>
                             </li>
+                            @endcan
+                            @can('menu_mst_grup_inventaris')
                             <li class="nav-item">
                                 <a class="nav-link menu-link @yield('nav_active_grup_inventaris')" href="{{ route('inventaris') }}">
                                     <i class="ri-briefcase-line"></i><span data-key="t-widgets">Grup Inventaris</span>
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -200,47 +204,49 @@
                         </ul>
                     </div>
                 </li>
+                @endif
+                {{-- /end authentication --}}
+                @if(Gate::check('menu_data_inventaris') || Gate::check('menu_query_inventaris') || Gate::check('menu_peminjaman') || Gate::check('menu_pemeliharaan'))
                 <li class="nav-item">
-                    <a class="nav-link menu-link @yield('nav_active_inventaris')" href="{{ route('inventaris') }}">
-                        <i class="ri-briefcase-line"></i><span data-key="t-widgets">Inventaris</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link @yield('nav_active_peminjaman')" href="{{ route('inventaris.peminjaman') }}">
-                        <i class="ri-share-forward-2-fill"></i><span data-key="t-widgets">Peminjaman</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link @yield('nav_active_pemeliharaan')" href="{{ route('/home') }}">
-                        <i class="ri-service-line"></i><span data-key="t-widgets">Pemeliharaan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link @yield('nav_active_master_muser')" href="#sidebarDashboards" data-bs-toggle="collapse"
+                    <a class="nav-link menu-link @yield('nav_active_inventaris_head')" href="#sidebarDashboards" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="ri-file-chart-line"></i> <span data-key="t-dashboards">Report</span>
+                        <i class="ri-suitcase-2-line"></i> <span data-key="t-dashboards">Inventaris</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
                         <ul class="nav nav-sm flex-column">
-                            @can('menu_mst_user')
+                            @can('menu_data_inventaris')
                             <li class="nav-item">
-                                <a href="{{ route('user')}}" class="nav-link @yield('nav_active_user')">
-                                    <i class="ri-user-settings-line"></i> Loremipsum
+                                <a class="nav-link menu-link @yield('nav_active_inventaris')" href="{{ route('inventaris') }}">
+                                    <i class="ri-briefcase-line"></i><span data-key="t-widgets">Data Inventaris</span>
                                 </a>
                             </li>
                             @endcan
-                            @can('menu_mst_grup')
+                            @can('menu_query_inventaris')
                             <li class="nav-item">
-                                <a href="{{ route('grup')}}" class="nav-link @yield('nav_active_grup')">
-                                    <i class="ri-group-line"></i> Loremipsum 
+                                <a class="nav-link menu-link @yield('nav_active_query_inventaris')" target="_blank" href="{{ route('inventaris.getinfo1') }}">
+                                    <i class="ri-file-search-line"></i><span data-key="t-widgets">Query Inventaris</span>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('menu_peminjaman')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @yield('nav_active_peminjaman')" href="{{ route('inventaris.peminjaman') }}">
+                                    <i class="ri-share-forward-2-fill"></i><span data-key="t-widgets">Peminjaman</span>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('menu_pemeliharaan')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @yield('nav_active_pemeliharaan')" href="{{ route('/home') }}">
+                                    <i class="ri-service-line"></i><span data-key="t-widgets">Pemeliharaan</span>
                                 </a>
                             </li>
                             @endcan
                         </ul>
                     </div>
-                </li> 
+                </li>
                 @endif
-                {{-- /end authentication --}}
+                
             </ul>
         </div>
         <!-- Sidebar -->
