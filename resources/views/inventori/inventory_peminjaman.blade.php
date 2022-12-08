@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('title', 'Peminjaman Inventaris')
+@section('nav_active_inventaris_head', 'active')
 @section('nav_active_inventaris', 'active')
 @push('styles')
 <style>

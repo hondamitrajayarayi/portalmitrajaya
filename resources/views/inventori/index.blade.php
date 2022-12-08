@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('title', 'Master Data Inventaris')
+@section('nav_active_inventaris_head', 'active')
 @section('nav_active_inventaris', 'active')
 @push('styles')
 <style>
@@ -121,12 +122,12 @@
                                                         <ul class="dropdown-menu dropdown-menu-end" data-v-cd5f1dea=""
                                                             style="">
 
-                                                            <li data-v-cd5f1dea="">
+                                                            {{-- <li data-v-cd5f1dea="">
                                                                 <a href="{{ route('inventaris.getinfo1') }}" class="dropdown-item edit"
                                                                     id="edit" target="_blank"><i
                                                                         class="ri-pages-line align-bottom me-2 text-muted"
                                                                         data-v-cd5f1dea=""></i> Detail</a>
-                                                            </li>
+                                                            </li> --}}
                                                             <li data-v-cd5f1dea="">
                                                                 <a href="javascript:void(0)" class="dropdown-item edit"
                                                                     id="edit" data-v-cd5f1dea=""
