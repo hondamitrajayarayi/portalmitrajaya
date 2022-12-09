@@ -45,7 +45,13 @@ class AuthServiceProvider extends ServiceProvider
                where users.username = '$id' and menuCode = 'menu_mst_user'
             ");
 
-            if (!empty($cekMenu)) {
+            $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_user' and auth_user_permissions.userId = '$id'
+            ");
+
+            if (!empty($cekMenu) || !empty($cekMenu2)) {
                return true;
             }
       
@@ -65,7 +71,13 @@ class AuthServiceProvider extends ServiceProvider
                where users.username = '$id' and menuCode = 'menu_mst_grup'
             ");
 
-            if (!empty($cekMenu)) {
+            $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_grup' and auth_user_permissions.userId = '$id'
+            ");
+
+            if (!empty($cekMenu) || !empty($cekMenu2)) {
                return true;
             }
       
@@ -85,7 +97,13 @@ class AuthServiceProvider extends ServiceProvider
                where users.username = '$id' and menuCode = 'menu_mst_karyawan'
             ");
 
-            if (!empty($cekMenu)) {
+            $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_karyawan' and auth_user_permissions.userId = '$id'
+            ");
+
+            if (!empty($cekMenu) || !empty($cekMenu2)) {
                return true;
             }
             return false;
@@ -104,7 +122,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_mst_departement'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_departement' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -123,7 +147,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_mst_branch'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_branch' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -142,7 +172,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_mst_jabatan'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_jabatan' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -161,7 +197,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_mst_jenis_inventaris'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_jenis_inventaris' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -180,7 +222,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_mst_grup_inventaris'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_grup_inventaris' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -201,7 +249,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_pengajuan'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_pengajuan' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -220,7 +274,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_persetujuan'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_persetujuan' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -239,7 +299,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_pengesahan'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_pengesahan' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -258,7 +324,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_otorisasi'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_otorisasi' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -279,7 +351,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_data_inventaris'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_data_inventaris' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -298,7 +376,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_query_inventaris'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_query_inventaris' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -317,7 +401,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_peminjaman'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_peminjaman' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;
@@ -336,7 +426,13 @@ class AuthServiceProvider extends ServiceProvider
             where users.username = '$id' and menuCode = 'menu_pemeliharaan'
          ");
 
-         if (!empty($cekMenu)) {
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_pemeliharaan' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
             return true;
          }
          return false;

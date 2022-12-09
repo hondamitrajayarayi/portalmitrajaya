@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth_user_permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
@@ -26,25 +27,28 @@ class AuthController extends Controller
     }
 
     public function simpan(Request $request){
+        
         $cek = User::where('username', '=', $request->nik)->first();
         if($cek){
             $karyawan = Karyawan::where('nik', '=', $request->nik)->firstOrFail();
             return redirect()->route('user')->with('message','User '.$karyawan->nama.' Sudah Ada!');
-        }
-        $validate = $request->validate([
-            'nik'      => 'required',
-            'password' => 'required|min:5',
-            'level'    => 'required',
-            'email'    => 'required|email',
-        ],
-        [
-            'nik.required'      => 'Bidang ini tidak boleh kosong !',
-            'password.required' => 'Bidang ini tidak boleh kosong !',
-            'level.required'    => 'Bidang ini tidak boleh kosong !',
-            'email.required'    => 'Bidang ini tidak boleh kosong !',
+        }else{
+            $validate = $request->validate([
+                'nik'      => 'required',
+                'password' => 'required|min:5',
+                'level'    => 'required',
+                'email'    => 'required|email',
+            ],
+            [
+                'nik.required'      => 'Bidang ini tidak boleh kosong !',
+                'password.required' => 'Bidang ini tidak boleh kosong !',
+                'level.required'    => 'Bidang ini tidak boleh kosong !',
+                'email.required'    => 'Bidang ini tidak boleh kosong !',
+    
+                'password.max' => 'Minimal 5 Karakter!',
+            ]);
 
-            'password.max' => 'Minimal 5 Karakter!',
-        ]);
+        }
 
         $karyawan = Karyawan::where('nik', '=', $request->nik)->firstOrFail();
         
@@ -72,9 +76,23 @@ class AuthController extends Controller
         $data2 = [
             'userId'    => $request->nik,
             'groupId'   => $request->level,
+            'created_at'    => date('Y-m-d H.i.s')
         ];
 
         Auth_user_group::insert($data2);
+
+        if (!empty($request->izin)) {
+            foreach ($request->izin as  $value) {
+                # code...
+                $data3 = [
+                    'userId'        => $request->nik,
+                    'permission_id' => $value,
+                    'created_at'    => date('Y-m-d H.i.s')
+                ];
+        
+                Auth_user_permission::insert($data3);
+            }
+        }        
 
         return redirect()->route('user')->with('message','Data '.$karyawan->nama.' Berhasil Disimpan!');
     }

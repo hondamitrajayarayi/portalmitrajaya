@@ -2,9 +2,7 @@
 @section('title', 'Authentication Group')
 @section('nav_active_grup', 'active')
 @section('nav_active_master_muser', 'active')
-@push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/multi.js/multi.min.css') }}" />
-@endpush
+
 @section('content')
 
 

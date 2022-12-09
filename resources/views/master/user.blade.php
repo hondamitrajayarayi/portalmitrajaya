@@ -21,26 +21,35 @@
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="validationCustom04"
-                                        class="form-label @error('nik') text-danger @enderror">Karyawan</label>
-                                    <select class="form-control" data-choices name="nik" id="choices-single-default">
+                                        class="form-label @error('nik') text-danger @enderror">Karyawan <i class="text-danger fs-15">*</i></label>
+                                    <select class="form-control mb-0" data-choices name="nik" id="choices-single-default">
                                         <option value="">Pilih Karyawan</option>
                                         @foreach($karyawan as $kry)
                                             <option value="{{ $kry->nik }}" @if(old('nik') == $kry->nik) selected @endif>{{ $kry->cabang->branch_name }} | {{ $kry->jabatan->nama_jabatan }} {{ $kry->departemen->nama_dept }}  | {{ $kry->nama }}</option>
                                         @endforeach
                                     </select>
-                                        
-                                    @error('nik')
+                                     
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-12">
+                                <div>
+                                    <label for="validationCustom04"
+                                        class="form-label @error('email') text-danger @enderror">Email <i class="text-danger fs-15">*</i></label>
+                                    <input type="email" name="email" value="{{ old('email') }}"
+                                        class="form-control @error('email') is-invalid @enderror" id="validationCustom04"
+                                        autocomplete="off">
+                                    @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                             </div>
-                            <!--end col-->
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="validationCustom02"
-                                        class="form-label @error('password') text-danger @enderror">Password</label>
+                                        class="form-label @error('password') text-danger @enderror">Password <i class="text-danger fs-15">*</i></label>
                                         <input type="password" name="password" 
                                         class="form-control @error('password') is-invalid @enderror" id="validationCustom04"
                                         autocomplete="off">
@@ -55,8 +64,47 @@
 
                             <div class="col-xxl-12">
                                 <div>
+                                    <label for="validationCustom02"
+                                        class="form-label @error('izin') text-danger @enderror">Autentikasi Pengguna</label>
+                                        <select multiple="multiple" name="izin[]" id="multiselect-optiongroup">
+                                            <optgroup label="Autentikasi">
+                                                {{-- <option value="3" selected>Pengguna</option> --}}
+                                                <option value="3">Pengguna</option>
+                                                <option value="6">Grup</option>
+                                            </optgroup>
+                                            <optgroup label="App Budgeting">
+                                                <option value="7">Pengajuan</option>
+                                                <option value="8">Persetujuan</option>
+                                                <option value="9">Pengesahan</option>
+                                                <option value="10">Otorisasi</option>
+                                            </optgroup>
+                                            <optgroup label="App Inventaris">
+                                                <option value="11">Data Inventaris</option>
+                                                <option value="12">Query Inventaris</option>
+                                                <option value="13">Peminjaman</option>
+                                                <option value="14">Pemeliharaan</option>
+                                            </optgroup>
+                                            <optgroup label="Master Data">
+                                                <option value="2">Karyawan</option>
+                                                <option value="4">Departemen</option>
+                                                <option value="5">Jabatan</option>
+                                                <option value="1">Cabang</option>
+                                                <option value="15">Jenis Inventaris</option>
+                                                <option value="16">Grup Inventaris</option>
+                                            </optgroup>
+                                        </select>
+                                  
+                                    @error('izin')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-xxl-12">
+                                <div>
                                     <label for="validationCustom04"
-                                        class="form-label @error('level') text-danger @enderror">Grup Autentikasi</label>
+                                        class="form-label @error('level') text-danger @enderror">Autentikasi Grup <i class="text-danger fs-15">*</i></label>
                                     <select class="form-control" data-choices name="level" id="choices-single-default">
                                         <option value="">Pilih Grup Autentikasi</option>
                                         @foreach($grup as $rslt)
@@ -65,22 +113,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="col-xxl-12">
-                                <div>
-                                    <label for="validationCustom04"
-                                        class="form-label @error('email') text-danger @enderror">Email</label>
-                                    <input type="email" name="email" value="{{ old('email') }}"
-                                        class="form-control @error('email') is-invalid @enderror" id="validationCustom04"
-                                        autocomplete="off">
-                                    @error('email')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-
                             <!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
@@ -139,20 +171,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            
-                            {{-- <div class="col-xxl-12">
-                                <div>
-                                    <label for="validationCustom04"
-                                        class="form-label @error('edit_level') text-danger @enderror">Level</label>
-                                    <select class="form-control" data-choices name="edit_level" id="edit_level">
-                                        <option value="">Pilih Level</option>
-                                        <option value="admin" @if(old('level') == 'admin') selected @endif>Admin</option>
-                                        <option value="teknisi" @if(old('level') == 'teknisi') selected @endif>Teknisi</option>
-                                        <option value="user" @if(old('level') == 'user') selected @endif>User</option>
-                                        
-                                    </select>
-                                </div>
-                            </div> --}}
 
                             <div class="col-xxl-12">
                                 <div>
@@ -389,6 +407,9 @@
     <script src="{{ asset('assets/libs/list.js/list.pagination.js.min.js') }}"></script>
     <script src="{{ asset('assets/libs/list.js/listjs.init.js') }}"></script>
     <script src="{{ asset('assets/libs/list.js/list.min.js') }}"></script>
+    <!-- multi.js -->
+    <script src="{{ asset('assets/libs/multi.js/multi.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-advanced2.init.js') }}"></script>
 
     {{-- <script src="{{ asset('assets/libs/sweetalert2.min.js') }}"></script> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

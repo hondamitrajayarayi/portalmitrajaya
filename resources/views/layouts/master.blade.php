@@ -25,6 +25,7 @@
     <!-- custom Css-->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://kit.fontawesome.com/bdc70a6d76.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/multi.js/multi.min.css') }}" />
     @stack('styles')
 </head>
 
