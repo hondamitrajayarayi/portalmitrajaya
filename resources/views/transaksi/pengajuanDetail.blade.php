@@ -473,8 +473,8 @@
                         <div class="row">
                             <div class="col-sm-6 mt-2">
                                 <div>
-                                    <label for="basiInput" class="form-label fs-16">Diketahui oleh</label>
-                                    <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="diketahui[]" multiple>
+                                    <label for="basiInput" class="form-label fs-16">Diketahui oleh <i class="text-danger">*</i></label>
+                                    <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="diketahui[]" multiple required>
                                         <option value="">Pilih</option>
                                         @foreach($diketahui as $result)
                                         <option value="{{ $result->nik }}">{{ $result->jabatan->nama_jabatan }} {{ $result->departemen->nama_dept }} | {{ $result->nama }}</option>
@@ -484,8 +484,8 @@
                             </div>
                             <div class="col-sm-6 mt-2">
                                 <div>
-                                    <label for="basiInput" class="form-label fs-16">Disetujui oleh</label>
-                                    <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="disetujui[]" multiple>
+                                    <label for="basiInput" class="form-label fs-16">Disetujui oleh <i class="text-danger">*</i></label>
+                                    <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="disetujui[]" multiple required>
                                         <option value="">Pilih</option>
                                         @foreach($disetujui as $result)
                                         <option value="{{ $result->nik }}">{{ $result->jabatan->nama_jabatan }} {{ $result->departemen->nama_dept }} | {{ $result->nama }}</option>
