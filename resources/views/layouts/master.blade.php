@@ -33,7 +33,43 @@
 
     <!-- Begin page -->
     <div id="layout-wrapper">
-
+        <div id="profileModals" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content border-0 overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-lg-12">
+                            <div class="modal-body p-4">
+                                <div class="text-center mb-3 mt-1">
+                                    <div class="profile-user position-relative d-inline-block mx-auto  mb-3">
+                                        <div class="avatar-xl img-thumbnail rounded-circle flex-shrink-0 mb-0">
+                                            <div class="avatar-title border bg-soft-info text-info rounded-circle text-uppercase fs-1">
+                                                <?php 
+                                                    $s = Auth::user()->name;
+                
+                                                    if(preg_match_all('/\b(\w)/',strtoupper($s),$m)) {
+                                                        $v = implode('',$m[1]); 
+                                                    }
+                
+                                                    echo $v;
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="fs-16 mb-1">{{ Auth::user()->name }}</h5>
+                                    <p class="text-muted mb-0">{{ Auth::user()->karyawan->jabatan->nama_jabatan }} {{ Auth::user()->karyawan->departemen->nama_dept }}</p>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><i class="ri-user-line align-middle me-2 fs-15"></i> {{ Auth::user()->username }}</li>
+                                    <li class="list-group-item"><i class="ri-mail-line align-middle me-2 fs-15"></i> {{ Auth::user()->email }}</li>
+                                    <li class="list-group-item"><i class="ri-mind-map align-middle me-2 fs-15"></i>SCHEMA {{ Auth::user()->karyawan->cabang->schema_name }}</li>
+                                    <li class="list-group-item"><i class="ri-building-4-line align-middle me-2 fs-15"></i>{{ Auth::user()->karyawan->cabang->branch_name }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         @include('layouts.header')
         <!-- ========== App Menu ========== -->
         @include('layouts.menubar')
