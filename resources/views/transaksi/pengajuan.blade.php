@@ -18,7 +18,7 @@
                             <div class="col-xl-4">
                                 <div>
                                     <label for="validationCustom04"
-                                        class="form-label mb-1">No. RB</label>
+                                        class="form-label mb-1">No. RB <i class="text-danger">*</i></label>
                                     <input type="text" name="no_rb" value="{{ $kodeRb }}"
                                         class="form-control" id="validationCustom04"
                                         autocomplete="off" readonly>
@@ -27,7 +27,7 @@
                             <div class="col-xl-4">
                                 <div>
                                     <label for="validationCustom04"
-                                        class="form-label mb-1">Cabang</label>
+                                        class="form-label mb-1">Cabang <i class="text-danger">*</i></label>
                                     <input type="hidden" name="cabang" value="{{ $user->branch_id }}">
                                     <input type="text" value="{{ $user->cabang->branch_name }}"
                                         class="form-control" id="validationCustom04"
@@ -37,7 +37,7 @@
                             <div class="col-xl-4">
                                 <div>
                                     <label for="validationCustom04"
-                                        class="form-label mb-1">Diajukan Oleh</label>
+                                        class="form-label mb-1">Diajukan Oleh <i class="text-danger">*</i></label>
                                     <input type="hidden" name="nama" value="{{ $user->nik }}">
                                     <input type="text" value="{{ $user->nama }}"
                                         class="form-control" id="validationCustom04"
@@ -50,7 +50,7 @@
                                 
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5"
-                                    class="form-label mb-1">Dana ditransfer ke Bank</label>
+                                    class="form-label mb-1">Dana ditransfer ke Bank <i class="text-danger">*</i></label>
                                     <input type="text" name="bank" placeholder="Nama Bank"
                                     class="form-control" id="validationCustom04"
                                     autocomplete="off" required>
@@ -59,7 +59,7 @@
                             <div class="col-xl-4">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5"
-                                        class="form-label mb-1">Dana ditransfer ke Rekening</label>
+                                        class="form-label mb-1">Dana ditransfer ke Rekening <i class="text-danger">*</i></label>
                                     <input type="text" name="rekening" placeholder="No. Rekening"
                                         class="form-control" id="validationCustom04"
                                         autocomplete="off" required>
@@ -77,7 +77,7 @@
                                 <div class="pt-2">
 
                                     <label for="exampleFormControlTextarea5"
-                                    class="form-label mb-1">Atas nama Rekening</label>
+                                    class="form-label mb-1">Atas nama Rekening <i class="text-danger">*</i></label>
                                     <input type="text" name="anrek" placeholder="Atas nama Rekening"
                                     class="form-control" id="validationCustom04"
                                     autocomplete="off" required>
@@ -88,7 +88,7 @@
                             <div class="col-xl-4">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5" 
-                                        class="form-label mb-1">Lampirkan file <i class="text-muted fs-12">(Extenstion yang diizinkan untuk diupload: .pdf)</i></label>
+                                        class="form-label mb-1">Lampirkan file <i class="text-danger">*</i> <i class="text-muted fs-12">(Extenstion yang diizinkan untuk diupload: .pdf)</i></label>
                                     <input name="dokumen[]" type="file" 
                                         class="form-control" multiple="multiple" accept=".pdf" required>
                                     
@@ -112,7 +112,7 @@
                             <div class="col-xl-12">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5" 
-                                        class="form-label mb-1">Note</label>
+                                        class="form-label mb-1">Note <i class="text-danger">*</i></label>
                                     <textarea class="form-control" name="note" id="deskripsi" rows="2" required>{{ old('deskripsi') }}</textarea>
                                     
                                 </div>
@@ -121,7 +121,7 @@
                         </div>
                         
                         <div class="card-header align-items-center d-flex">
-                            <h5 class="card-title mb-0 mt-4 flex-grow-1">Detail Item Pengajuan Budget</h5>
+                            <h5 class="card-title mb-0 mt-4 flex-grow-1">Detail Item Pengajuan Budget <i class="text-danger">*</i></h5>
                             <div class="flex-shrink-0">
                                 <div class="form-check form-switch form-switch-right form-switch-md">
                                     {{-- <button name="add" id="add" type="button" class="btn btn-success btn-sm btn-label waves-effect waves-light">
