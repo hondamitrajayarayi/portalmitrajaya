@@ -280,7 +280,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-9">
+        <div class="col-xl-12">
             <div div class="card">
                 <div class="card-header" >
                     <h6 class="card-title mb-0 font-poppins fs-15" >Master Karyawan</h6>
@@ -321,10 +321,10 @@
                                     <th class="sort" data-sort="email">Nama</th>
                                     <th class="sort" data-sort="phone">Jenis Kelamin</th>
                                     <th class="sort" data-sort="date">Cabang</th>
-                                    {{-- <th class="sort" data-sort="date">Schema</th> --}}
+                                    <th class="sort" data-sort="date">Schema</th>
                                     <th class="sort" data-sort="date">Departemen</th>
                                     <th class="sort" data-sort="date">Jabatan</th>
-                                    <th class="sort" data-sort="date">No Telepon</th>
+                                    {{-- <th class="sort" data-sort="date">No Telepon</th> --}}
                                     {{-- <th class="sort" data-sort="status">Updated</th> --}}
                                     <th class="sort" data-sort="status">Created</th>
                                     <th class="sort" data-sort="action">Action</th>
@@ -337,10 +337,10 @@
                                         <td class="customer_name">{{ $item->nama }}</td>
                                         <td class="email"> {{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                         <td class="email">{{ $item->cabang['branch_name'] }}</td>
-                                        {{-- <td class="email">{{ $item->schema }}</td> --}}
+                                        <td class="email">{{ $item->schema }}</td>
                                         <td class="email">{{ $item->departemen['nama_dept'] }}</td>
                                         <td class="email">{{ $item->jabatan['nama_jabatan'] }}</td>
-                                        <td class="email">{{ $item->no_telp }}</td>
+                                        {{-- <td class="email">{{ $item->no_telp }}</td> --}}
                                         {{-- <td class="phone">@tanggal($item->updated_at)</td> --}}
                                         <td class="date">@tanggal($item->created_at)</td>
                                         <td>
@@ -402,7 +402,7 @@
 
             </div>
         </div>
-        <div class="col-xl-3 col-md-3">
+        {{-- <div class="col-xl-3 col-md-3">
             <div class="card"  data-v-37db4fe8="">
                 <div class="card-header" >
                     <h6 class="card-title mb-0 font-poppins fs-15" >Related Master Data</h6>
@@ -453,7 +453,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
 @endsection
