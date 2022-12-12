@@ -28,14 +28,15 @@ class InventarisController extends Controller
     }
     public function tambah()
     {
+        $already = TrxInventory::whereNotNull('item_id')->get('item_id');
+        
         $data = TrxRbHeader::where('trx_rb_header.status',0)
-                ->whereNotIn('trx_rb_detail_item.item_id', TrxInventory::get('item_id'))
+                ->whereNotIn('trx_rb_detail_item.item_id', $already)
                 ->join('trx_rb_detail_item','trx_rb_detail_item.rb_id','=','trx_rb_header.rb_id')
                 ->orderBy('trx_rb_header.created_date','desc')
                 ->get();
         $autofill = null;
         $grup = GrupInventaris::get(["group_name", "group_id"]);
-        
         
         return view('inventori.inventory_tambah', compact('data','autofill','grup'));
     }

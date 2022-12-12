@@ -17,7 +17,7 @@
         <div class="col-xl-12">
             <div div class="card">
                 <div class="card-header" >
-                    <h6 class="card-title mb-0 font-poppins fs-15" >Master Inventory</h6>
+                    <h6 class="card-title mb-0 font-poppins fs-15" >Master Inventaris</h6>
                 </div>
                 <form method="POST">
                     @csrf
