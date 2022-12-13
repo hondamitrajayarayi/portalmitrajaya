@@ -42,8 +42,11 @@
                             <div class="modal-body p-4">
                                 <div class="text-center mb-3 mt-1">
                                     <div class="text-center">
-                                        @if(Auth::user()->karyawan->jk == 'L')
+                                        @if(Auth::user()->karyawan->id_bag_dept == '1')
                                         <lord-icon src="https://cdn.lordicon.com/nobciafz.json" trigger="loop" style="width:130px;height:130px">
+                                        </lord-icon>
+                                        @elseif(Auth::user()->karyawan->jk == 'L')
+                                        <lord-icon src="https://cdn.lordicon.com/eszyyflr.json" trigger="loop" style="width:130px;height:130px">
                                         </lord-icon>
                                         @else
                                         <lord-icon src="https://cdn.lordicon.com/bwnhdkha.json" trigger="loop" style="width:130px;height:130px">
