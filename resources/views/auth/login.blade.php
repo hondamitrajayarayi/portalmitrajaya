@@ -69,7 +69,7 @@
                                     {{-- <input type="hidden" name="_token" value="GRnh6IhvowqWwRofYQN8ZcmpUSfR71R3UCjdubxi"> --}}
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()" autocomplete="off" id="username"
+                                        <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()" id="username"
                                             name="username" placeholder="Enter username">
                                     </div>
 
