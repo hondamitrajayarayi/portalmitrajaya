@@ -22,10 +22,9 @@ class PengajuanController extends Controller
         $user = Karyawan::where('nik', '=', Auth::user()->username)->first();
         $kodeRb = $this->getKodeRB($user);
         $tanggal = date('d F Y');
-        $diketahui = Karyawan::where('id_jabatan',2)
-                    ->orWhere('id_jabatan',6)
-                    ->orWhere('id_jabatan',7)
-                    ->orWhere('id_bag_dept',8)->get();
+        $diketahui = Karyawan::where('id_jabatan',1)
+                    ->orWhere('id_jabatan',2)
+                    ->orWhere('id_jabatan',3)->get();
         // dd($kodeRb);
         return view('transaksi.pengajuan', compact('user','kodeRb','tanggal','diketahui'));
     }
