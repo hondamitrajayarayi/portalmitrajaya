@@ -82,6 +82,9 @@
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModals"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Profile</span></a>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#passwordModals"><i
+                                class="ri-shield-keyhole-line text-muted fs-16 align-middle me-1"></i> <span
+                                class="align-middle">Password reset</span></a>
                         <a class="dropdown-item" href="https://gintinx.atlassian.net/l/cp/R1QYZqfw" target="_blank" ><i
                                 class="ri-book-mark-line text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Manual Book</span></a>
@@ -100,3 +103,52 @@
     </div>
     
 </header>
+@push('before-scripts')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script>
+        $('#password-input, #confirm-password-input').on('keyup', function () {
+            if ($('#password-input').val() == $('#confirm-password-input').val()) {
+                $('#message').html('<div class="d-flex fs-13"><div class="flex-shrink-0 text-success me-1"><i class="ri-checkbox-circle-fill fs-12 align-middle"></i></div><div class="flex-grow-1 text-success">Matching</div></div>');
+                $('#message1').html('<div class="d-flex fs-13"><div class="flex-shrink-0 text-success me-1"><i class="ri-checkbox-circle-fill fs-12 align-middle"></i></div><div class="flex-grow-1 text-success">Matching</div></div>');
+                // $('#password-input').addClass('is-valid');
+                $('#button_password').removeAttr('disabled');
+            } else {
+                $('#message').html('<div class="d-flex fs-13"><div class="flex-shrink-0 text-danger me-1"><i class="ri-close-circle-fill fs-12 align-middle"></i></div><div class="flex-grow-1 text-danger">Not Matching</div></div>');
+                $('#message1').html('<div class="d-flex fs-13"><div class="flex-shrink-0 text-danger me-1"><i class="ri-close-circle-fill fs-12 align-middle"></i></div><div class="flex-grow-1 text-danger">Not Matching</div></div>');
+                $('#button_password').attr('disabled','disabled');
+
+            }
+        });
+    </script>
+    <script>
+        $("#password-addon").click(function() {
+            console.log('ada');
+            $('#icon').removeClass('ri-eye-fill align-middle');
+            $('#icon').addClass('ri-eye-off-fill align-middle');
+            var x = document.getElementById("password-input");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                console.log('hide');
+                $('#icon').removeClass('ri-eye-off-fill align-middle');
+                $('#icon').addClass('ri-eye-fill align-middle');
+                x.type = "password";
+            }
+        });
+        $("#confirm-password-input-addon").click(function() {
+            console.log('ada');
+            $('#icon2').removeClass('ri-eye-fill align-middle');
+            $('#icon2').addClass('ri-eye-off-fill align-middle');
+            var x = document.getElementById("confirm-password-input");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                console.log('hide');
+                $('#icon2').removeClass('ri-eye-off-fill align-middle');
+                $('#icon2').addClass('ri-eye-fill align-middle');
+                x.type = "password";
+            }
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+@endpush

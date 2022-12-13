@@ -59,7 +59,8 @@ class AuthController extends Controller
             'email'     => $request->email,
             'status'     => 1,
             'created_at' => date('Y-m-d H:i:s'), 
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
+            'last_user' => Auth::user()->username,
         ];
 
         User::insert($data);
@@ -95,6 +96,20 @@ class AuthController extends Controller
         }        
 
         return redirect()->route('user')->with('message','Data '.$karyawan->nama.' Berhasil Disimpan!');
+    }
+
+    public function resetpassword(Request $request)
+    {
+        
+        $data = [
+            'password'  => Hash::make($request->newpassword),
+            'updated_at' => date('Y-m-d H:i:s'),
+            'last_user' => Auth::user()->username,
+        ];
+
+        User::where('username',  Auth::user()->username)->update($data);
+
+        return redirect()->route('/home')->with('message-password','Password Berhasil Diubah!');
     }
 
     public function edit($id)

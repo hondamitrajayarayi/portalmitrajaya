@@ -30,6 +30,7 @@ Route::post('/logout','AuthController@logout')->name('logout');
 
 // // Route::group(['middleware' => 'CekloginMiddleware'], function (){
 Route::group(['middleware' => 'auth'], function (){
+    Route::post('/resetpassword','AuthController@resetpassword')->name('reset.password');
     Route::get('/dashboard', function () { 
         // jika yg login pembuat tiket
         $cekAdmin= Karyawan::whereIn('id_jabatan',[4])->where('nik', Auth::user()->username)->first();

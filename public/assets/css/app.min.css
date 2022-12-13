@@ -13339,6 +13339,34 @@ span.flatpickr-weekday {
   color: rgba(255, 255, 255, .5)
 }
 
+#password-contain {
+  display: none
+}
+
+#password-contain p {
+  padding-left: 13px
+}
+
+#password-contain p.valid {
+  color: #0ab39c
+}
+
+#password-contain p.valid::before {
+  position: relative;
+  left: -8px;
+  content: "✔"
+}
+
+#password-contain p.invalid {
+  color: #f06548
+}
+
+#password-contain p.invalid::before {
+  position: relative;
+  left: -8px;
+  content: "✖"
+}
+
 .dash-filter-picker {
   min-width: 210px !important
 }
