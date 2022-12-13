@@ -41,22 +41,16 @@
                         <div class="col-lg-12">
                             <div class="modal-body p-4">
                                 <div class="text-center mb-3 mt-1">
-                                    <div class="profile-user position-relative d-inline-block mx-auto  mb-3">
-                                        <div class="avatar-xl img-thumbnail rounded-circle flex-shrink-0 mb-0">
-                                            <div class="avatar-title border bg-soft-info text-info rounded-circle text-uppercase fs-1">
-                                                <?php 
-                                                    $s = Auth::user()->name;
-                
-                                                    if(preg_match_all('/\b(\w)/',strtoupper($s),$m)) {
-                                                        $v = implode('',$m[1]); 
-                                                    }
-                
-                                                    echo $v;
-                                                ?>
-                                            </div>
-                                        </div>
+                                    <div class="text-center">
+                                        @if(Auth::user()->karyawan->jk == 'L')
+                                        <lord-icon src="https://cdn.lordicon.com/nobciafz.json" trigger="loop" style="width:130px;height:130px">
+                                        </lord-icon>
+                                        @else
+                                        <lord-icon src="https://cdn.lordicon.com/bwnhdkha.json" trigger="loop" style="width:130px;height:130px">
+                                        </lord-icon>
+                                        @endif
                                     </div>
-                                    <h5 class="fs-16 mb-1">{{ Auth::user()->name }}</h5>
+                                    <h5 class="fs-16 mb-1 mt-0">{{ Auth::user()->name }}</h5>
                                     <p class="text-muted mb-0">{{ Auth::user()->karyawan->jabatan->nama_jabatan }} {{ Auth::user()->karyawan->departemen->nama_dept }}</p>
                                 </div>
                                 <ul class="list-group">
