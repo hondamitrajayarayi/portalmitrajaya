@@ -79,12 +79,14 @@
                                         </div>
                                         <label class="form-label" for="password-input">Password</label>
                                         <div class="position-relative auth-pass-inputgroup mb-3">
-                                            <input type="password" class="form-control pe-5 " autocomplete="off"
+                                            <input type="password" class="form-control pe-5 password-input" autocomplete="off"
                                                 name="password" placeholder="Enter password" id="password-input">
+                                                {{-- <input type="password" class="form-control pe-5 password-input"
+                                                placeholder="Enter password" id="password-input"> --}}
                                             <button
                                                 class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                                                 type="button" id="password-addon"><i
-                                                    class="ri-eye-fill align-middle"></i></button>
+                                                    class="ri-eye-fill align-middle" id="icon"></i></button>
                                         </div>
                                     </div>
 
@@ -165,7 +167,25 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="http://velzon.laravel-default.themesbrand.com/assets/libs/particles.js/particles.js.min.js"></script>
 <script src="http://velzon.laravel-default.themesbrand.com/assets/js/pages/particles.app.js"></script>
-<script src="http://velzon.laravel-default.themesbrand.com/assets/js/pages/password-addon.init.js"></script>
+<script src="{{ asset('assets/js/pages/password-addon.init.js') }}"></script>
+<script>
+    $("#password-addon").click(function() {
+        console.log('ada');
+        // $(this).toggleClass("fa-eye fa-eye-slash");
+        // var input = $($(this).attr("toggle"));
+        $('#icon').removeClass('ri-eye-fill align-middle');
+        $('#icon').addClass('ri-eye-off-fill align-middle');
+        var x = document.getElementById("password-input");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            console.log('hide');
+            $('#icon').removeClass('ri-eye-off-fill align-middle');
+            $('#icon').addClass('ri-eye-fill align-middle');
+            x.type = "password";
+        }
+    });
+</script>
 @if (session('message'))
     <script>
         Toastify({
