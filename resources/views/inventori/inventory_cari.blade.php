@@ -58,7 +58,7 @@
                                         <div class="row g-2">
                                             <div class="col">
                                                 <div class="position-relative mb-2">
-                                                    <input type="text" name="inv_id" class="form-control rounded-pill form-control-lg bg-light border-light" placeholder="Masukan kode inventaris disini..." autocomplete="off">
+                                                    <input type="text" name="inv_id" class="form-control rounded-pill form-control-lg bg-light border-light" placeholder="Masukan kode inventaris disini..." autocomplete="off" autofocus>
                                                     <button type="submit" id="btnSubmit" class="btn btn-lg link-primary position-absolute end-0 top-0 " aria-controls="offcanvasExample"><i class="ri-search-line"></i> &nbsp;&nbsp;</button>
                                                     <div id="loading" style="display:none;">
                                                         <button type="button" class="btn btn-lg link-primary btn-load position-absolute end-0 top-0 " aria-controls="offcanvasExample">
