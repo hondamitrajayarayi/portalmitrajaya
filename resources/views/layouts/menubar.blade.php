@@ -163,14 +163,14 @@
                             @endcan
                             @can('menu_mst_jenis_inventaris')
                             <li class="nav-item">
-                                <a class="nav-link menu-link @yield('nav_active_jenis_inventaris')" href="{{ route('inventaris') }}">
+                                <a class="nav-link menu-link @yield('nav_active_jenis_inventaris')" href="{{ route('inventaris.jenis') }}">
                                     <i class="ri-briefcase-line"></i><span data-key="t-widgets">Jenis Inventaris</span>
                                 </a>
                             </li>
                             @endcan
                             @can('menu_mst_grup_inventaris')
                             <li class="nav-item">
-                                <a class="nav-link menu-link @yield('nav_active_grup_inventaris')" href="{{ route('inventaris') }}">
+                                <a class="nav-link menu-link @yield('nav_active_grup_inventaris')" href="{{ route('inventaris.group') }}">
                                     <i class="ri-briefcase-line"></i><span data-key="t-widgets">Grup Inventaris</span>
                                 </a>
                             </li>

@@ -107,10 +107,10 @@ Route::group(['middleware' => 'auth'], function (){
         Route::delete('jabatan/delete/{id}','JabatanController@hapus')->name('jabatan.hapus');
     });
     Route::group(['middleware' => 'can:menu_mst_jenis_inventaris'], function (){
-
+        Route::get('inventaris/jenis','InventarisController@masterjenis')->name('inventaris.jenis');
     });
     Route::group(['middleware' => 'can:menu_mst_grup_inventaris'], function (){
-
+        Route::get('inventaris/group','InventarisController@mastergroup')->name('inventaris.group');
     });
 
     // rb

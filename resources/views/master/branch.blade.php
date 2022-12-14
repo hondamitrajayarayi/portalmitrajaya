@@ -282,6 +282,26 @@
                                         Branch</h6>
                                 </a></div>
                         </div>
+                        <div class="d-flex mb-2 list-setting_item pointer" >
+                            <div class="flex-shrink-0" ><span
+                                    class="badge badge-soft-primary p-1 fs-15" ><i
+                                        class="ri-briefcase-line" ></i></span></div>
+                            <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
+                                    href="{{ route('inventaris.jenis')}}" class="" >
+                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
+                                        Jenis Inventaris</h6>
+                                </a></div>
+                        </div>
+                        <div class="d-flex mb-2 list-setting_item pointer" >
+                            <div class="flex-shrink-0" ><span
+                                    class="badge badge-soft-primary p-1 fs-15" ><i
+                                        class="ri-briefcase-line" ></i></span></div>
+                            <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
+                                    href="{{ route('inventaris.group')}}" class="" >
+                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
+                                        Grup Inventaris</h6>
+                                </a></div>
+                        </div>
                     </div>
                 </div>
             </div>

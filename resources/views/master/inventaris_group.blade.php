@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title', 'Master Data Departemen')
-@section('nav_active_departemen', 'active')
+@section('title', 'Master Grup Inventaris')
+@section('nav_active_grup_inventaris', 'active')
 @section('nav_active_master_data', 'active')
 @section('content')
 
@@ -10,23 +10,23 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header p-3 bg-primary" data-v-01bddeea="">
-                    <h5 class="modal-title text-light" id="exampleModalLabel" data-v-01bddeea=""> Tambah Departemen </h5>
+                    <h5 class="modal-title text-light" id="exampleModalLabel" data-v-01bddeea=""> Tambah Branch </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal" data-v-01bddeea=""></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('departemen.simpan') }}" method="POST">
+                    <form action="{{ route('branch.simpan') }}" method="POST">
                         @csrf
                         <div class="row g-3">
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="validationCustom02"
-                                        class="form-label @error('nama_dep') text-danger @enderror">Nama Departemen</label>
-                                        <input type="text" name="nama_dep" 
-                                        class="form-control @error('nama_dep') is-invalid @enderror" id="validationCustom04"
-                                        autocomplete="off">
-                                  
-                                    @error('nama_dep')
+                                        class="form-label @error('nama_branch') text-danger @enderror">Nama Branch</label>
+                                    <input type="text" name="nama_branch"
+                                        class="form-control @error('nama_branch') is-invalid @enderror"
+                                        id="validationCustom04" autocomplete="off">
+
+                                    @error('nama_branch')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -34,7 +34,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <!--end col-->
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
@@ -68,12 +68,12 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header p-3 bg-primary" data-v-01bddeea="">
-                    <h5 class="modal-title text-light" id="exampleModalgridLabel">Edit Departemen</h5>
+                    <h5 class="modal-title text-light" id="exampleModalgridLabel">Edit Brach</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
                         id="close-modal" data-v-01bddeea=""></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('departemen.update') }}" method="POST">
+                    <form action="{{ route('branch.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ old('id') }}">
                         <div class="row g-3">
@@ -81,11 +81,11 @@
                             <div class="col-xxl-12">
                                 <div>
                                     <label for="validationCustom02"
-                                        class="form-label @error('edit_nama') text-danger @enderror">Nama Departemen</label>
-                                        <input type="text" id="edit_nama" name="edit_nama" 
-                                        class="form-control @error('edit_nama') is-invalid @enderror" id="validationCustom04"
-                                        autocomplete="off">
-                                  
+                                        class="form-label @error('edit_nama') text-danger @enderror">Nama Branch</label>
+                                    <input type="text" id="edit_nama" name="edit_nama"
+                                        class="form-control @error('edit_nama') is-invalid @enderror"
+                                        id="validationCustom04" autocomplete="off">
+
                                     @error('edit_nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -111,7 +111,7 @@
                                         </button>
                                     </div>
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    
+
                                 </div>
                             </div>
                             <!--end col-->
@@ -125,28 +125,26 @@
     <div class="row">
         <div class="col-xl-9">
             <div div class="card">
-                <div class="card-header" >
-                    <h6 class="card-title mb-0 font-poppins fs-15" >Master Departemen</h6>
-                </div>
-                <div class="card-header border-0">
-                    <div class="row g-4">
-                        <div class="col-12 col-md-6">
-                          
-                                <div class="d-flex justify-content-md-start justify-content-center"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
-                                    {{-- <a href="{{ route('tambah') }}"> --}}
-                                    <button class="btn btn-outline-secondary">
-                                        <i class="ri-add-line align-bottom me-1"></i> Tambah Data
-                                    </button>
-                                    {{-- </a> --}}
-                                </div>
-                       
+                <div class="card-header border-0" data-v-cd5f1dea="">
+                    <div class="row g-4" data-v-cd5f1dea="">
+                        <div class="col-12 col-md-6" data-v-cd5f1dea="">
+
+                            <div class="d-flex justify-content-md-start justify-content-center" data-v-cd5f1dea=""
+                                data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                {{-- <a href="{{ route('tambah') }}"> --}}
+                                {{-- <button class="btn btn-outline-secondary" data-v-cd5f1dea="">
+                                    <i class="ri-add-line align-bottom me-1" data-v-cd5f1dea=""></i> Tambah Data
+                                </button> --}}
+                                <h6 class="card-title mb-0 mt-2 font-poppins" >Master Group Inventaris</h6>
+                                {{-- </a> --}}
+                            </div>
+
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="d-flex justify-content-md-end justify-content-center">
-                                <div class="search-box ms-2"><input type="text"
-                                        class="form-control" placeholder="Search .." id="myInput"
-                                        name="search"><i class="ri-search-line search-icon"></i>
+                        <div class="col-12 col-md-6" data-v-cd5f1dea="">
+                            <div class="d-flex justify-content-md-end justify-content-center" data-v-cd5f1dea="">
+                                <div class="search-box ms-2" data-v-cd5f1dea=""><input type="text"
+                                        class="form-control" placeholder="Search .." data-v-cd5f1dea="" id="myInput"
+                                        name="search"><i class="ri-search-line search-icon" data-v-cd5f1dea=""></i>
                                 </div>
                             </div>
                         </div>
@@ -160,10 +158,12 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="sort" data-sort="customer_name">No</th>
-                                    <th class="sort" data-sort="email">Nama Departemen</th>
-                                    <th class="sort" data-sort="status">Updated</th>
-                                    <th class="sort" data-sort="status">Created</th>
-                                    <th class="sort" data-sort="action">Action</th>
+                                    <th class="sort" data-sort="status">Nama Grup</th>
+                                    <th class="sort" data-sort="status">Status</th>
+                                    <th class="sort" data-sort="email">Created by</th>
+                                    <th class="sort" data-sort="email">Created date</th>
+                                    {{-- <th class="sort" data-sort="status">City</th> --}}
+                                    {{-- <th class="sort" data-sort="action">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody class="list form-check-all" id="carirow">
@@ -171,36 +171,44 @@
                                     <tr>
 
                                         <td class="status">{{ $data->firstItem() + $no }}</td>
-                                        <td class="customer_name">{{ $item->nama_dept }}</td>
-                                        <td class="phone"> @tanggal($item->updated_at) </td>
-                                        <td class="date">@tanggal($item->created_at)</td>
-                                        <td>
-                                            <span>
-                                                <div class="dropdown"><button
+                                        <td class="customer_name">{{ $item->group_name }}</td>
+                                        <td class="customer_name">
+                                            @if($item->status == '1')
+                                            <span class="badge badge-soft-success badge-border">Aktif</span>
+                                            @else
+                                            <span class="badge badge-soft-danger badge-border">Non Aktif</span>
+                                            @endif
+                                        </td>
+                                        <td class="customer_name">{{ $item->create_user }}</td>
+                                        <td class="customer_name">@tanggal($item->create_date)</td>
+                                        {{-- <td class="phone"> {{ $item->city }} </td> --}}
+                                        {{-- <td>
+                                            <span data-v-cd5f1dea="">
+                                                <div class="dropdown" data-v-cd5f1dea=""><button
                                                         class="btn btn-soft-secondary btn-sm dropdown" type="button"
                                                         data-bs-toggle="dropdown" aria-expanded="false"
-                                                       ><i class="ri-more-fill"
-                                                           ></i></button>
-                                                    <ul class="dropdown-menu dropdown-menu-end"
+                                                        data-v-cd5f1dea=""><i class="ri-more-fill"
+                                                            data-v-cd5f1dea=""></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" data-v-cd5f1dea=""
                                                         style="">
 
-                                                        <li>
+                                                        <li data-v-cd5f1dea="">
                                                             <a href="javascript:void(0)" class="dropdown-item edit"
-                                                                id="edit"
-                                                                data-id="{{ $item->id }}"><i
+                                                                id="edit" data-v-cd5f1dea=""
+                                                                data-id="{{ $item->branch_id }}"><i
                                                                     class="ri-pencil-fill align-bottom me-2 text-muted"
-                                                                   ></i> Edit</a>
+                                                                    data-v-cd5f1dea=""></i> Edit</a>
                                                         </li>
-                                                        <li>
+                                                        <li data-v-cd5f1dea="">
                                                             <a class="dropdown-item remove-item-btn confirm-delete"
-                                                                data-id="{{ $item->id }}">
+                                                                data-v-cd5f1dea="" data-id="{{ $item->branch_id }}">
                                                                 <i class="ri-delete-bin-fill align-bottom me-2 text-muted"
-                                                                   >
+                                                                    data-v-cd5f1dea="">
                                                                 </i>
                                                                 Delete
                                                                 <form method="POST"
-                                                                    action="{{ route('departemen.hapus', $item->id) }}"
-                                                                    id="delete-{{ $item->id }}">
+                                                                    action="{{ route('branch.hapus', $item->branch_id) }}"
+                                                                    id="delete-{{ $item->branch_id }}">
                                                                     @csrf
                                                                     @method('delete')
                                                                 </form>
@@ -209,7 +217,7 @@
                                                     </ul>
                                                 </div>
                                             </span>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -227,7 +235,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        
+
                         {{ $data->links() }}
                     </div>
                 </div>
@@ -265,10 +273,10 @@
                         <div class="d-flex mb-2 list-setting_item pointer" >
                             <div class="flex-shrink-0" ><span
                                     class="badge badge-soft-primary p-1 fs-15" ><i
-                                        class="text-info ri-node-tree" ></i></span></div>
+                                        class="ri-node-tree" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
                                     href="{{ route('departemen')}}" class="" >
-                                    <h6 class="text-info text-truncate fs-13 mb-0 font-poppins" >
+                                    <h6 class=" text-truncate fs-13 mb-0 font-poppins" >
                                         Departemen</h6>
                                 </a></div>
                         </div>
@@ -278,7 +286,7 @@
                                         class="ri-building-line" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
                                     href="{{ route('branch')}}" class="" >
-                                    <h6 class=" text-truncate fs-13 mb-0 font-poppins" >
+                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
                                         Branch</h6>
                                 </a></div>
                         </div>
@@ -295,10 +303,10 @@
                         <div class="d-flex mb-2 list-setting_item pointer" >
                             <div class="flex-shrink-0" ><span
                                     class="badge badge-soft-primary p-1 fs-15" ><i
-                                        class="ri-briefcase-line" ></i></span></div>
+                                        class="text-info ri-briefcase-line" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
                                     href="{{ route('inventaris.group')}}" class="" >
-                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
+                                    <h6 class="text-info text-truncate fs-13 mb-0 font-poppins" >
                                         Grup Inventaris</h6>
                                 </a></div>
                         </div>
@@ -368,19 +376,19 @@
     </script>
     <script>
         $(document).on('click', '.edit', function() {
-            var url = "departemen/";
+            var url = "branch/";
             var id = $(this).data('id');
             $.get(url + id + '/edit', function(data) {
                 //success data
                 console.log(data);
                 $('#id').val(data.id);
-                $('#edit_nama').val(data.nama_dept);
+                $('#edit_nama').val(data.branch_name);
                 $('#modaledit').modal('show');
             })
         });
     </script>
     <script>
-        @if ($errors->has('nama_dep'))
+        @if ($errors->has('nama_branch'))
             $(document).ready(function() {
 
                 $('#exampleModalgrid').modal('show');
