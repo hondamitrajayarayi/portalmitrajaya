@@ -51,18 +51,39 @@
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5"
                                     class="form-label mb-1">Dana ditransfer ke Bank <i class="text-danger">*</i></label>
-                                    <input type="text" name="bank" placeholder="Nama Bank"
+                                    {{-- <input type="text" name="bank" placeholder="Nama Bank"
                                     class="form-control" id="validationCustom04"
-                                    autocomplete="off" required>
+                                    autocomplete="off" required> --}}
+                                    <select class="form-control" name="bank" id="pilihbank" required>
+                                        <option value="">Pilih Bank</option>
+                                        @foreach ($bank as $kn)
+                                            <option value="{{ $kn->bank_id }}">{{ $kn->bank_name }}</option>
+                                        @endforeach
+                                        
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-xl-4">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5"
                                         class="form-label mb-1">Dana ditransfer ke Rekening <i class="text-danger">*</i></label>
-                                    <input type="text" name="rekening" placeholder="No. Rekening"
+                                    {{-- <input type="text" name="rekening" placeholder="No. Rekening"
                                         class="form-control" id="validationCustom04"
-                                        autocomplete="off" required>
+                                        autocomplete="off" required> --}}
+                                        
+                                            {{-- <select class="form-control" data-choices name="norek" id="norek" required> --}}
+                                        <div id="norekhide">
+                                            <select class="form-control" name="norek" id="norek" required>                                        
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="ph-item big p-1 mb-0" id="listloading" hidden>
+                                            <div class="ph-col-12 p-1 mb-0">
+                                                <div class="ph-row">
+                                                    <div class="ph-col-12 big ph-border-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {{-- <select class="form-control" data-choices name="kondisi" id="choices-single-default">
                                         <option value="">Pilih Rekening</option>
                                         @foreach ($kondisi as $kn)
@@ -74,18 +95,25 @@
                                 </div>
                             </div>
                             <div class="col-xl-4">
-                                <div class="pt-2">
+                                {{-- <div class="pt-2">
 
                                     <label for="exampleFormControlTextarea5"
                                     class="form-label mb-1">Atas nama Rekening <i class="text-danger">*</i></label>
                                     <input type="text" name="anrek" placeholder="Atas nama Rekening"
                                     class="form-control" id="validationCustom04"
                                     autocomplete="off" required>
+                                </div> --}}
+                                <div class="pt-2">
+                                    <label for="exampleFormControlTextarea5" 
+                                        class="form-label mb-1">Lampirkan file <i class="text-danger">*</i> <i class="text-muted fs-12">(Extenstion yang diizinkan untuk diupload: .pdf)</i></label>
+                                    <input name="dokumen[]" type="file" 
+                                        class="form-control" multiple="multiple" accept=".pdf" required>
+                                    
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-4">
+                            {{-- <div class="col-xl-4">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5" 
                                         class="form-label mb-1">Lampirkan file <i class="text-danger">*</i> <i class="text-muted fs-12">(Extenstion yang diizinkan untuk diupload: .pdf)</i></label>
@@ -94,13 +122,13 @@
                                     
                                 </div>
                                 
-                            </div>
-                            <div class="col-xl-8">
+                            </div> --}}
+                            <div class="col-xl-4">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5" 
                                         class="form-label mb-1">Mengetahui <i class="text-muted fs-12">(Wajib diisi untuk pengajuan cabang)</i></label>
-                                    <select class="form-control" id="choices-remove-button" data-choices data-choices-removeItem name="diketahui">
-                                        <option value="">Pilih Karyawan</option>
+                                    <select class="form-control" id="choices-remove-button" name="diketahui">
+                                        <option value="">Pilih Branch head/ Management</option>
                                         @foreach($diketahui as $result)
                                         <option value="{{ $result->nik }}">{{ $result->jabatan->nama_jabatan }} {{ $result->departemen->nama_dept }} | {{ $result->cabang->branch_name }} | {{ $result->nama }}</option>
                                         @endforeach
@@ -109,7 +137,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="col-xl-12">
+                            <div class="col-xl-8">
                                 <div class="pt-2">
                                     <label for="exampleFormControlTextarea5" 
                                         class="form-label mb-1">Note <i class="text-danger">*</i></label>
@@ -234,7 +262,6 @@
 
 @push('before-scripts')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-   
 @endpush
 
 @push('center-scripts')
@@ -249,7 +276,57 @@
     
 @endpush
 @push('scripts')
-    
+    <script>
+        $(document).ready(function () {
+            $("#pilihbank").select2({
+                theme: "bootstrap",
+                placeholder: "Pilih Bank"
+            });
+        });
+        $(document).ready(function () {
+            $("#norek").select2({
+                theme: "bootstrap",
+                placeholder: "Pilih rekening"
+            });
+        });
+        $(document).ready(function () {
+            $("#choices-remove-button").select2({
+                theme: "bootstrap",
+                placeholder: "Pilih Branch head/ Management"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $('#pilihbank').on('change', function () {
+                var bankid = this.value;
+                console.log(bankid);
+                $('#listloading').removeAttr('hidden');
+                $('#norekhide').attr('hidden','hidden');
+                $.ajax({
+                    url: "{{url('bank/getnorekening')}}",
+                    type: "POST",
+                    data: {
+                        bankid: bankid,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#norek").html('');
+                        $('#norek').html('<option value="">Pilih rekening</option>');
+                        $.each(result, function (key, value) {
+                            console.log(value.bank_account_no);
+                            $("#norek").append('<option value="' + value
+                                .bank_branch_id + '">' + value.bank_account_no +' | '+ value.bank_account_name + '</option>');
+                        });
+                        $('#norekhide').removeAttr('hidden');
+                        $('#listloading').attr('hidden','hidden');
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         var i = 0;
 

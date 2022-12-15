@@ -114,6 +114,8 @@ Route::group(['middleware' => 'auth'], function (){
     });
 
     // rb
+    Route::post('bank/getnorekening','PengajuanController@getnorekening');
+
     Route::group(['middleware' => 'can:menu_pengajuan'], function (){
         Route::get('pengajuan/riwayat','PengajuanController@list')->name('pengajuan.list');
         Route::get('pengajuan','PengajuanController@index')->name('pengajuan.baru');

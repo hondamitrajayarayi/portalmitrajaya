@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Bank;
+use App\BankCabang;
 use App\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,12 +23,20 @@ class PengajuanController extends Controller
 
         $user = Karyawan::where('nik', '=', Auth::user()->username)->first();
         $kodeRb = $this->getKodeRB($user);
+        $bank = Bank::all();
         $tanggal = date('d F Y');
         $diketahui = Karyawan::where('id_jabatan',1)
                     ->orWhere('id_jabatan',2)
                     ->orWhere('id_jabatan',3)->get();
         // dd($kodeRb);
-        return view('transaksi.pengajuan', compact('user','kodeRb','tanggal','diketahui'));
+        return view('transaksi.pengajuan', compact('user','bank','kodeRb','tanggal','diketahui'));
+    }
+
+    public function getnorekening(Request $request)
+    {
+        $data = BankCabang::where('bank_id', '=', $request->bankid)->get();
+
+        return response()->json($data);
     }
 
     public function list()
@@ -44,37 +54,9 @@ class PengajuanController extends Controller
 
     public function simpan(Request $request)
     {
-        foreach($request->file('dokumen') as $file)
-        {
-
-            $nama_ft = $request->no_rb. '-' .$file->getClientOriginalName();
-            $file->move('dokumen', $nama_ft);
-
-            $dok[] = [
-                "RB_ID"         => $request->no_rb,
-                "DOKUMEN_NAME"  => $nama_ft
-            ];
-        }
+        $bank = Bank::where('bank_id', $request->bank)->first();
+        $rekening = BankCabang::where('bank_branch_id', $request->norek)->first();
         $user  = Karyawan::where("nik", $request->nama)->first();
-        
-
-        foreach($request->addmore as $data){
-            $detail = [
-                'RB_ID'     => $request->no_rb,
-                'ITEM'      => $data['keterangan'],
-                'QTY'       => (int)$data['qty'],
-                'HARGA'     => str_replace('.', '', $data['harga']),
-                'ITEM_ID'   => $this->itemId(),
-            ];
-            TrxRbDetailItem::insert($detail);
-        }
-        // dd($detail);
-        $tracking = [
-            'rb_id'         => $request->no_rb,
-            'status'        => 'Create RB',
-            'id_user'       => $request->nama,
-            'created_date'  => date('Y-m-d H:i:s')
-        ];
         
         if($request->diketahui != ''){
             $header = [
@@ -82,9 +64,9 @@ class PengajuanController extends Controller
                 "CREATED_BY"   => $request->nama,
                 "KETERANGAN"   => $request->note,
                 "STATUS"       => 1,
-                "NAMA_REK"     => $request->anrek,
-                "BANK"         => $request->bank,
-                "NO_REK"       => (int)$request->rekening,
+                "NAMA_REK"     => $rekening->bank_account_name,
+                "BANK"         => $bank->bank_name,
+                "NO_REK"       => $rekening->bank_account_no,
                 "TOTAL_HARGA"  => str_replace('.', '', $request->total),
                 "BRANCH_ID"    => $request->cabang,
                 "SCHEMA_NAME"  => $user->schema,
@@ -128,9 +110,9 @@ class PengajuanController extends Controller
                 "CREATED_BY"   => $request->nama,
                 "KETERANGAN"   => $request->note,
                 "STATUS"       => 2,
-                "NAMA_REK"     => $request->anrek,
-                "BANK"         => $request->bank,
-                "NO_REK"       => (int)$request->rekening,
+                "NAMA_REK"     => $rekening->bank_account_name,
+                "BANK"         => $bank->bank_name,
+                "NO_REK"       => $rekening->bank_account_no,
                 "TOTAL_HARGA"  => str_replace('.', '', $request->total),
                 "BRANCH_ID"    => $request->cabang,
                 "SCHEMA_NAME"  => $user->schema,
@@ -139,6 +121,36 @@ class PengajuanController extends Controller
                 "CREATE_USER"  => $request->nama,
             ];
         }
+
+        foreach($request->file('dokumen') as $file)
+        {
+
+            $nama_ft = $request->no_rb. '-' .$file->getClientOriginalName();
+            $file->move('dokumen', $nama_ft);
+
+            $dok[] = [
+                "RB_ID"         => $request->no_rb,
+                "DOKUMEN_NAME"  => $nama_ft
+            ];
+        }
+
+        foreach($request->addmore as $data){
+            $detail = [
+                'RB_ID'     => $request->no_rb,
+                'ITEM'      => $data['keterangan'],
+                'QTY'       => (int)$data['qty'],
+                'HARGA'     => str_replace('.', '', $data['harga']),
+                'ITEM_ID'   => $this->itemId(),
+            ];
+            TrxRbDetailItem::insert($detail);
+        }
+        // dd($detail);
+        $tracking = [
+            'rb_id'         => $request->no_rb,
+            'status'        => 'Create RB',
+            'id_user'       => $request->nama,
+            'created_date'  => date('Y-m-d H:i:s')
+        ];
 
         $approval2 = [
             'rb_id'         => $request->no_rb,
