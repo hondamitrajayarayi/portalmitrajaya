@@ -133,7 +133,7 @@ class PersetujuanController extends Controller
                 'cabang'        => $cekuser->cabang->branch_name,
                 'pemohon'       => $rb->karyawan->nama,
                 'mengetahui'    => $cekuser->nama,
-                'j_mengetahui'  => $cekuser->AuthUsergrup->grup->name
+                'j_mengetahui'  => $cekuser->jabatan->nama_jabatan
             ];
 
             $approval = [
@@ -150,10 +150,10 @@ class PersetujuanController extends Controller
                                 ->where('approve_by', Auth::user()->username)
                                 ->update($approval);
             
-            return redirect()->route('persetujuan')->with('message','RB Berhasil Diupdate!');
+            return redirect()->route('persetujuan.riwayat')->with('message','RB Berhasil Diupdate!');
         }
 
-        //update pembagian approval oleh evi
+        //update pembagian approval oleh evi atau admin ho
         if ($request->status == 3){
             $data = TrxRbHeader::where('rb_id', $request->rb_id)->first();   
 
@@ -206,7 +206,7 @@ class PersetujuanController extends Controller
             TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
             TrxRbTracking::insert($tracking);
 
-            return redirect()->route('pengesahan')->with('message','RB Berhasil Diupdate!');
+            return redirect()->route('pengesahan.riwayat')->with('message','RB Berhasil Diupdate!');
         }
 
         //approval terkait
@@ -267,7 +267,7 @@ class PersetujuanController extends Controller
                 $this->_send_mail($request->rb_id);
             }
 
-            return redirect()->route('persetujuan')->with('message','RB Berhasil Diupdate!');
+            return redirect()->route('persetujuan.riwayat')->with('message','RB Berhasil Diupdate!');
         }
 
         //pengajuan ditolak
@@ -330,7 +330,7 @@ class PersetujuanController extends Controller
                 ->whereNotIn('approve_by', [$cekuser->nik])
                 ->update($approval2);
             
-            return redirect()->route('persetujuan')->with('message','RB Berhasil Dibatalkan!');
+            return redirect()->route('persetujuan.riwayat')->with('message','RB Berhasil Dibatalkan!');
         }
 
         if ($request->status == 0) {
@@ -365,7 +365,7 @@ class PersetujuanController extends Controller
             TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
             TrxRbTracking::insert($tracking);
 
-            return redirect()->route('otorisasi')->with('message','RB Berhasil Diupdate!');
+            return redirect()->route('otorisasi.riwayat')->with('message','RB Berhasil Diupdate!');
         }
     }
 }

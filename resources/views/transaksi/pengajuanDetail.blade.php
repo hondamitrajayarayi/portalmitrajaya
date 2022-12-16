@@ -464,7 +464,7 @@
 
                     {{-- jika user admin rb --}}
                     @if($data->status == 2)
-                    @if($user->AuthUsergrup->groupId == 11 || $user->AuthUsergrup->groupId == 1)
+                    @if($user->AuthUsergrup->groupId == 20)
                     <form method="POST" action="{{ route('persetujuan.update') }}">
                         @csrf
                         <input type="hidden" name="id_user" value="{{ $user->nik }}">
@@ -536,7 +536,7 @@
 
                     {{-- Otorisasi grup otorisasi--}}
                     @if($data->status == 6)
-                    @if($user->AuthUsergrup->groupId == 14)
+                    @if($cekfinance == true)
                     <div>
 
                         <form method="POST" action="{{ route('persetujuan.update') }}" enctype="multipart/form-data">
@@ -547,7 +547,7 @@
                             <div class="row">
                                 <div class="col-xl-10">
                                     <label for="exampleFormControlTextarea5" 
-                                        class="form-label mb-1">Lampirkan bukti transfer</label>
+                                        class="form-label mb-1">Lampirkan bukti transfer <i class="text-danger">*</i></label>
                                     <input name="buktitf" type="file" 
                                         class="form-control" accept=".pdf,.png,.jpg" required>
                                     <div id="passwordHelpBlock" class="form-text">

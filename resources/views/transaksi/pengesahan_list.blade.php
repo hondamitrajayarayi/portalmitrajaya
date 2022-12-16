@@ -192,10 +192,11 @@
                                 </div>
                             </div>
                         </div>
+                        @if(!empty($data))
                         <div class="d-flex justify-content-end">
-
                             {{ $data->links() }}
                         </div>
+                        @endif
                     </div>
                     <!--end modal -->
                 </div>

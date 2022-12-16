@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bank;
 use App\BankCabang;
 use App\Branch;
+use App\Departemen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -175,6 +176,14 @@ class PengajuanController extends Controller
         $cek      = TrxRbDetailApproval::where('RB_ID', $id)
                     ->where('approve_by', Auth::user()->username)
                     ->where('status',0)->first();
+
+        // cek untuk otorisasi
+        $adminfinance = Departemen::where('id', Auth::user()->karyawan->id_bag_dept)->first();
+        if($adminfinance->id == 10){
+            $cekfinance = true;
+        }else{
+            $cekfinance = false;
+        }
         
         $tracking = TrxRbTracking::where('RB_id', $id)->orderBy('created_date', 'asc')->get();
         $user     = Karyawan::where('nik', '=', Auth::user()->username)->first();
@@ -189,9 +198,9 @@ class PengajuanController extends Controller
                         ->get();
         
         $diketahui = Karyawan::where('id_jabatan',2)->orWhere('id_bag_dept',8)->get();
-        $disetujui = Karyawan::where('id_jabatan',2)->get();
+        $disetujui = Karyawan::whereIn('id_jabatan',[2,7,8])->get(); //manager, gm, direktur
 
-        return view('transaksi.pengajuanDetail', compact('data','cek','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
+        return view('transaksi.pengajuanDetail', compact('data','cek','cekfinance','tracking','user','mengetahui','menyetujui','diketahui','disetujui'));
     }
     public function itemId()
     {
