@@ -105,7 +105,8 @@ class PengajuanController extends Controller
                 'cabang'        => $cekuser->cabang->branch_name,
                 'pemohon'       => $cekuser->nama
             ];
-            \Mail::to('detriawanrayi@gmail.com')->send(new \App\Mail\NewTicketToAdminHo($email));
+            // \Mail::to('detriawanrayi@gmail.com')->send(new \App\Mail\NewTicketToAdminHo($email));
+            \Mail::to('evisitisopiah23@gmail.com')->send(new \App\Mail\NewTicketToAdminHo($email));
             $header = [
                 "RB_ID"        => $request->no_rb,
                 "CREATED_BY"   => $request->nama,
@@ -184,7 +185,7 @@ class PengajuanController extends Controller
         }else{
             $cekfinance = false;
         }
-        
+
         $tracking = TrxRbTracking::where('RB_id', $id)->orderBy('created_date', 'asc')->get();
         $user     = Karyawan::where('nik', '=', Auth::user()->username)->first();
         $mengetahui = TrxRbDetailApproval::where('RB_ID', $id)

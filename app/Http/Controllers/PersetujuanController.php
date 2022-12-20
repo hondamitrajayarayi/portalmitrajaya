@@ -142,7 +142,8 @@ class PersetujuanController extends Controller
             ];
             // dd($email);
             // kirim email ke evi atau kemana ?
-            \Mail::to('detriawanrayi@gmail.com')->send(new \App\Mail\NewTicketToAdminHo($email));
+            // \Mail::to('detriawanrayi@gmail.com')->send(new \App\Mail\NewTicketToAdminHo($email));
+            \Mail::to('evisitisopiah23@gmail.com')->send(new \App\Mail\NewTicketToAdminHo($email));
 
             TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
             TrxRbTracking::insert($tracking);
@@ -259,7 +260,9 @@ class PersetujuanController extends Controller
                     'pemohon'       => $rb->karyawan->nama,
                 ];
                 
-                \Mail::to($rb->karyawan->user->email)->send(new \App\Mail\NewTicketToKudus($email));
+                // email ke admin kudus
+                // \Mail::to($rb->karyawan->user->email)->send(new \App\Mail\NewTicketToKudus($email));
+                \Mail::to('jm00pst@gmail.com')->send(new \App\Mail\NewTicketToKudus($email));
                 
                 TrxRbHeader::where('rb_id', $request->rb_id)->update($data);
                 TrxRbTracking::insert($tracking);
