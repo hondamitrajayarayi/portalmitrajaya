@@ -85,9 +85,9 @@
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#passwordModals"><i
                                 class="ri-shield-keyhole-line text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Password reset</span></a>
-                        <a class="dropdown-item" href="{{ asset('/I-ManualBook.pdf')}}" target="_blank" ><i
+                        {{-- <a class="dropdown-item" href="{{ asset('/I-ManualBook.pdf')}}" target="_blank" ><i
                                 class="ri-book-mark-line text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Manual Book</span></a>
+                                class="align-middle">Manual Book</span></a> --}}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item"  href="{{ route('logout') }}"><i
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
