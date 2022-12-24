@@ -337,17 +337,27 @@ class PersetujuanController extends Controller
         }
 
         if ($request->status == 0) {
-            $file = $request->buktitf;
-            $nama_ft = $request->rb_id. '-' .$file->getClientOriginalName();
-            
-            $file->move('buktitf', $nama_ft);
 
-            $data = [
-                'status'        => $request->status,
-                'update_user'   => $cekuser->nik,
-                'bukti_tf'       => $nama_ft,
-                'update_date'   => date('Y-m-d H:i:s')
-            ];
+            if(!empty($request->buktitf)){
+
+                $file = $request->buktitf;
+                $nama_ft = $request->rb_id. '-' .$file->getClientOriginalName();
+                
+                $file->move('buktitf', $nama_ft);
+    
+                $data = [
+                    'status'        => $request->status,
+                    'update_user'   => $cekuser->nik,
+                    'bukti_tf'       => $nama_ft,
+                    'update_date'   => date('Y-m-d H:i:s')
+                ];
+            }else{
+                $data = [
+                    'status'        => $request->status,
+                    'update_user'   => $cekuser->nik,
+                    'update_date'   => date('Y-m-d H:i:s')
+                ];
+            }
 
             $tracking = [
                 'rb_id'         => $request->rb_id,

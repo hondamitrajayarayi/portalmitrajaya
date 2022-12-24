@@ -547,9 +547,9 @@
                             <div class="row">
                                 <div class="col-xl-10">
                                     <label for="exampleFormControlTextarea5" 
-                                        class="form-label mb-1">Lampirkan bukti transfer <i class="text-danger">*</i></label>
+                                        class="form-label mb-1">Lampirkan bukti transfer</label>
                                     <input name="buktitf" type="file" 
-                                        class="form-control" accept=".pdf,.png,.jpg" required>
+                                        class="form-control" accept=".pdf,.png,.jpg">
                                     <div id="passwordHelpBlock" class="form-text">
                                         Extenstion yang diizinkan untuk diupload: .pdf, .jpg, .png.
                                     </div>
