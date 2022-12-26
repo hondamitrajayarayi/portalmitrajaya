@@ -210,7 +210,7 @@
                                                                 <div class="ribbon ribbon-primary round-shape">Deskripsi item</div>
                                                                 {{-- <h5 class="fs-14 text-end">Rounded Ribbon</h5> --}}
                                                                 <div class="ribbon-content mt-5 text-muted">
-                                                                    <p class="mb-0">{{ $inventaris->deskripsi_item }}</p>
+                                                                    <p class="mb-0">@nl2br($inventaris->deskripsi_item)</p>
                                                                 </div>
                                                             </div>
                                                         </div>

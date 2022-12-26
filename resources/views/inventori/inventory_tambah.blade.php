@@ -129,7 +129,7 @@
                                     <label for="basiInput" class="form-label mb-1">No Revisi Budget <i class="text-muted">(optional)</i></label>
                                     <div class="input-group">
                                         
-                                        <input type="text" class="form-control" id="norb" name="norb" @if($autofill != null) value="{{ $autofill->rb_id }}" @endif readonly aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <input type="text" class="form-control" placeholder="No revisi budget"  id="norb" name="norb" @if($autofill != null) value="{{ $autofill->rb_id }}" @endif readonly aria-label="Recipient's username" aria-describedby="button-addon2">
                                         <button data-bs-toggle="modal" data-bs-target="#exampleModalgrid" class="btn btn-soft-primary" type="button" id="button-addon2"><i class="ri-search-line"></i></button>
                                         
                                     </div>
@@ -138,17 +138,22 @@
                             <div class="col-md-8">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Nama Item<i class="text-danger">*</i></label>
-                                    <input type="text" class="form-control" name="item" required id="valueInput" @if($autofill != null) value="{{ $autofill->item }}" readonly @endif>
+                                    <input type="text" placeholder="Masukan nama item" class="form-control" name="item" required id="valueInput" @if($autofill != null) value="{{ $autofill->item }}" readonly @endif>
                                     <input type="hidden" class="form-control" name="item_id" required id="valueInput" @if($autofill != null) value="{{ $autofill->item_id }}" readonly @endif>
                                 </div>
                             </div>
-                            <div class="col-md-1 mt-2">
+                            <div class="col-md-4 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Stok<i class="text-danger">*</i></label>
-                                    <input type="text" class="form-control" name="qty" required id="valueInput" @if($autofill != null) value="{{ $autofill->qty }}" readonly @endif>
+                                    {{-- <input type="number" placeholder="Masukan stok item" class="form-control" name="qty" required id="valueInput" @if($autofill != null) value="{{ $autofill->qty }}" readonly @endif> --}}
+                                    <div class="input-step full-width">
+                                        <button type="button" class="minus">–</button>
+                                        <input type="text" name="qty" @if($autofill != null) value="{{ $autofill->qty }}" @else value="0" @endif class="product-quantity" min="0" max="100" readonly>
+                                        <button type="button" class="plus">+</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 mt-2">
+                            <div class="col-md-4 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Harga Item<i class="text-danger">*</i></label>
                                     {{-- <input type="text" class="form-control" name="harga" required id="valueInput" @if($autofill != null) value="{{ $autofill->harga }}" @endif> --}}
@@ -156,6 +161,13 @@
                                         <span class="input-group-text" id="basic-addon1">Rp.</span>
                                         <input type="text" name="harga" id="harga" @if($autofill != null) value="@rupiah($autofill->harga)" readonly @endif class="form-control text-end" autocomplete="off" required>
                                     </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mt-2">
+                                <div>
+                                    <label for="basiInput" class="form-label mb-1">Nama Label <i class="text-muted">(penamaan di stiker label)</i><i class="text-danger">*</i></label>
+                                    <input type="text" maxlength="25" name="label" placeholder="Masukan nama label" class="form-control" id="valueInput" required>
                                 </div>
                             </div>
                             <div class="col-md-4 mt-2">
@@ -176,24 +188,33 @@
                                 <div>
                                     <label for="validationCustom04"
                                         class="form-label mb-1">Jenis Item<i class="text-danger">*</i></label>
-                                    
+                                    <div id="norekhide">
                                     <select class="form-control" data-choices name="jenis" id="jenis" required>
                                         <option value="">Pilih jenis</option>
-                                        
                                     </select>
+                                    </div>
+
+                                    <div class="ph-item big p-1 mb-0" id="listloading" hidden>
+                                        <div class="ph-col-12 p-1 mb-0">
+                                            <div class="ph-row">
+                                                <div class="ph-col-12 big ph-border-1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     
                                 </div>
                             </div>
+                            
                             <div class="col-md-4 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Gambar Item<i class="text-danger">*</i></label>
                                     <input type="file" name="gambar" accept="image/*" class="form-control" id="valueInput" required>
                                 </div>
                             </div>
-                            <div class="col-md-8 mt-2">
+                            <div class="col-md-12 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Deskripsi<i class="text-danger">*</i></label>
-                                    <textarea type="text" name="deskripsi" class="form-control" id="valueInput" required></textarea>
+                                    <textarea type="text" placeholder="Masukan deskripsi item" name="deskripsi" class="form-control" id="valueInput" required></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -359,7 +380,20 @@
             return rupiah;
         }
     </script>
-
+    <script>
+        $(document).ready(function () {
+            $("#grup").select2({
+                theme: "bootstrap",
+                placeholder: "Pilih Grup Item"
+            });
+        });
+        $(document).ready(function () {
+            $("#jenis").select2({
+                theme: "bootstrap",
+                placeholder: "Pilih Jenis Item"
+            });
+        });
+    </script>
     <script>
         $(document).ready(function () {
   
@@ -367,6 +401,8 @@
                 var grup_id = this.value;
                 console.log(grup_id);
                 $("#jenis").html('');
+                $('#listloading').removeAttr('hidden');
+                $('#norekhide').attr('hidden','hidden');
                 $.ajax({
                     url: "{{url('inventaris/getjenis')}}",
                     type: "POST",
@@ -383,6 +419,8 @@
                             $("#jenis").append('<option value="' + value
                                 .jenis_id + '">' + value.nama_jenis + '</option>');
                         });
+                        $('#norekhide').removeAttr('hidden');
+                        $('#listloading').attr('hidden','hidden');
                     }
                 });
             });

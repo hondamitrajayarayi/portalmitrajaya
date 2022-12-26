@@ -216,6 +216,7 @@ class InventarisController extends Controller
                 'IMAGE'         => $gambar,
                 'GRUP_ID'       => $request->grup,
                 'JENIS_ID'      => $request->jenis,
+                'LABEL_NAME'    => $request->label,
             ];
         }else{
             // create item id
@@ -239,6 +240,7 @@ class InventarisController extends Controller
                 'IMAGE'         => $gambar,
                 'GRUP_ID'       => $request->grup,
                 'JENIS_ID'      => $request->jenis,
+                'LABEL_NAME'    => $request->label,
             ];
         }
         

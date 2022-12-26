@@ -66,6 +66,7 @@
                                         <th class="sort" data-sort="customer_name">#</th>
                                         <th class="sort" data-sort="email">ID</th>
                                         <th class="sort" data-sort="date">Item</th>
+                                        <th class="sort" data-sort="date">Label sticker</th>
                                         <th class="sort text-center" data-sort="date">QTY</th>
                                         <th class="sort text-center" data-sort="date">Harga Beli</th>
                                         <th class="sort text-center" data-sort="status">Status</th>
@@ -87,10 +88,9 @@
                                             </td>
                                             <td class="customer_name">
                                                 {{ $item->inventory_id }}
-                                                {{-- <p class="text-muted mb-0">Inventory ID</p> {{ $item->inventory_id }} --}}
-                                                {{-- <p class="text-muted mt-1 mb-0">RB ID</p> {{ $item->rb_id ? $item->rb_id : '-' }} --}}
                                             </td>
                                             <td class="email">{{ $item->item }}</td>
+                                            <td class="email">{{ $item->label_name }}</td>
                                             <td class="email text-center">{{ $item->qty }}</td>
                                             <td class="email text-end">@uang($item->harga_beli)</td>
                                             <td class="email text-center">

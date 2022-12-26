@@ -206,7 +206,7 @@
     <script src="{{ asset('assets/js/pages/dashboard-analytics.init.js') }}"></script>
     @stack('center-scripts')
     <!-- App js -->
-    
+    <script src="{{ asset('assets/js/pages/form-input-spin.init.js') }}"></script>
     <script src="{{ asset('assets/js/app2.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{-- <script src="{{ asset('assets/js/pages/passowrd-create.init.js') }}"></script> --}}

@@ -41,7 +41,7 @@
                         <img height="56px" src="{{ asset('inventory/qr/'.$item->name_file) }}"></td>
                     <td class="p-1">
                         <p class="mb-0 fw-bold" style="font-size: 10px">
-                            {{ $item->inventory_id }}
+                            {{ $item->inventory->label_name }}
                         </p>
                         {{-- <p class="mt-0 mb-0 fw-semibold" style="font-size: 10px">
                             <a href="{{ asset('inventaris/getinfo/'. $item->inventory_id ) }}" style="text-decoration: none" target="_blank">
