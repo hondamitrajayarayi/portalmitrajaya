@@ -214,7 +214,7 @@
                             <div class="col-md-12 mt-2">
                                 <div>
                                     <label for="basiInput" class="form-label mb-1">Deskripsi<i class="text-danger">*</i></label>
-                                    <textarea type="text" placeholder="Masukan deskripsi item" name="deskripsi" class="form-control" id="valueInput" required></textarea>
+                                    <textarea type="text" placeholder="Masukan deskripsi item" name="deskripsi" rows="4" class="form-control" id="valueInput" required></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
