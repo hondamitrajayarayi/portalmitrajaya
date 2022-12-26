@@ -148,7 +148,7 @@
                                     {{-- <input type="number" placeholder="Masukan stok item" class="form-control" name="qty" required id="valueInput" @if($autofill != null) value="{{ $autofill->qty }}" readonly @endif> --}}
                                     <div class="input-step full-width">
                                         <button type="button" class="minus">–</button>
-                                        <input type="text" name="qty" @if($autofill != null) value="{{ $autofill->qty }}" @else value="0" @endif class="product-quantity" min="0" max="100" readonly>
+                                        <input type="text" name="qty" @if($autofill != null) value="{{ $autofill->qty }}" @else value="1" @endif class="product-quantity" min="0" max="100" readonly>
                                         <button type="button" class="plus">+</button>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@
                                     class="badge badge-soft-primary p-1 fs-15" ><i
                                         class="text-info ri-briefcase-line" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
-                                    href="{{ route('karyawan')}}" class="" >
+                                    href="{{ route('inventaris')}}" class="" >
                                     <h6 class="text-info text-truncate fs-13 mb-0 font-poppins" >
                                         Inventaris</h6>
                                 </a></div>
@@ -278,9 +278,19 @@
                         <div class="d-flex mb-2 list-setting_item pointer" >
                             <div class="flex-shrink-0" ><span
                                     class="badge badge-soft-primary p-1 fs-15" ><i
+                                        class="ri-file-search-line" ></i></span></div>
+                            <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
+                                    href="{{ route('inventaris.getinfo1')}}" class="" >
+                                    <h6 class="text-truncate fs-13 mb-0 font-poppins" >
+                                        Query Inventaris</h6>
+                                </a></div>
+                        </div>
+                        <div class="d-flex mb-2 list-setting_item pointer" >
+                            <div class="flex-shrink-0" ><span
+                                    class="badge badge-soft-primary p-1 fs-15" ><i
                                         class="ri-share-forward-2-fill" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
-                                    href="{{ route('jabatan')}}" class="" >
+                                    href="{{ route('inventaris.peminjaman')}}" class="" >
                                     <h6 class="text-truncate fs-13 mb-0 font-poppins" >
                                         Peminjaman</h6>
                                 </a></div>
@@ -290,7 +300,7 @@
                                     class="badge badge-soft-primary p-1 fs-15" ><i
                                         class="ri-service-line" ></i></span></div>
                             <div class="flex-grow-1 ms-2 mt-0 mt-1 overflow-hidden" ><a
-                                    href="{{ route('departemen')}}" class="" >
+                                    href="{{ route('inventaris')}}" class="" >
                                     <h6 class=" text-truncate fs-13 mb-0 font-poppins" >
                                         Pemeliharaan</h6>
                                 </a></div>
