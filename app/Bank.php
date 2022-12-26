@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bank extends Model
 {
-    public $connection = "MITRA";
+    public $connection = "INTRA";
     public $timestamps = false;
-    protected $table = 'MITRA.MST_BANK';
+    protected $dates = ['create_date','last_update'];
+    protected $table = 'INTRAMITRA.MST_BANK';
 }

@@ -233,6 +233,31 @@ class AuthServiceProvider extends ServiceProvider
          }
          return false;
       });
+      Gate::define('menu_mst_bank', function ($user){
+
+         $id = $user->username;
+         $now = Carbon::now();
+
+         $cekMenu = DB::connection('mysql')->select("
+            SELECT users.username, users.name, auth_user_groups.groupId, auth_groups.name as grup, auth_permissions.name as permissions_name, auth_permissions.menuCode FROM users 
+            join auth_user_groups on auth_user_groups.userId = users.username
+            join auth_groups on auth_groups.id = auth_user_groups.groupId
+            join auth_group_permissions on auth_group_permissions.group_id = auth_groups.id
+            join auth_permissions on auth_permissions.id = auth_group_permissions.permission_id
+            where users.username = '$id' and menuCode = 'menu_mst_bank'
+         ");
+
+         $cekMenu2 = DB::connection('mysql')->select("
+               SELECT * FROM auth_user_permissions
+               JOIN auth_permissions on auth_permissions.id = auth_user_permissions.permission_id
+               WHERE auth_permissions.menuCode = 'menu_mst_bank' and auth_user_permissions.userId = '$id'
+         ");
+
+         if (!empty($cekMenu) || !empty($cekMenu2)) {
+            return true;
+         }
+         return false;
+      });
 
       // rb
       Gate::define('menu_pengajuan', function ($user){

@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class BankCabang extends Model
 {
-    public $connection = "MITRA";
+    public $connection = "INTRA";
     public $timestamps = false;
-    protected $table = 'MITRA.MST_BANK_BRANCH';
+    protected $dates = ['create_date','last_update'];
+    protected $table = 'INTRAMITRA.MST_BANK_BRANCH';
+
+    public function bank(){
+        return $this->belongsTo('\App\Bank','bank_id','bank_id');
+    }
 }

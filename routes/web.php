@@ -112,6 +112,14 @@ Route::group(['middleware' => 'auth'], function (){
     Route::group(['middleware' => 'can:menu_mst_grup_inventaris'], function (){
         Route::get('inventaris/group','InventarisController@mastergroup')->name('inventaris.group');
     });
+    Route::group(['middleware' => 'can:menu_mst_bank'], function (){
+        Route::get('bank','BankController@index')->name('bank');
+        Route::get('bank/cari', 'BankController@cari')->name('bank.cari');
+        Route::post('bank/simpan','BankController@simpan')->name('bank.simpan');
+        Route::get('bank/{id}/edit','BankController@edit')->name('bank.edit');
+        Route::post('bank/update','BankController@update')->name('bank.update');
+        Route::delete('bank/delete/{id}','BankController@hapus')->name('bank.hapus');
+    });
 
     // rb
     Route::post('bank/getnorekening','PengajuanController@getnorekening');

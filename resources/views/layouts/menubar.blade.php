@@ -161,6 +161,13 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('menu_mst_bank')
+                            <li class="nav-item">
+                                <a href="{{ route('bank')}}" class="nav-link @yield('nav_active_bank')" data-key="t-projects">
+                                    <i class="ri-bank-card-line"></i> Bank 
+                                </a>
+                            </li>
+                            @endcan
                             @can('menu_mst_jenis_inventaris')
                             <li class="nav-item">
                                 <a class="nav-link menu-link @yield('nav_active_jenis_inventaris')" href="{{ route('inventaris.jenis') }}">
