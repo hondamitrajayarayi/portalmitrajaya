@@ -125,7 +125,7 @@
                     </div>
                 </li>
                 @endcan
-                @if(Gate::check('menu_mst_karyawan') || Gate::check('menu_mst_jabatan') || Gate::check('menu_mst_departement') || Gate::check('menu_mst_branch') || Gate::check('menu_mst_jabatan')) 
+                @if(Gate::check('menu_mst_karyawan') || Gate::check('menu_mst_jabatan') || Gate::check('menu_mst_departement') || Gate::check('menu_mst_branch') || Gate::check('menu_mst_jabatan') || Gate::check('menu_mst_bank') || Gate::check('menu_mst_jenis_inventaris') || Gate::check('menu_mst_grup_inventaris')) 
                 <li class="nav-item">
                     <a class="nav-link menu-link @yield('nav_active_master_data')" href="#sidebarDashboards" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarDashboards">
