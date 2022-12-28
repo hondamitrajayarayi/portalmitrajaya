@@ -189,7 +189,7 @@ class InventarisController extends Controller
         return response()->json($data);
     }
     public function simpan(Request $request)
-    {   
+    {
         
         if (!empty($request->norb)) {
             $rb          = TrxRbHeader::where('rb_id', $request->norb)->first();
@@ -368,7 +368,7 @@ class InventarisController extends Controller
         $kd = null;
         
         if ($schema == 'MITRA') {
-            $q = TrxInventory::select(DB::raw('max(SUBSTR(TRX_INVENTORY.INVENTORY_ID,22)) as INVENTORY_ID'))
+            $q = TrxInventory::select(DB::raw('max(SUBSTR(TRX_INVENTORY.INVENTORY_ID,21)) as INVENTORY_ID'))
             ->where('schema',$schema)
             ->where('branch_id',$branch)
             ->get();
