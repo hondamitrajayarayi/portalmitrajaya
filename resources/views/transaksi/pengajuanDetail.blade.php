@@ -407,7 +407,12 @@
                             @endif
                             <div class="fs-12">
                                 <strong><u>{{ $result->karyawan->nama }}</u><br>
-                                {{ $result->karyawan->jabatan->nama_jabatan }} {{ $result->karyawan->departemen->nama_dept }}</strong>
+                                @if($result->karyawan->jabatan->nama_jabatan == 'Branch Head' )
+                                {{ $result->karyawan->jabatan->nama_jabatan }}        
+                                @else
+                                {{ $result->karyawan->jabatan->nama_jabatan }} {{ $result->karyawan->departemen->nama_dept }}
+                                @endif
+                                </strong>
                             </div>
                         </div>
                         @endforeach
