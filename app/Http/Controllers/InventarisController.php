@@ -22,8 +22,10 @@ class InventarisController extends Controller
 {
     public function index()
     {
-        $datai = TrxInventory::orderBy('created_date','desc')->paginate(10);
-
+        $datai = TrxInventory::where('branch_id','=', Auth::user()->karyawan->branch_id)
+                ->where('schema','=', Auth::user()->karyawan->schema)
+                ->orderBy('created_date','desc')->paginate(10);
+        
         return view('inventori.index', compact('datai'));
     }
     public function tambah()
