@@ -423,13 +423,13 @@ class InventarisController extends Controller
     }
     public function mastergroup()
     {
-        $data = GrupInventaris::paginate(10);
+        $data = GrupInventaris::orderby('create_date', 'desc')->paginate(10);
         
         return view('master.inventaris_group', compact('data'));
     }
     public function masterjenis()
     {
-        $data = JenisInventaris::paginate(10);
+        $data = JenisInventaris::orderby('create_date', 'desc')->paginate(10);
         
         return view('master.inventaris_jenis', compact('data'));
     }
